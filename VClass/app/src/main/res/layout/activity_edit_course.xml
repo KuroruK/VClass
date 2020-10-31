@@ -1,132 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
-    android:padding="10dp"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:context=".editCourseActivity">
 
-
-    <TextView
-        android:id="@+id/regFormC"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="9"
-        android:text="Edit Course Details"
-        android:gravity="center"
-        android:textSize="25dp"
-        android:textAllCaps="false"
-        android:textColor="#000000"
-        />
+        android:padding="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="6"
-        android:textSize="25dp"
-        android:text="Course Name"
-        android:id="@+id/c_edit_name2"
-        android:layout_below="@+id/regFormC"
-        android:textColor="#000000"
+        <TextView
+            android:id="@+id/edit_crs_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"
+            android:text="Edit Courses"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            />
 
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name: "
+            android:id="@+id/edit_crs_name"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/edit_crs_details"
+            />
 
-    <EditText
-        android:id="@+id/c_edit_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_toRightOf="@id/c_edit_name2"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Name"
-        android:layout_below="@id/regFormC"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_crs_name1"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/custom_spinner_boundary"
+            android:layout_toEndOf="@id/edit_crs_crd_hrs"
+            android:layout_below="@+id/edit_crs_details"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/edit_crs_crd_hrs" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="6"
-        android:textSize="25dp"
-        android:text="Course Code "
-        android:id="@+id/c_edit_cCode2"
-        android:layout_below="@+id/c_edit_name2"
-        android:textColor="#000000"
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="name here"
+            android:background="@null"
+            android:id="@+id/edit_crs_name2"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/edit_crs_crd_hrs"
+            android:layout_below="@+id/edit_crs_details"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/edit_crs_crd_hrs" />
 
-        />
-    <EditText
-        android:id="@+id/c_edit_cCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/c_edit_cCode2"
-        android:hint="Course Code"
-        android:inputType="text"
-        android:layout_below="@id/c_edit_name2"
-        android:layout_marginTop="20dp"
-        android:ems="10" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Course Code:"
+            android:id="@+id/edit_crs_id"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/edit_crs_name"
+            android:layout_marginLeft="10dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="6"
-        android:textSize="25dp"
-        android:text="Credit Hrs "
-        android:id="@+id/c_edit_crHrs2"
-        android:layout_below="@+id/c_edit_cCode2"
-        android:textColor="#000000"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_crs_id1"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:background="@drawable/custom_spinner_boundary"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_below="@id/edit_crs_name"
+            android:layout_toEndOf="@id/edit_crs_crd_hrs"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/edit_crs_crd_hrs" />
 
-        />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="id here"
+            android:id="@+id/edit_crs_id2"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@null"
+            android:layout_below="@id/edit_crs_name"
+            android:layout_toEndOf="@id/edit_crs_crd_hrs"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/edit_crs_crd_hrs" />
 
-    <EditText
-        android:id="@+id/c_edit_crHrs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/c_edit_crHrs2"
-        android:hint="Credit Hrs"
-        android:inputType="textEmailAddress"
-        android:layout_below="@id/c_edit_cCode2"
-        android:layout_marginTop="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Credit Hourse:"
+            android:id="@+id/edit_crs_crd_hrs"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/edit_crs_id"
+            android:layout_marginLeft="10dp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_crs_crd_hrs1"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:background="@drawable/custom_spinner_boundary"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_below="@id/edit_crs_id"
+            android:layout_toEndOf="@id/edit_crs_crd_hrs"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/edit_crs_crd_hrs" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_crs_crd_hrs2"
+            android:hint="credit hours here"
+            android:textSize="16sp"
+            android:background="@null"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_below="@id/edit_crs_id"
+            android:layout_toEndOf="@id/edit_crs_crd_hrs"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/edit_crs_crd_hrs" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="6"
-        android:textSize="25dp"
-        android:text="Description"
-        android:id="@+id/c_edit_desc2"
-        android:layout_below="@+id/c_edit_crHrs2"
-        android:textColor="#000000"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description:"
+            android:id="@+id/edit_crs_desc"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/edit_crs_crd_hrs"
+            android:layout_marginLeft="10dp" />
 
-        />    <EditText
-        android:id="@+id/c_edit_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter description"
-        android:layout_toRightOf="@id/c_edit_desc2"
-        android:inputType="text"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/c_edit_crHrs"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="144dp"
+            android:id="@+id/edit_crs_desc1"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:background="@drawable/custom_spinner_boundary"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_below="@id/edit_crs_desc"
+            android:layout_marginLeft="10dp" />
 
-    <Button
-        android:id="@+id/c_save_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:background="@drawable/smooth_edged_button"
-        android:layout_marginTop="30dp"
-        android:layout_below="@id/c_edit_desc2"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="description here"
+            android:id="@+id/edit_crs_desc2"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:background="@null"
 
-</RelativeLayout>
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="5dp"
+            android:layout_below="@id/edit_crs_desc"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_save_edit_crs"
+            android:padding="10dp"
+            android:text="Save"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorEdit"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginVertical="50dp"
+            android:layout_below="@id/edit_crs_desc1"
+            />
+
+    </RelativeLayout>
 </ScrollView>

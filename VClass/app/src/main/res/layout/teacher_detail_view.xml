@@ -274,7 +274,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/t_course3"
-            android:weightSum="1.5"
+            android:weightSum="1"
             android:orientation="horizontal"
             android:layout_marginVertical="50dp"
             >
@@ -296,33 +296,6 @@
                         android:layout_height="match_parent"
                         android:id="@+id/t_edit"
                         android:text="Edit Bio"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textAllCaps="false"
-                        android:textColor="#FFFFFF"
-                        android:background="@drawable/all_curved_corners"
-                        android:backgroundTint="@color/colorEdit"
-                        />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="0.5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                >
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal">
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/t_edit_t_courses"
-                        android:text="Edit Courses"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textAllCaps="false"

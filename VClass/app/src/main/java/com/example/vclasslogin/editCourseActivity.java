@@ -22,13 +22,13 @@ public class editCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_course);
 
-        courseName = (EditText) findViewById(R.id.c_edit_name);
-        courseCode = (EditText) findViewById(R.id.c_edit_cCode);
-        creditHrs = (EditText) findViewById(R.id.c_edit_crHrs);
-        description = (EditText) findViewById(R.id.c_edit_desc);
+        courseName = (EditText) findViewById(R.id.edit_crs_name2);
+        courseCode = (EditText) findViewById(R.id.edit_crs_id2);
+        creditHrs = (EditText) findViewById(R.id.edit_crs_crd_hrs2);
+        description = (EditText) findViewById(R.id.edit_crs_desc2);
         DB = new DBHelper(this);
         init();
-        save = (Button) findViewById(R.id.c_save_edit);
+        save = (Button) findViewById(R.id.btn_save_edit_crs);
 
         //listener for Sign-up button
         save.setOnClickListener(new View.OnClickListener() {

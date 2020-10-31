@@ -33,7 +33,12 @@ public class LoginActivity extends AppCompatActivity {
         DB = new DBHelper(this);
         DB.deleteTables();
         DB.createTables();
+        if(!DB.doesStudentUserNameExist("student1"))
+            DB.initTeachersAndStudents();
         this.initCourses();
+        DB.initStudentCourse();
+        DB.initTeacherCourse();
+
         if(!DB.doesUserNameExist("admin123")) {
             Boolean c = DB.insertData("Admin", "090078601", "admin@gmail.com", "admin123", "pass", "admin");
             if (c)

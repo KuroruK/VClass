@@ -38,6 +38,8 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
     private Button loadBtn;
     private Spinner daySpinner;
     private TimetableView timetable;
+
+    private int weekday;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +56,7 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
         loadBtn = findViewById(R.id.load_btn);
         daySpinner=(Spinner)findViewById(R.id.timtable_day_spinner);
 
-
+        weekday=0;
 
 
 
@@ -81,12 +83,13 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 loadTableForDay(i);
-
+                weekday=i;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 loadTableForDay(0);
+                weekday=0;
             }
         });
     }
@@ -186,10 +189,10 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
         int day=0;
         DBHelper obj=new DBHelper(context);
 
-        obj.deleteTimeSlotData();
+        obj.deleteTimeSlotData(weekday);
         csvLoader c=new csvLoader();
 
-        for(int i=0;i<2;i++) {
+        for(int i=0;i<5;i++) {
             ArrayList<timeSlot> s = c.getTable(context, days[i]+".csv");
             List<timeSlot> t = new ArrayList<timeSlot>(s);
             Collections.sort(t);

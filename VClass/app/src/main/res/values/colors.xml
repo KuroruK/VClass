@@ -9,6 +9,7 @@
         <color name="colorTableItem">#efefef</color>
     <color name="colorEdit">#20B177</color>
     <color name="colorDelete">#DD3737</color>
+    <color name="colorWhite">#FFFFFF</color>
         <string-array name="default_sticker_color">
             <item>#f08676</item>
             <item>#ecc369</item>

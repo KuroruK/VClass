@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class viewTeacherDetailsActivity extends AppCompatActivity {
 
     TextView name, mobileNo, email, username, password,specialization,id,course1,course2,course3;
-    Button edit,delete,editCourses;
+    Button edit,delete;
     DBHelper db;
     int teacherID;
     @Override
@@ -42,9 +42,34 @@ public class viewTeacherDetailsActivity extends AppCompatActivity {
         db=new DBHelper(this);
         edit = (Button) findViewById(R.id.t_edit);
         delete = (Button) findViewById(R.id.t_delete);
-        editCourses=(Button) findViewById(R.id.t_edit_t_courses);
-
         init();
+        String qu = "SELECT * FROM teacher_course";
+        Cursor cursor = db.execReadQuery(qu);
+        if(cursor==null||cursor.getCount()==0)
+        {
+            Toast.makeText(getBaseContext(),"No teacher_course Found",Toast.LENGTH_LONG).show();
+        }else {
+            cursor.moveToFirst();
+            int i=0;
+            while (!cursor.isAfterLast()) {
+                if(cursor.getInt(0)==teacherID) {
+                    if (i == 0) {
+                        course1.setText(db.getCourseName(cursor.getInt(1)));
+                    }
+                    if (i == 1) {
+                        course2.setText(db.getCourseName(cursor.getInt(1)));
+                    }
+                    if (i == 2) {
+                        course3.setText(db.getCourseName(cursor.getInt(1)));
+                    }
+                    i++;
+                }
+                cursor.moveToNext();
+
+            }
+        }
+
+        //init();
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +81,10 @@ public class viewTeacherDetailsActivity extends AppCompatActivity {
                 intent.putExtra("username",getIntent().getStringExtra("username"));
                 intent.putExtra("password",getIntent().getStringExtra("password"));
                 intent.putExtra("specialization",getIntent().getStringExtra("specialization"));
-                intent.putExtra("id",getIntent().getIntExtra("name",-1));
+                intent.putExtra("course1",course1.getText().toString());
+                intent.putExtra("course2",course2.getText().toString());
+                intent.putExtra("course3",course3.getText().toString());
+                intent.putExtra("id",getIntent().getIntExtra("id",-1));
                 startActivity(intent);
 
             }
@@ -65,7 +93,7 @@ public class viewTeacherDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 boolean deletion=db.deleteTeacherData(teacherID);
-                if(deletion==true){
+                if(deletion){
                     Toast.makeText(viewTeacherDetailsActivity.this,"Deletion Successful",Toast.LENGTH_LONG).show();
                     Intent intent=new Intent(view.getContext(),ListTeacherActivity.class);
                     startActivity(intent);
@@ -78,12 +106,6 @@ public class viewTeacherDetailsActivity extends AppCompatActivity {
             }
         });
 
-        editCourses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
     void init(){
         name.setText(getIntent().getStringExtra("name"));
@@ -95,25 +117,11 @@ public class viewTeacherDetailsActivity extends AppCompatActivity {
         teacherID=db.getTeacherID(getIntent().getStringExtra("username"));
         id.setText(Integer.toString(teacherID));
 
-        ArrayList<Integer> x=new ArrayList<>();
 
-        course1.setText("Artificial Intelligence");
-        course2.setText("Software Engineering");
-        course3.setText("Object Oriented Analysis And Design");
-        String qu = "SELECT * FROM teacher_course";
-        DBHelper db= new DBHelper(this);
-        Cursor cursor = db.execReadQuery(qu);
-        if(cursor==null||cursor.getCount()==0)
-        {
-            Toast.makeText(getBaseContext(),"No teacher_course Found",Toast.LENGTH_LONG).show();
-        }else {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                Log.v("teacher-Courses: "," list teacherCourses cursor");
-                x.add(cursor.getInt(0));
+        course1.setText("None");
+        course2.setText("None");
+        course3.setText("None");
 
-            }
-        }
 
 
         return;

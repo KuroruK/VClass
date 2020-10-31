@@ -1,5 +1,6 @@
 package com.example.vclasslogin;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -22,10 +23,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME6= "teacher_course";
     public static final String TABLE_NAME7= "student_course";
 
-    private Context cont;
 
     public DBHelper(Context context){
-
         super(context, DB_NAME, null, 1);
     }
 
@@ -46,31 +45,66 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("create Table if not exists " + TABLE_NAME5 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, classTitle TEXT, classPlace TEXT, professorName TEXT, day Integer,startHr Integer,startMin Integer,endHr Integer,endMin Integer,weekday Integer)");
         MyDB.execSQL("create Table if not exists "+ TABLE_NAME6 +"(teacherID INTEGER, courseID INTEGER, PRIMARY KEY (teacherID, courseID),FOREIGN KEY (teacherID) references teachers(userid) on delete cascade, FOREIGN KEY (courseID) references courses (id) on delete cascade)");
         MyDB.execSQL("create Table if not exists "+ TABLE_NAME7 +"(studentID INTEGER, courseID INTEGER, PRIMARY KEY(studentID, courseID),FOREIGN KEY (studentID) references students(userid) on delete cascade, FOREIGN KEY (courseID) references courses (id) on delete cascade)");
-        if(!(doesCourseCodeExist("CS101")))
-            addCourses();
     }
 
-    public void addCourses(){
-        this.insertCourseData("CS101","Programming Fundamentals","3","Course Coordinator: Naveed Ahmed");
-        this.insertCourseData("CS217","Object Oriented Programming","3","Course Coordinator: Subhan Ullah");
-        this.insertCourseData("CS218","Data Structures","3","Course Coordinator: Adnan Tariq");
+    public void initTeachersAndStudents(){
+        insertStudentData("student1","0123456781","s1@gmail.com","student1","1234","2017","A");
+        insertStudentData("student2","0123456782","s2@gmail.com","student2","1234","2017","A");
+        insertStudentData("student3","0123456783","s3@gmail.com","student3","1234","2017","A");
+        insertStudentData("student4","0123456784","s4@gmail.com","student4","1234","2017","A");
+        insertStudentData("student5","0123456785","s5@gmail.com","student5","1234","2017","A");
+        insertStudentData("student6","0123456786","s6@gmail.com","student6","1234","2017","A");
+        insertStudentData("student7","0123456787","s7@gmail.com","student7","1234","2017","A");
+        insertStudentData("student8","0123456788","s8@gmail.com","student8","1234","2017","A");
+        insertStudentData("student9","0123456789","s9@gmail.com","student9","1234","2017","A");
 
-
-
+        insertTeacherData("teacher1","01234567891","t1@gmail.com","teacher1","1234","something");
+        insertTeacherData("teacher2","01234567892","t2@gmail.com","teacher2","1234","something");
+        insertTeacherData("teacher3","01234567893","t3@gmail.com","teacher3","1234","something");
+        insertTeacherData("teacher4","01234567894","t4@gmail.com","teacher4","1234","something");
+        insertTeacherData("teacher5","01234567895","t5@gmail.com","teacher5","1234","something");
+        insertTeacherData("teacher6","01234567896","t6@gmail.com","teacher6","1234","something");
+        insertTeacherData("teacher7","01234567897","t7@gmail.com","teacher7","1234","something");
+        insertTeacherData("teacher8","01234567898","t8@gmail.com","teacher8","1234","something");
+        insertTeacherData("teacher9","01234567899","t9@gmail.com","teacher9","1234","something");
 
     }
-    public void addTeacherCourse(){
-        this.insertTeacherCoursetData(getTeacherID("bilal"),getCourseID("CS101"));
-        this.insertTeacherCoursetData(getTeacherID("bilal"),getCourseID("CS217"));
-        this.insertTeacherCoursetData(getTeacherID("bilal"),getCourseID("CS218"));
+    public void initStudentCourse(){
+        setDefaultStudentCourse("CS101");
+        setDefaultStudentCourse("CS217");
+        setDefaultStudentCourse("CS218");
+        setDefaultStudentCourse("EE227");
+        setDefaultStudentCourse("CS211");
+
     }
-    public void deleteTables() {
+    private void setDefaultStudentCourse(String crs){
+        insertStudentCourseData(getStudentID("student1"),getCourseID(crs));
+        insertStudentCourseData(getStudentID("student2"),getCourseID(crs));
+        insertStudentCourseData(getStudentID("student3"),getCourseID(crs));
+        insertStudentCourseData(getStudentID("student4"),getCourseID(crs));
+        insertStudentCourseData(getStudentID("student5"),getCourseID(crs));
+        insertStudentCourseData(getStudentID("student6"),getCourseID(crs));
+        insertStudentCourseData(getStudentID("student7"),getCourseID(crs));
+        insertStudentCourseData(getStudentID("student8"),getCourseID(crs));
+        insertStudentCourseData(getStudentID("student9"),getCourseID(crs));
+
+    }
+    public void initTeacherCourse(){
+        insertTeacherCourseData(getTeacherID("teacher1"),getCourseID("CS101"));
+        insertTeacherCourseData(getTeacherID("teacher2"),getCourseID("CS217"));
+        insertTeacherCourseData(getTeacherID("teacher3"),getCourseID("CS218"));
+        insertTeacherCourseData(getTeacherID("teacher4"),getCourseID("EE227"));
+        insertTeacherCourseData(getTeacherID("teacher5"),getCourseID("CS211"));
+    }
+
+
+ public void deleteTables() {
         SQLiteDatabase MyDB=this.getWritableDatabase();
        // MyDB.execSQL("drop Table if exists " + TABLE_NAME1);
 
       //  MyDB.execSQL("drop Table if exists " + TABLE_NAME2);
       //  MyDB.execSQL("drop Table if exists " + TABLE_NAME3);
-        MyDB.execSQL("drop Table if exists " + TABLE_NAME5);
+       // MyDB.execSQL("drop Table if exists " + TABLE_NAME6);
         //adminonCreate(MyDB);
     }
 
@@ -383,6 +417,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return id;
     }
+    String getCourseName(int id) {
+
+        String query="Select * from courses where id="+id;
+        Cursor cursor = this.execReadQuery(query);
+        int idx =  cursor.getColumnIndex("courseName");
+
+        cursor.moveToFirst();
+
+        String cname = cursor.getString(idx);
+        //Log.v("UserType", str);
+
+        return cname;
+    }
 
     int getCourseIDFromCourseName(String courseName){
 
@@ -391,11 +438,12 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME4 + " where courseName = ?", new String[] {courseName});
 
         int idx =  cursor.getColumnIndex("ID");
-        Log.v("Course ID column", String.valueOf(idx));
 
         cursor.moveToFirst();
 
         int id = cursor.getInt(idx);
+        Log.v("Course ID column", String.valueOf(id));
+
         //Log.v("UserType", str);
 
         return id;
@@ -555,11 +603,15 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return true;
     }
-    public void deleteTimeSlotData() {
+    public void deleteTimeSlotData(int weekday) {
 
         SQLiteDatabase MyDB=this.getWritableDatabase();
-        MyDB.execSQL("drop Table if exists " + TABLE_NAME5);
-        MyDB.execSQL("create Table if not exists " + TABLE_NAME5 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, classTitle TEXT, classPlace TEXT, professorName TEXT, day Integer,startHr Integer,startMin Integer,endHr Integer,endMin Integer,weekday Integer)");
+        //MyDB.execSQL("drop Table if exists " + TABLE_NAME5);
+
+        //MyDB.execSQL("create Table if not exists " + TABLE_NAME5 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, classTitle TEXT, classPlace TEXT, professorName TEXT, day Integer,startHr Integer,startMin Integer,endHr Integer,endMin Integer,weekday Integer)");
+
+        long result = MyDB.delete(TABLE_NAME5,"weekday="+weekday,null);
+
 
     }
 
@@ -601,11 +653,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return arr;
     }
 //////////////////////////////teacher-course Table-----------------------------------------------
-public Boolean insertTeacherCoursetData(int teacherID,int courseID) {
+public Boolean insertTeacherCourseData(int teacherID,int courseID) {
     SQLiteDatabase MyDB = this.getWritableDatabase();
 
-    ContentValues contentValues = new ContentValues();
-    ContentValues contentValues1=new ContentValues();
+    ContentValues contentValues = new ContentValues() ;
     contentValues.put("teacherID",teacherID );
     contentValues.put("courseID",courseID );
 
@@ -616,5 +667,58 @@ public Boolean insertTeacherCoursetData(int teacherID,int courseID) {
     return true;
 }
 
+    public Boolean deleteTeacherCourseData(int teacherid) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        if(teacherid==-1)
+            return false;
+
+        long result = MyDB.delete(TABLE_NAME6,"teacherid="+teacherid,null);
+        if (result == -1)
+            return false;
+        return true;
+    }
+
 //////////////////////////////student-course Table-----------------------------------------------
+public Boolean insertStudentCourseData(int studentID,int courseID) {
+    SQLiteDatabase MyDB = this.getWritableDatabase();
+
+    ContentValues contentValues = new ContentValues() ;
+    contentValues.put("studentID",studentID );
+    contentValues.put("courseID",courseID );
+
+    long result = MyDB.insert(TABLE_NAME7, null, contentValues);
+
+    if (result == -1)
+        return false;
+    return true;
+}
+
+    public Boolean deleteStudentCourseData(int studentid) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        if(studentid==-1)
+            return false;
+
+        long result = MyDB.delete(TABLE_NAME7,"studentid="+studentid,null);
+        if (result == -1)
+            return false;
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

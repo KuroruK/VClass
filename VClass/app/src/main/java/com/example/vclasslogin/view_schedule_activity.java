@@ -9,10 +9,7 @@ import android.preference.PreferenceManager;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -20,14 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 import joinery.DataFrame;
 
-public class view_schedule extends AppCompatActivity implements View.OnClickListener {
+public class view_schedule_activity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     public static final int REQUEST_ADD = 1;
     public static final int REQUEST_EDIT = 2;
@@ -36,29 +31,26 @@ public class view_schedule extends AppCompatActivity implements View.OnClickList
     private Button clearBtn;
     private Button saveBtn;
     private Button loadBtn;
+
     private TimetableView timetable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_timetable);
+        setContentView(R.layout.view_schedule);
 
         init();
     }
 
     private void init(){
         this.context = this;
-        addBtn = findViewById(R.id.add_btn);
-        clearBtn = findViewById(R.id.clear_btn);
-        saveBtn = findViewById(R.id.save_btn);
-        loadBtn = findViewById(R.id.load_btn);
-
-
+        addBtn = findViewById(R.id.add_btn_sch);
+        clearBtn = findViewById(R.id.clear_btn_sch);
+        saveBtn = findViewById(R.id.save_btn_sch);
+        loadBtn = findViewById(R.id.load_btn_sch);
 
         timetable = findViewById(R.id.timetable);
         timetable.setHeaderHighlight(2);
-
-        //--------loads from db
-        DBHelper obj=new DBHelper(context);
+        initView();
     }
 
     private void initView(){
@@ -152,56 +144,35 @@ public class view_schedule extends AppCompatActivity implements View.OnClickList
         timetable.add(temp);
 */
 
-        String[] days={"monday","tuesday","wednesday","thursday","friday","saturday","sunday"};
-        int day=0;
-        DBHelper obj=new DBHelper(context);
-
-        obj.deleteTimeSlotData();
         csvLoader c=new csvLoader();
+        ArrayList<timeSlot> t=c.getTable(context,"tt.csv");
 
-        for(int i=0;i<2;i++) {
-            ArrayList<timeSlot> s = c.getTable(context, days[i]+".csv");
-            List<timeSlot> t = new ArrayList<timeSlot>(s);
-            Collections.sort(t);
 
-            int lH = 0, lM = 0;
-            int k = -1;
-            for (timeSlot slot : t) {
-                ArrayList<Schedule> temp = new ArrayList<Schedule>();
-                //if(lH==slot.getStartTime().getHour() && lM==slot.getStartTime().getMinute())
-                k += 1;
-                if (k >= 29)
-                    k = 0;
+        int lH=0,lM=0;
+        int k=-1;
+        for(timeSlot slot:t){
+            ArrayList<Schedule> temp=new ArrayList<Schedule>();
+            //if(lH==slot.getStartTime().getHour() && lM==slot.getStartTime().getMinute())
+            k+=1;
+            if(k>6)
+                k=0;
 
-                Schedule a = new Schedule();
-                a.setClassPlace();
-                a.setClassTitle(slot.name);
-                a.setDay(k);
-                a.setProfessorName();
-                a.setStartTime(slot.getStartTime());
+            Schedule a=new Schedule();
+            a.setClassPlace();
+            a.setClassTitle(slot.name);
+            a.setDay(k);
+            a.setProfessorName();
+            a.setStartTime(slot.getStartTime());
 //            a.setStartTime(new Time(10,10));
-                a.setEndTime(slot.getEndTime());
+            a.setEndTime(slot.getEndTime());
 //            a.setEndTime(new Time(13,10));
+            temp.add(a);
+            timetable.add(temp);
 
-                temp.add(a);
-                obj.insertTimeSlot(a, i);
-                //timetable.add(temp);
-            }
         }
-
-        ArrayList<Schedule> sch=obj.getTimeSlots(0);
-        if(sch.size()!=0)
-            for(Schedule sched:sch){
-                ArrayList<Schedule> temp=new ArrayList<Schedule>();
-                temp.add(sched);
-                timetable.add(temp);
-            }
-
-
-        Log.v("hello there",Integer.toString(sch.size()));
+        Log.v("hello there",Integer.toString(t.size()));
 
 
         Toast.makeText(this,"loaded!", Toast.LENGTH_SHORT).show();
     }
-
 }

@@ -1,13 +1,20 @@
 package com.example.vclasslogin;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class editStudentActivity extends AppCompatActivity {
 
@@ -15,6 +22,8 @@ public class editStudentActivity extends AppCompatActivity {
     int id;
     Button save;
     DBHelper DB;
+    Spinner c1,c2,c3,c4,c5;
+    String course1,course2,course3,course4,course5;
 
 
     @Override
@@ -22,17 +31,132 @@ public class editStudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_student);
 
-        name = (EditText) findViewById(R.id.s_edit_Name);
-        mobileNo = (EditText) findViewById(R.id.s_edit_mobile);
-        email = (EditText) findViewById(R.id.s_edit_email);
-        username = (EditText) findViewById(R.id.s_edit_username);
-        Class = (EditText) findViewById(R.id.s_edit_class);
-        section = (EditText) findViewById(R.id.s_edit_section);
-        password = (EditText) findViewById(R.id.s_edit_password);
-
+        name = (EditText) findViewById(R.id.edit_s_name2);
+        mobileNo = (EditText) findViewById(R.id.edit_s_contact2);
+        email = (EditText) findViewById(R.id.edit_s_email2);
+        username = (EditText) findViewById(R.id.edit_s_username2);
+        Class = (EditText) findViewById(R.id.edit_s_class2);
+        section = (EditText) findViewById(R.id.edit_s_section2);
+        password = (EditText) findViewById(R.id.edit_s_password2);
+        c1=(Spinner)findViewById(R.id.edit_s_course11);
+        c2=(Spinner)findViewById(R.id.edit_s_course21);
+        c3=(Spinner)findViewById(R.id.edit_s_course31);
+        c4=(Spinner)findViewById(R.id.edit_s_course41);
+        c5=(Spinner)findViewById(R.id.edit_s_course51);
         DB = new DBHelper(this);
         init();
-        save = (Button) findViewById(R.id.s_save_edit);
+        save = (Button) findViewById(R.id.btn_save_edit_s);
+
+        course1=getIntent().getStringExtra("course1");
+        course2=getIntent().getStringExtra("course2");
+        course3=getIntent().getStringExtra("course3");
+        course4=getIntent().getStringExtra("course4");
+        course5=getIntent().getStringExtra("course5");
+
+        final ArrayList<String> c1List=new ArrayList<String>();
+        final ArrayList<String> c2List=new ArrayList<String>();
+        final ArrayList<String> c3List=new ArrayList<String>();
+        final ArrayList<String> c4List=new ArrayList<String>();
+        final ArrayList<String> c5List=new ArrayList<String>();
+        String qu = "SELECT * FROM COURSES";
+        DBHelper db= new DBHelper(this);
+        Cursor cursor = db.execReadQuery(qu);
+        if(cursor==null||cursor.getCount()==0)
+        {
+            Toast.makeText(getBaseContext(),"No Courses Found",Toast.LENGTH_LONG).show();
+        }else {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Log.v("Courses: "," list Courses cursor");
+                c1List.add(cursor.getString(2));
+                c2List.add(cursor.getString(2));
+                c3List.add(cursor.getString(2));
+                c4List.add(cursor.getString(2));
+                c5List.add(cursor.getString(2));
+                cursor.moveToNext();
+            }
+        }
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, c1List);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, c2List);
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, c3List);
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, c4List);
+        ArrayAdapter<String> adapter5 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, c5List);
+        c1.setAdapter(adapter1);
+        c2.setAdapter(adapter2);
+        c3.setAdapter(adapter3);
+        c4.setAdapter(adapter4);
+        c5.setAdapter(adapter5);
+        c1.setSelection(c1List.indexOf(getIntent().getStringExtra("course1")));
+        c2.setSelection(c2List.indexOf(getIntent().getStringExtra("course2")));
+        c3.setSelection(c3List.indexOf(getIntent().getStringExtra("course3")));
+        c4.setSelection(c4List.indexOf(getIntent().getStringExtra("course4")));
+        c5.setSelection(c5List.indexOf(getIntent().getStringExtra("course5")));
+
+        c1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                course1= c1List.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.v("Course selected1","Nothing selected");
+
+
+            }
+        });
+        c2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                course2= c2List.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        c3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                course3= c3List.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.v("Course selected3","Nothing 3 selected");
+
+            }
+        });
+        c4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                course4= c4List.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.v("Course selected4","Nothing 4 selected");
+
+            }
+        });
+        c5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                course5= c5List.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.v("Course selected5","Nothing 5 selected");
+
+            }
+        });
+
+
+
+
+
 
         //listener for Sign-up button
         save.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +189,15 @@ public class editStudentActivity extends AppCompatActivity {
                             Boolean update = DB.updateStudentData(id,tname, mobile, mail, user, pass,aclass,sec);
                             if (update) {
                                 Toast.makeText(editStudentActivity.this, "Student Details Updated Successfully!", Toast.LENGTH_SHORT).show();
+                                DB.deleteStudentCourseData(id);
+                                DB.insertStudentCourseData(id,DB.getCourseIDFromCourseName(course1));
+                                DB.insertStudentCourseData(id,DB.getCourseIDFromCourseName(course2));
+                                DB.insertStudentCourseData(id,DB.getCourseIDFromCourseName(course3));
+                                DB.insertStudentCourseData(id,DB.getCourseIDFromCourseName(course4));
+                                DB.insertStudentCourseData(id,DB.getCourseIDFromCourseName(course5));
+                                DB.close();
+                                Log.v("selected courses",course1+" "+course2+" "+course3+" "+course4+" "+course5);
+
                                 Intent intent = new Intent(getApplicationContext(), ListStudentActivity.class);
                                 startActivity(intent);
                             }
