@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
+    android:padding="10dp"
+    tools:context=".registerStudentActivity">
+
+
+    <TextView
+        android:id="@+id/regFormS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="9"
+        android:text="Registration Form (Student)"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        />
+
+
+    <EditText
+        android:id="@+id/firstNameS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="9"
+        android:inputType="textPersonName"
+        android:hint="First Name"
+        android:layout_below="@id/regFormS"
+        />
+
+    <EditText
+        android:id="@+id/lastNameS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Last Name"
+        android:layout_toRightOf="@id/firstNameS"
+        android:layout_marginTop="20dp"
+        android:inputType="textPersonName"
+        android:layout_below="@id/regFormS"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/mobileNoS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mobile Number"
+        android:inputType="phone"
+        android:layout_below="@id/firstNameS"
+        android:layout_marginTop="20dp"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/emailS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email Address"
+        android:inputType="textEmailAddress"
+        android:layout_below="@id/mobileNoS"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/classS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Class"
+        android:inputType="text"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/emailS"/>
+    <EditText
+        android:id="@+id/sectionS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Section"
+        android:inputType="text"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/classS"/>
+
+
+    <EditText
+        android:id="@+id/usernameS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="User Name"
+        android:layout_below="@id/sectionS"
+        android:layout_marginTop="20dp"/>
+
+
+    <EditText
+        android:id="@+id/passwordS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="New Password"
+        android:layout_marginTop="20dp"
+        android:inputType="textPassword"
+        android:layout_below="@id/usernameS"/>
+
+
+    <EditText
+        android:id="@+id/cPasswordS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/passwordS"/>
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/showPasswordS"
+        android:text="Show password"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/cPasswordS"
+        />
+
+    <Button
+        android:id="@+id/btnSignUpS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register!"
+        android:background="@drawable/smooth_edged_button"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/showPasswordS"/>
+
+</RelativeLayout>
+</ScrollView>
