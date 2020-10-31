@@ -30,6 +30,8 @@ public class registerTeacherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_teacher);
 
+        getSupportActionBar().setTitle("Register Teacher");
+
         firstName = (EditText) findViewById(R.id.firstName);
         lastName = (EditText) findViewById(R.id.lastName);
         mobileNo = (EditText) findViewById(R.id.mobileNo);

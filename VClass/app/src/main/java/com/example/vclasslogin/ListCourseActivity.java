@@ -27,6 +27,9 @@ public class ListCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_list);
+
+        getSupportActionBar().setTitle("Courses' List");
+
         courseList=new ArrayList<Courses>();
         FloatingActionButton addButton=(FloatingActionButton) findViewById(R.id.plusButtonCourse);
         assert addButton!=null;

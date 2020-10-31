@@ -75,8 +75,8 @@ public class gridAdapterStudent extends BaseAdapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent launchinIntent = new Intent(activity, view_schedule_activity.class);
-                    activity.startActivity(launchinIntent);
+                //    Intent launchinIntent = new Intent(activity, view_schedule_activity.class);
+                 //   activity.startActivity(launchinIntent);
                 }
             });
             Animation anim = new ScaleAnimation(
@@ -120,10 +120,7 @@ public class gridAdapterStudent extends BaseAdapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FragmentManager fm = activity.getFragmentManager();
-                    createRequest request = new createRequest();
-                    request.show(fm,"Select");
-                }
+                     }
             });
             Animation anim = new ScaleAnimation(
                     0.95f, 1f, // Start and end values for the X axis scaling

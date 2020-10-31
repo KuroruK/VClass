@@ -21,6 +21,8 @@ public class viewCourseDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_detail_view);
 
+        getSupportActionBar().setTitle("Detail View");
+
         courseName = findViewById(R.id.c_name2);
         courseCode = findViewById(R.id.c_id2);
         creditHrs = findViewById(R.id.c_crd_hrs2);

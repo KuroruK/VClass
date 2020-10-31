@@ -29,6 +29,8 @@ public class viewTeacherDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teacher_detail_view);
 
+        getSupportActionBar().setTitle("Detail View");
+
         name = findViewById(R.id.t_name2);
         email = findViewById(R.id.t_email2);
         mobileNo = findViewById(R.id.t_contact2);

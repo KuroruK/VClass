@@ -22,6 +22,8 @@ public class editCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_course);
 
+        getSupportActionBar().setTitle("Go Back");
+
         courseName = (EditText) findViewById(R.id.edit_crs_name2);
         courseCode = (EditText) findViewById(R.id.edit_crs_id2);
         creditHrs = (EditText) findViewById(R.id.edit_crs_crd_hrs2);

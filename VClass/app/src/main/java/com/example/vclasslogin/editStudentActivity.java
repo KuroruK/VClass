@@ -31,6 +31,8 @@ public class editStudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_student);
 
+        getSupportActionBar().setTitle("Go Back");
+
         name = (EditText) findViewById(R.id.edit_s_name2);
         mobileNo = (EditText) findViewById(R.id.edit_s_contact2);
         email = (EditText) findViewById(R.id.edit_s_email2);

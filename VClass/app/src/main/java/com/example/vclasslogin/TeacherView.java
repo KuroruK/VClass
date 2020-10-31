@@ -36,6 +36,9 @@ public class TeacherView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_layout);
+
+        getSupportActionBar().setTitle("Sign out");
+
         basicFields = new ArrayList<>();
         handler = new databaseHandler(this);
         activity = this;

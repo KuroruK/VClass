@@ -27,6 +27,9 @@ public class ListTeacherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teacher_list);
+
+        getSupportActionBar().setTitle("Teachers' List");
+
         if(counter==0) {
             teacherList = new ArrayList<Teacher>();
             counter++;

@@ -30,23 +30,24 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        DB = new DBHelper(this);
-        DB.deleteTables();
-        DB.createTables();
-        if(!DB.doesStudentUserNameExist("student1"))
-            DB.initTeachersAndStudents();
-        this.initCourses();
-        DB.initStudentCourse();
-        DB.initTeacherCourse();
 
-        if(!DB.doesUserNameExist("admin123")) {
-            Boolean c = DB.insertData("Admin", "090078601", "admin@gmail.com", "admin123", "pass", "admin");
+        DB = new DBHelper(this);
+        //DB.deleteTables();
+        DB.createTables();
+        if(!DB.doesUserNameExist("admin")) {
+            Boolean c = DB.insertData("Admin", "090078601", "manager.vclass@gmail.com", "admin", "pass", "admin");
             if (c)
                 Log.v("insertinsert", "hogaya");
         }
         else
             Log.v("insertinsert","nai hogaya");
 
+        if(!DB.doesStudentUserNameExist("student1")) {
+            DB.initTeachersAndStudents();
+            this.initCourses();
+            DB.initStudentCourse();
+            DB.initTeacherCourse();
+        }
         username = (EditText) findViewById(R.id.username1);
         password = (EditText) findViewById(R.id.password1);
         showPasswordCheckbox = (AppCompatCheckBox) findViewById(R.id.showPassword1);

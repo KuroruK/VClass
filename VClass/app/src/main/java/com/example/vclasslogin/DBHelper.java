@@ -38,6 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public void createTables(){
         SQLiteDatabase MyDB=this.getWritableDatabase();
+
         MyDB.execSQL("create Table if not exists " + TABLE_NAME1 + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, mobileNo TEXT, email TEXT, username TEXT, password TEXT, user_type TEXT)");
         MyDB.execSQL("create Table if not exists " + TABLE_NAME2 + "(userID INTEGER PRIMARY KEY, specialization TEXT, FOREIGN KEY (userID) references all_users (userID)  )");
         MyDB.execSQL("create Table if not exists " + TABLE_NAME3 + "(userID INTEGER PRIMARY KEY, class TEXT,section TEXT, FOREIGN KEY (userID) references all_users (userID)  )");
@@ -70,7 +71,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
     public void initStudentCourse(){
-        setDefaultStudentCourse("CS101");
+        setDefaultStudentCourse("CS118");
         setDefaultStudentCourse("CS217");
         setDefaultStudentCourse("CS218");
         setDefaultStudentCourse("EE227");
@@ -90,7 +91,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
     public void initTeacherCourse(){
-        insertTeacherCourseData(getTeacherID("teacher1"),getCourseID("CS101"));
+        insertTeacherCourseData(getTeacherID("teacher1"),getCourseID("CS118"));
         insertTeacherCourseData(getTeacherID("teacher2"),getCourseID("CS217"));
         insertTeacherCourseData(getTeacherID("teacher3"),getCourseID("CS218"));
         insertTeacherCourseData(getTeacherID("teacher4"),getCourseID("EE227"));
@@ -100,11 +101,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
  public void deleteTables() {
         SQLiteDatabase MyDB=this.getWritableDatabase();
-       // MyDB.execSQL("drop Table if exists " + TABLE_NAME1);
+        MyDB.execSQL("drop Table if exists " + TABLE_NAME1);
 
-      //  MyDB.execSQL("drop Table if exists " + TABLE_NAME2);
-      //  MyDB.execSQL("drop Table if exists " + TABLE_NAME3);
-       // MyDB.execSQL("drop Table if exists " + TABLE_NAME6);
+        MyDB.execSQL("drop Table if exists " + TABLE_NAME2);
+        MyDB.execSQL("drop Table if exists " + TABLE_NAME3);
+        MyDB.execSQL("drop Table if exists " + TABLE_NAME4);
+        MyDB.execSQL("drop Table if exists " + TABLE_NAME5);
+        MyDB.execSQL("drop Table if exists " + TABLE_NAME6);
+        MyDB.execSQL("drop Table if exists " + TABLE_NAME7);
         //adminonCreate(MyDB);
     }
 
@@ -659,9 +663,13 @@ public Boolean insertTeacherCourseData(int teacherID,int courseID) {
     ContentValues contentValues = new ContentValues() ;
     contentValues.put("teacherID",teacherID );
     contentValues.put("courseID",courseID );
-
-    long result = MyDB.insert(TABLE_NAME6, null, contentValues);
-
+    long result=-1;
+    try {
+        result = MyDB.insert(TABLE_NAME6, null, contentValues);
+    }
+    catch (Exception e){
+        Log.v("Exception","insertTeacherCourseData");
+    }
     if (result == -1)
         return false;
     return true;
@@ -685,9 +693,13 @@ public Boolean insertStudentCourseData(int studentID,int courseID) {
     ContentValues contentValues = new ContentValues() ;
     contentValues.put("studentID",studentID );
     contentValues.put("courseID",courseID );
-
-    long result = MyDB.insert(TABLE_NAME7, null, contentValues);
-
+    long result=-1;
+    try {
+        result = MyDB.insert(TABLE_NAME7, null, contentValues);
+    }
+    catch (Exception e){
+        Log.v("Exception","insertTeacherCourseData");
+    }
     if (result == -1)
         return false;
     return true;
@@ -705,7 +717,72 @@ public Boolean insertStudentCourseData(int studentID,int courseID) {
     }
 
 
+    public ArrayList<Integer> getStudentCourseIDs(int ID){
+        ArrayList<Integer> arr=new ArrayList<Integer>();
 
+        String qu = "SELECT * FROM " +TABLE_NAME7+" where studentID ="+Integer.toString(ID); //+" where weekday = "+Integer.toString(day);
+        SQLiteDatabase MyDB=this.getReadableDatabase();
+        Cursor cursor = MyDB.rawQuery(qu,null);
+        if(cursor==null||cursor.getCount()==0)
+        {
+            Log.v("getStudentCourseID err","oooooo");
+            return arr;
+        }
+        else {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                arr.add(cursor.getInt(1));
+                cursor.moveToNext();
+            }
+        }
+
+        return arr;
+    }
+
+
+    public ArrayList<Schedule> getStudentSchedules(String username){
+        ArrayList<Schedule> sch = new ArrayList<Schedule>();
+
+        ArrayList<Integer> crsID=getStudentCourseIDs(getStudentID(username));
+
+        for(Integer id:crsID){
+            String crsName=getCourseName(id);
+
+            String qu = "SELECT * FROM " +TABLE_NAME5+" where classTitle  ="+crsName; //+" where weekday = "+Integer.toString(day);
+            SQLiteDatabase MyDB=this.getReadableDatabase();
+            Cursor cursor = MyDB.rawQuery(qu,null);
+            if(cursor==null||cursor.getCount()==0)
+            {
+                Log.v("getStudentSchedules err","oooooo");
+                return sch;
+            }
+            else {
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    Schedule temp=new Schedule();
+                    cursor.getInt(0);
+                    temp.setClassTitle(cursor.getString(1));
+                    temp.setClassPlace(cursor.getString(2));
+                    temp.setProfessorName(cursor.getString(3));
+                    temp.setDay(cursor.getInt(4));
+                    Time tS=new Time();
+                    Time tE=new Time();
+                    tS.setHour(cursor.getInt(5));
+                    tS.setMinute(cursor.getInt(6));
+                    tE.setHour(cursor.getInt(7));
+                    tE.setMinute(cursor.getInt(8));
+                    temp.setStartTime(tS);
+                    temp.setEndTime(tE);
+                    temp.setDay(cursor.getInt(9));
+
+                    sch.add(temp);
+
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return sch;
+    }
 
 
 

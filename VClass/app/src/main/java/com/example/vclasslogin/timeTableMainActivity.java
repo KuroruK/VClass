@@ -45,6 +45,8 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_timetable);
 
+        getSupportActionBar().setTitle("Timetable");
+
         init();
     }
 

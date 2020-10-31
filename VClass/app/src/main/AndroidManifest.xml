@@ -5,47 +5,97 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
-        <application
+    <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view_schedule_activity"/>
-        <activity android:name=".TeacherView"/>
-        <activity android:name=".registerTeacherActivity"/>
-        <activity android:name=".manageTeacherActivity"/>
-        <activity android:name=".viewTeacherDetailsActivity"/>
-        <activity android:name=".editTeacherActivity"/>
-        <activity android:name=".ListTeacherActivity"/>
-        <activity android:name=".registerStudentActivity"/>
-        <activity android:name=".viewStudentDetailsActivity"/>
-        <activity android:name=".editStudentActivity"/>
-        <activity android:name=".ListStudentActivity"/>
-        <activity android:name=".registerCourseActivity"/>
-        <activity android:name=".viewCourseDetailsActivity"/>
-        <activity android:name=".editCourseActivity"/>
-        <activity android:name=".ListCourseActivity"/>
 
-        <activity android:name=".StudentView" />
-        <activity android:name=".AdminView" >
+        <!--Activities-->
+        <activity android:name=".AdminView"
+            android:parentActivityName=".LoginActivity">
+
         </activity>
+
+        <activity android:name=".ListTeacherActivity"
+            android:parentActivityName=".AdminView">
+        </activity>
+
+        <activity android:name=".manageTeacherActivity">
+        </activity>
+
+        <activity android:name=".registerTeacherActivity"
+            android:parentActivityName=".ListTeacherActivity">
+        </activity>
+
+        <activity android:name=".viewTeacherDetailsActivity"
+            android:parentActivityName=".ListTeacherActivity">
+        </activity>
+
+        <activity android:name=".editTeacherActivity"
+            android:parentActivityName=".ListTeacherActivity">
+        </activity>
+
+        <activity android:name=".registerStudentActivity"
+            android:parentActivityName=".ListStudentActivity">
+        </activity>
+
+        <activity android:name=".viewStudentDetailsActivity"
+            android:parentActivityName=".ListStudentActivity">
+        </activity>
+
+        <activity android:name=".editStudentActivity"
+            android:parentActivityName=".ListStudentActivity">
+        </activity>
+
+        <activity android:name=".ListStudentActivity"
+            android:parentActivityName=".AdminView">
+        </activity>
+
+        <activity android:name=".registerCourseActivity"
+            android:parentActivityName=".ListCourseActivity">
+        </activity>
+
+        <activity android:name=".viewCourseDetailsActivity"
+            android:parentActivityName=".ListCourseActivity">
+        </activity>
+
+        <activity android:name=".editCourseActivity"
+            android:parentActivityName=".ListCourseActivity">
+        </activity>
+
+        <activity android:name=".ListCourseActivity"
+            android:parentActivityName=".AdminView">
+        </activity>
+
+        <activity android:name=".timeTableEditActivity"
+            android:parentActivityName=".timeTableMainActivity">
+        </activity>
+
+        <activity android:name=".timeTableMainActivity"
+            android:parentActivityName=".AdminView">
+        </activity>
+
+        <activity android:name=".TeacherView"
+            android:parentActivityName=".LoginActivity">
+        </activity>
+
+        <activity android:name=".StudentView"
+            android:parentActivityName=".LoginActivity">
+
+        </activity>
+
         <activity android:name=".HomeActivity" />
 
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
-        <activity android:name=".timeTableEditActivity" />
-
-        <activity android:name=".timeTableMainActivity" >
-        </activity>
     </application>
 
 </manifest>

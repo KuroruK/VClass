@@ -21,6 +21,8 @@ public class viewStudentDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_detail_view);
 
+        getSupportActionBar().setTitle("Detail View");
+
         name = findViewById(R.id.s_name2);
         email = findViewById(R.id.s_email2);
         mobileNo = findViewById(R.id.s_contact2);
