@@ -47,12 +47,29 @@ public class ListTeacherActivity extends AppCompatActivity {
         Cursor cursor = db.execReadQuery(qu);
         if(cursor==null||cursor.getCount()==0)
         {
-            Toast.makeText(getBaseContext(),"No Notes Found",Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(),"No Teachers Found",Toast.LENGTH_LONG).show();
         }else {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                teacherList.add(new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6)));
+                teacherList.add(new Teacher(cursor.getInt(0), " ", " ", " "," ", " ",cursor.getString(1)));
                 cursor.moveToNext();
+            }
+
+            for(int i=0;i<teacherList.size();i++){
+                qu="Select * from all_users where userid="+teacherList.get(i).getId();
+                cursor=db.execReadQuery(qu);
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    teacherList.get(i).setName(cursor.getString(1));
+                    teacherList.get(i).setMobileNo(cursor.getString(2));
+                    teacherList.get(i).setEmail(cursor.getString(3));
+                    teacherList.get(i).setUsername(cursor.getString(4));
+                    teacherList.get(i).setPassword(cursor.getString(5));
+
+                    cursor.moveToNext();
+                }
+
+
             }
         }
             for(int i=0;i<teacherList.size();i++)
@@ -70,7 +87,7 @@ public class ListTeacherActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 3) {
-                String qu = "SELECT * FROM TEACHERS";
+     /*           String qu = "SELECT * FROM TEACHERS";
                 DBHelper db= new DBHelper(this);
                 Cursor cursor = db.execReadQuery(qu);
                 if(cursor==null||cursor.getCount()==0)
@@ -86,7 +103,44 @@ public class ListTeacherActivity extends AppCompatActivity {
                         teacherList.add(new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6)));
                         cursor.moveToNext();
                     }
+                }*/
+
+
+            String qu = "SELECT * FROM TEACHERS";
+            DBHelper db= new DBHelper(this);
+            Cursor cursor = db.execReadQuery(qu);
+            if(cursor==null||cursor.getCount()==0)
+            {
+                Toast.makeText(getBaseContext(),"No Teachers Found",Toast.LENGTH_LONG).show();
+            }else {
+
+                cursor.moveToFirst();
+                for(int i=teacherList.size();i>0;i--){
+                    teacherList.remove(i-1);
+
                 }
+                while (!cursor.isAfterLast()) {
+                    teacherList.add(new Teacher(cursor.getInt(0), " ", " ", " "," ", " ",cursor.getString(1)));
+                    cursor.moveToNext();
+                }
+
+                for(int i=0;i<teacherList.size();i++){
+                    qu="Select * from all_users where userid="+teacherList.get(i).getId();
+                    cursor=db.execReadQuery(qu);
+                    cursor.moveToFirst();
+                    while (!cursor.isAfterLast()) {
+                        teacherList.get(i).setName(cursor.getString(1));
+                        teacherList.get(i).setMobileNo(cursor.getString(2));
+                        teacherList.get(i).setEmail(cursor.getString(3));
+                        teacherList.get(i).setUsername(cursor.getString(4));
+                        teacherList.get(i).setPassword(cursor.getString(5));
+
+                        cursor.moveToNext();
+                    }
+
+
+                }
+            }
 
                 rv=findViewById(R.id.rvList);
           //s      add=findViewById(R.id.address);

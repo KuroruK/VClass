@@ -1,6 +1,7 @@
 package com.example.vclasslogin;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,12 +74,14 @@ class timeSlot implements Comparable<timeSlot> {
 	public class csvLoader {
 		ArrayList<course> crs;
 
-		public ArrayList<course> getCourses(String file) {
+		public ArrayList<course> getCourses(Context cont,String file) {
 			crs = new ArrayList<course>();
 			DataFrame<Object> df;
 			try {
 				new DataFrame<>();
-				df = DataFrame.readCsv(file);
+				Log.v("gerCourses",cont.toString());
+				df = DataFrame.readCsv(cont.getAssets().open(file));
+
 				String ccode = "";
 				String cname = "";
 				String cCHs = "";

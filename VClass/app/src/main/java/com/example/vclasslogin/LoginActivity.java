@@ -17,6 +17,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class LoginActivity extends AppCompatActivity {
     EditText username, password;
     AppCompatCheckBox showPasswordCheckbox;
@@ -29,7 +31,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         DB = new DBHelper(this);
+        DB.deleteTables();
         DB.createTables();
+        this.initCourses();
         if(!DB.doesUserNameExist("admin123")) {
             Boolean c = DB.insertData("Admin", "090078601", "admin@gmail.com", "admin123", "pass", "admin");
             if (c)
@@ -37,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
             Log.v("insertinsert","nai hogaya");
-
 
         username = (EditText) findViewById(R.id.username1);
         password = (EditText) findViewById(R.id.password1);
@@ -104,6 +107,30 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void initCourses(){
+        csvLoader loader=new csvLoader();
+
+        ArrayList<course> crs=loader.getCourses(this,"crs.csv");
+        for(course c:crs){
+            if(!(DB.doesCourseCodeExist(c.code))){
+                DB.insertCourseData(c.code,c.name,c.CHs,c.coordinator);
+                Log.v("course add",Boolean.toString(DB.doesCourseCodeExist(c.code)));
+            }
+        }
+        crs=loader.getCourses(this,"crs2.csv");
+        for(course c:crs){
+            if(!(DB.doesCourseCodeExist(c.code))){
+                DB.insertCourseData(c.code,c.name,c.CHs,c.coordinator);
+            }
+        }
+/*        crs=loader.getCourses(this,"crs3.csv");
+        for(course c:crs){
+            if(!(DB.doesCourseCodeExist(c.code))){
+                DB.insertCourseData(c.code,c.name,c.CHs,c.coordinator);
+            }
+        }*/
     }
 
 }

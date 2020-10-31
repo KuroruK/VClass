@@ -69,9 +69,9 @@ public class gridAdapterStudent extends BaseAdapter {
 }
         TextView textView = (TextView)v.findViewById(R.id.namePlacer);
         ImageView imageView = (ImageView)v.findViewById(R.id.imageHolder);
-        if(names.get(position).toString().equals("Schedule Class"))
+        if(names.get(position).toString().equals("View Schedule"))
         {
-            imageView.setImageResource(R.drawable.ic_schedule);
+            imageView.setImageResource(R.drawable.timetable);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,15 +91,15 @@ public class gridAdapterStudent extends BaseAdapter {
             imageView.startAnimation(anim);
 
         }
-        else if(names.get(position).toString().equals("Scheduled Classes"))
+        else if(names.get(position).toString().equals("View Timetable"))
         {
-            imageView.setImageResource(R.drawable.ic_schedule);
+            imageView.setImageResource(R.drawable.timetable);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-             //       Intent launchinIntent = new Intent(activity, scheduledClassesActivity.class);
-             //       activity.startActivity(launchinIntent);
-                }
+                    Intent intent=new Intent(activity,timeTableMainActivity.class);
+                    intent.putExtra("type: ","student");
+                    activity.startActivity(intent);    }
             });
             Animation anim = new ScaleAnimation(
                     0.95f, 1f, // Start and end values for the X axis scaling
@@ -114,9 +114,9 @@ public class gridAdapterStudent extends BaseAdapter {
 
         }
 
-        else if(names.get(position).toString().equals("ATTENDANCE"))
+        else if(names.get(position).toString().equals("Manage Courses"))
         {
-            imageView.setImageResource(R.drawable.ic_attendance);
+            imageView.setImageResource(R.drawable.courses);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -136,91 +136,7 @@ public class gridAdapterStudent extends BaseAdapter {
             anim.setRepeatCount(Animation.INFINITE);
             imageView.startAnimation(anim);
 
-        }else if(names.get(position).toString().equals("SCHEDULER"))
-        {
-            imageView.setImageResource(R.drawable.ic_schedule);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-              //      Intent launchinIntent = new Intent(activity, scheduler.class);
-              //      activity.startActivity(launchinIntent);
-                }
-            });
-            Animation anim = new ScaleAnimation(
-                    0.95f, 1f, // Start and end values for the X axis scaling
-                    0.95f, 1f, // Start and end values for the Y axis scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
-            anim.setFillAfter(true); // Needed to keep the result of the animation
-            anim.setDuration(2000);
-            anim.setRepeatMode(Animation.INFINITE);
-            anim.setRepeatCount(Animation.INFINITE);
-            imageView.startAnimation(anim);
-
-        }else if(names.get(position).toString().equals("NOTES"))
-        {
-            imageView.setImageResource(R.drawable.ic_notes);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-             //       Intent launchinIntent = new Intent(activity, noteActivity.class);
-             //       activity.startActivity(launchinIntent);
-                }
-            });
-            Animation anim = new ScaleAnimation(
-                    0.95f, 1f, // Start and end values for the X axis scaling
-                    0.95f, 1f, // Start and end values for the Y axis scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
-            anim.setFillAfter(true); // Needed to keep the result of the animation
-            anim.setDuration(2000);
-            anim.setRepeatMode(Animation.INFINITE);
-            anim.setRepeatCount(Animation.INFINITE);
-            imageView.startAnimation(anim);
-
-        }else if(names.get(position).toString().equals("PROFILE"))
-        {
-            imageView.setImageResource(R.drawable.ic_profile);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-            //        Intent launchinIntent = new Intent(activity, profile_activity.class);
-            //        activity.startActivity(launchinIntent);
-                }
-            });
-            Animation anim = new ScaleAnimation(
-                    0.95f, 1f, // Start and end values for the X axis scaling
-                    0.95f, 1f, // Start and end values for the Y axis scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
-            anim.setFillAfter(true); // Needed to keep the result of the animation
-            anim.setDuration(2000);
-            anim.setRepeatMode(Animation.INFINITE);
-            anim.setRepeatCount(Animation.INFINITE);
-            imageView.startAnimation(anim);
         }
-        else if(names.get(position).toString().equals("CGPA CALCULATOR"))
-        {
-            imageView.setImageResource(R.drawable.ic_cgpa);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-              //      Intent launchinIntent = new Intent(activity, cgpa_activity.class);
-              //      activity.startActivity(launchinIntent);
-                }
-            });
-            Animation anim = new ScaleAnimation(
-                    0.95f, 1f, // Start and end values for the X axis scaling
-                    0.95f, 1f, // Start and end values for the Y axis scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
-            anim.setFillAfter(true); // Needed to keep the result of the animation
-            anim.setDuration(2000);
-            anim.setRepeatMode(Animation.INFINITE);
-            anim.setRepeatCount(Animation.INFINITE);
-            imageView.startAnimation(anim);
-        }
-
         textView.setText(names.get(position).toString());
         return v;
     }

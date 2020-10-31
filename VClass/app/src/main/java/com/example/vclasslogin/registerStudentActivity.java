@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -44,15 +45,15 @@ public class registerStudentActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String fName = firstName.getText().toString();
-                String lName = lastName.getText().toString();
-                String mobile = mobileNo.getText().toString();
-                String mail = email.getText().toString();
-                String user = username.getText().toString();
-                String pass = password.getText().toString();
-                String cPass = cPassword.getText().toString();
-                String clas= Class.getText().toString();
-                String sect= section.getText().toString();
+                String fName = firstName.getText().toString().trim();
+                String lName = lastName.getText().toString().trim();
+                String mobile = mobileNo.getText().toString().trim();
+                String mail = email.getText().toString().trim();
+                String user = username.getText().toString().trim();
+                String pass = password.getText().toString().trim();
+                String cPass = cPassword.getText().toString().trim();
+                String clas= Class.getText().toString().trim();
+                String sect= section.getText().toString().trim();
 
 
                 if (fName.isEmpty() || mobile.isEmpty() || mail.isEmpty() || user.isEmpty() || pass.isEmpty() || cPass.isEmpty() || clas.isEmpty() || sect.isEmpty())
@@ -65,6 +66,7 @@ public class registerStudentActivity extends AppCompatActivity {
                         if (!(checkUser || checkEmail || checkMobile)) {
                             Boolean insert = DB.insertStudentData((fName + " " + lName) , mobile, mail, user, pass,clas,sect);
                             if (insert) {
+                                sendMail(mail,user,pass);
                                 Toast.makeText(registerStudentActivity.this, "Register Successfully!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), ListStudentActivity.class);
                                 startActivity(intent);
@@ -105,6 +107,17 @@ public class registerStudentActivity extends AppCompatActivity {
             }
         });
     }
+    private void sendMail(String mail,String username,String password) {
+        String rcvEmail = mail;
+        String sbjStr = "Welcome to VClass.";
+        String msgStr = "Now you can log into VClass by using the following:\nUsername: "
+                + username+"\nPassword: "+ password;
 
+        // sending mail
+        JavaMailAPI javaMailAPI = new JavaMailAPI(this, rcvEmail, sbjStr, msgStr);
+        javaMailAPI.execute();
+
+        Log.v("temp_mail", rcvEmail + "___" + sbjStr + "___" + msgStr);
+    }
     // return checked radio button
 }

@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,9 +63,9 @@ public class gridAdapterTeacher extends BaseAdapter {
 }
         TextView textView = (TextView)v.findViewById(R.id.namePlacer);
         ImageView imageView = (ImageView)v.findViewById(R.id.imageHolder);
-        if(names.get(position).toString().equals("Schedule Classes"))
+        if(names.get(position).toString().equals("Schedule Class"))
         {
-            imageView.setImageResource(R.drawable.ic_schedule);
+            imageView.setImageResource(R.drawable.schedule);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -84,9 +85,9 @@ public class gridAdapterTeacher extends BaseAdapter {
             imageView.startAnimation(anim);
 
         }
-        else if(names.get(position).toString().equals("Scheduled Classes"))
+        else if(names.get(position).toString().equals("View Schedule"))
         {
-            imageView.setImageResource(R.drawable.ic_schedule);
+            imageView.setImageResource(R.drawable.timetable);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -107,15 +108,15 @@ public class gridAdapterTeacher extends BaseAdapter {
 
         }
 
-        else if(names.get(position).toString().equals("ATTENDANCE"))
+        else if(names.get(position).toString().equals("View Timetable"))
         {
-            imageView.setImageResource(R.drawable.ic_attendance);
+            imageView.setImageResource(R.drawable.timetable);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FragmentManager fm = activity.getFragmentManager();
-                    createRequest request = new createRequest();
-                    request.show(fm,"Select");
+                    Intent intent=new Intent(activity,timeTableMainActivity.class);
+                    intent.putExtra("type: ","teacher");
+                    activity.startActivity(intent);
                 }
             });
             Animation anim = new ScaleAnimation(
@@ -129,9 +130,9 @@ public class gridAdapterTeacher extends BaseAdapter {
             anim.setRepeatCount(Animation.INFINITE);
             imageView.startAnimation(anim);
 
-        }else if(names.get(position).toString().equals("SCHEDULER"))
+        }else if(names.get(position).toString().equals("Manage Tasks"))
         {
-            imageView.setImageResource(R.drawable.ic_schedule);
+            imageView.setImageResource(R.drawable.tasks);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

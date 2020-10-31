@@ -27,7 +27,7 @@ import java.util.Set;
 
 import joinery.DataFrame;
 
-public class timeTableMainActivity extends AppCompatActivity implements View.OnClickListener {
+public class view_schedule extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     public static final int REQUEST_ADD = 1;
     public static final int REQUEST_EDIT = 2;
@@ -36,7 +36,6 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
     private Button clearBtn;
     private Button saveBtn;
     private Button loadBtn;
-    private Spinner daySpinner;
     private TimetableView timetable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +51,6 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
         clearBtn = findViewById(R.id.clear_btn);
         saveBtn = findViewById(R.id.save_btn);
         loadBtn = findViewById(R.id.load_btn);
-        daySpinner=(Spinner)findViewById(R.id.timtable_day_spinner);
-
-
-
 
 
 
@@ -64,31 +59,6 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
 
         //--------loads from db
         DBHelper obj=new DBHelper(context);
-        ArrayList<Schedule> sch=obj.getTimeSlots(0);//default = 0 i.e. monday
-        if(sch.size()!=0)
-            for(Schedule sched:sch){
-                ArrayList<Schedule> temp=new ArrayList<Schedule>();
-                temp.add(sched);
-                timetable.add(temp);
-            }
-
-        loadSavedData();
-        initView();
-        String[] days=new String[]{"Monday","Tuesday","Wednesday","Thursday","Friday"};
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,days);
-        daySpinner.setAdapter(adapter);
-        daySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                loadTableForDay(i);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                loadTableForDay(0);
-            }
-        });
     }
 
     private void initView(){
@@ -232,19 +202,6 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
 
 
         Toast.makeText(this,"loaded!", Toast.LENGTH_SHORT).show();
-    }
-
-    public void loadTableForDay(int day){
-        timetable.removeAll();
-        DBHelper obj=new DBHelper(context);
-        ArrayList<Schedule> sch=obj.getTimeSlots(day);
-        if(sch.size()!=0)
-            for(Schedule s:sch){
-                ArrayList<Schedule> temp=new ArrayList<Schedule>();
-                temp.add(s);
-                timetable.add(temp);
-            }
-
     }
 
 }

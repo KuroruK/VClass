@@ -48,12 +48,31 @@ public class ListStudentActivity extends AppCompatActivity {
         }else {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                Log.v("Students: "," list student cursor");
-                studentList.add(new Student(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6),cursor.getString(7)));
+                studentList.add(new Student(cursor.getInt(0), " ", " ", " "," ", " ",cursor.getString(1),cursor.getString(2)));
                 cursor.moveToNext();
             }
+
+            for(int i=0;i<studentList.size();i++){
+                qu="Select * from all_users where userid="+studentList.get(i).getId();
+                cursor=db.execReadQuery(qu);
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    studentList.get(i).setName(cursor.getString(1));
+                    studentList.get(i).setMobileNo(cursor.getString(2));
+                    studentList.get(i).setEmail(cursor.getString(3));
+                    studentList.get(i).setUsername(cursor.getString(4));
+                    studentList.get(i).setPassword(cursor.getString(5));
+
+                    cursor.moveToNext();
+                }
+
+
+            }
         }
-            for(int i=0;i<studentList.size();i++)
+
+
+
+        for(int i=0;i<studentList.size();i++)
                 Log.v("StudentInfo ",studentList.get(i).toString());
             rv=findViewById(R.id.rvListStudent);
        // add=findViewById(R.id.address);
@@ -68,7 +87,7 @@ public class ListStudentActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 3) {
-                String qu = "SELECT * FROM STUDENTS";
+    /*            String qu = "SELECT * FROM STUDENTS";
                 DBHelper db= new DBHelper(this);
                 Cursor cursor = db.execReadQuery(qu);
                 if(cursor==null||cursor.getCount()==0)
@@ -78,7 +97,6 @@ public class ListStudentActivity extends AppCompatActivity {
                     cursor.moveToFirst();
                     for(int i=studentList.size();i>0;i--){
                         studentList.remove(i-1);
-
                     }
                     while (!cursor.isAfterLast()) {
                         studentList.add(new Student(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6),cursor.getString(7)));
@@ -86,7 +104,44 @@ public class ListStudentActivity extends AppCompatActivity {
                     }
                 }
 
-                rv=findViewById(R.id.rvListStudent);
+     */
+            String qu = "SELECT * FROM STUDENTS";
+            DBHelper db= new DBHelper(this);
+            Cursor cursor = db.execReadQuery(qu);
+            if(cursor==null||cursor.getCount()==0)
+            {
+                Toast.makeText(getBaseContext(),"No Students Found",Toast.LENGTH_LONG).show();
+            }else {
+                cursor.moveToFirst();
+                for(int i=studentList.size();i>0;i--){
+                    studentList.remove(i-1);
+                }
+                while (!cursor.isAfterLast()) {
+                    studentList.add(new Student(cursor.getInt(0), " ", " ", " "," ", " ",cursor.getString(1),cursor.getString(2)));
+                    cursor.moveToNext();
+                }
+
+                for(int i=0;i<studentList.size();i++){
+                    qu="Select * from all_users where userid="+studentList.get(i).getId();
+                    cursor=db.execReadQuery(qu);
+                    cursor.moveToFirst();
+                    while (!cursor.isAfterLast()) {
+                        studentList.get(i).setName(cursor.getString(1));
+                        studentList.get(i).setMobileNo(cursor.getString(2));
+                        studentList.get(i).setEmail(cursor.getString(3));
+                        studentList.get(i).setUsername(cursor.getString(4));
+                        studentList.get(i).setPassword(cursor.getString(5));
+
+                        cursor.moveToNext();
+                    }
+
+
+                }
+            }
+
+
+
+            rv=findViewById(R.id.rvListStudent);
           //s      add=findViewById(R.id.address);
                 RecyclerView.LayoutManager manager=new LinearLayoutManager(ListStudentActivity.this);
                rv.setLayoutManager(manager);

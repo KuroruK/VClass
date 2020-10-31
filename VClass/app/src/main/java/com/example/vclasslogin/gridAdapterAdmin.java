@@ -115,6 +115,7 @@ public class gridAdapterAdmin extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent launchinIntent = new Intent(activity, timeTableMainActivity.class);
+                    launchinIntent.putExtra("type: ","admin");
                     activity.startActivity(launchinIntent);
                 }
             });

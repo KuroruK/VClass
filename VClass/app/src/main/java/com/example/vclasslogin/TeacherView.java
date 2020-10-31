@@ -41,28 +41,11 @@ public class TeacherView extends AppCompatActivity {
         activity = this;
 
         getSupportActionBar().show();
-        divisions = new ArrayList();
-        divisions.add("Artificial Intelligence");
-        divisions.add("Software Engineering");
-        divisions.add("Human Computer Interaction");
-        divisions.add("Software for Mobile Devices");
-        divisions.add("Computer Networks");
-
-        timeSlots=new ArrayList();
-        timeSlots.add("8:00 - 9:30");
-        timeSlots.add("9:30 - 11:00");
-        timeSlots.add("11:00 - 12:30");
-        timeSlots.add("12:30 - 14:00");
-        timeSlots.add("14:00 - 15:30");
-        timeSlots.add("15:30 - 17:00");
-
         gridView = (GridView)findViewById(R.id.grid);
         basicFields.add("Schedule Class");
-        basicFields.add("Scheduled Classes");
-        basicFields.add("Timetable");
-        basicFields.add("All Tasks");
-        basicFields.add("Registered Courses");
-
+        basicFields.add("View Schedule");
+        basicFields.add("View Timetable");
+        basicFields.add("Manage Tasks");
         adapter = new gridAdapterTeacher(this,basicFields);
         gridView.setAdapter(adapter);
     }

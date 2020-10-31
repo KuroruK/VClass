@@ -1,9 +1,11 @@
 package com.example.vclasslogin;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -14,10 +16,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 
+import java.util.ArrayList;
+
 public class viewTeacherDetailsActivity extends AppCompatActivity {
 
-    TextView name, mobileNo, email, username, password,specialization,id;
-    Button edit,delete;
+    TextView name, mobileNo, email, username, password,specialization,id,course1,course2,course3;
+    Button edit,delete,editCourses;
     DBHelper db;
     int teacherID;
     @Override
@@ -31,10 +35,15 @@ public class viewTeacherDetailsActivity extends AppCompatActivity {
         username = findViewById(R.id.t_username2);
         specialization = findViewById(R.id.t_qualification2);
         password = findViewById(R.id.t_password2);
+        course1 = findViewById(R.id.t_course1);
+        course2 = findViewById(R.id.t_course21);
+        course3 = findViewById(R.id.t_course31);
         id = findViewById(R.id.t_id2);
         db=new DBHelper(this);
         edit = (Button) findViewById(R.id.t_edit);
         delete = (Button) findViewById(R.id.t_delete);
+        editCourses=(Button) findViewById(R.id.t_edit_t_courses);
+
         init();
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +77,13 @@ public class viewTeacherDetailsActivity extends AppCompatActivity {
 
             }
         });
+
+        editCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
     void init(){
         name.setText(getIntent().getStringExtra("name"));
@@ -78,6 +94,28 @@ public class viewTeacherDetailsActivity extends AppCompatActivity {
         password.setText(getIntent().getStringExtra("password"));
         teacherID=db.getTeacherID(getIntent().getStringExtra("username"));
         id.setText(Integer.toString(teacherID));
+
+        ArrayList<Integer> x=new ArrayList<>();
+
+        course1.setText("Artificial Intelligence");
+        course2.setText("Software Engineering");
+        course3.setText("Object Oriented Analysis And Design");
+        String qu = "SELECT * FROM teacher_course";
+        DBHelper db= new DBHelper(this);
+        Cursor cursor = db.execReadQuery(qu);
+        if(cursor==null||cursor.getCount()==0)
+        {
+            Toast.makeText(getBaseContext(),"No teacher_course Found",Toast.LENGTH_LONG).show();
+        }else {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Log.v("teacher-Courses: "," list teacherCourses cursor");
+                x.add(cursor.getInt(0));
+
+            }
+        }
+
+
         return;
     }
 }

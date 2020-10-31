@@ -197,13 +197,84 @@
             android:layout_marginLeft="5dp"
             android:layout_below="@id/t_contact"
             android:layout_toRightOf="@id/t_qualification"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Course 1: "
+            android:id="@+id/t_course"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/t_qualification"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="course 1 here"
+            android:id="@+id/t_course1"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/t_qualification"
+            android:layout_toRightOf="@id/t_course"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Course 2: "
+            android:id="@+id/t_course2"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/t_course"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Course 2 here"
+            android:id="@+id/t_course21"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/t_course"
+            android:layout_toRightOf="@id/t_course2"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Course 3: "
+            android:id="@+id/t_course3"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/t_course2"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Course 3 here"
+            android:id="@+id/t_course31"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/t_course2"
+            android:layout_toRightOf="@id/t_course3"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/t_qualification"
-            android:weightSum="1"
+            android:layout_below="@id/t_course3"
+            android:weightSum="1.5"
             android:orientation="horizontal"
             android:layout_marginVertical="50dp"
             >
@@ -224,7 +295,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/t_edit"
-                        android:text="Edit"
+                        android:text="Edit Bio"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textAllCaps="false"
@@ -234,6 +305,34 @@
                         />
                 </RelativeLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/t_edit_t_courses"
+                        android:text="Edit Courses"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/all_curved_corners"
+                        android:backgroundTint="@color/colorEdit"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_weight="0.5"

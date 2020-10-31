@@ -19,27 +19,59 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME3 = "students";
     public static final String TABLE_NAME4= "courses";
     public static final String TABLE_NAME5= "timeSlots";
+    public static final String TABLE_NAME6= "teacher_course";
+    public static final String TABLE_NAME7= "student_course";
+
+    private Context cont;
 
     public DBHelper(Context context){
+
         super(context, DB_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
 
-        MyDB.execSQL("create Table if not exists " + TABLE_NAME1 + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, mobileNo TEXT, email TEXT, username TEXT, password TEXT, user_type TEXT)");
-        MyDB.execSQL("create Table if not exists " + TABLE_NAME2 + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, mobileNo TEXT, email TEXT, username TEXT, password TEXT, specialization TEXT)");
-      //  MyDB.execSQL("create Table " + TABLE_NAME3 + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, mobileNo TEXT, email TEXT, username TEXT, password TEXT, user_type TEXT)");
+      //  MyDB.execSQL("create Table if not exists " + TABLE_NAME1 + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, mobileNo TEXT, email TEXT, username TEXT, password TEXT, user_type TEXT)");
+      //  MyDB.execSQL("create Table if not exists " + TABLE_NAME2 + "(userID INTEGER PRIMARY KEY, specialization TEXT, FOREIGN KEY (userID) references all_users (userID)  )");
 
 
     }
     public void createTables(){
         SQLiteDatabase MyDB=this.getWritableDatabase();
         MyDB.execSQL("create Table if not exists " + TABLE_NAME1 + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, mobileNo TEXT, email TEXT, username TEXT, password TEXT, user_type TEXT)");
-        MyDB.execSQL("create Table if not exists " + TABLE_NAME2 + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, mobileNo TEXT, email TEXT, username TEXT, password TEXT, specialization TEXT)");
-        MyDB.execSQL("create Table if not exists " + TABLE_NAME3 + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, mobileNo TEXT, email TEXT, username TEXT, password TEXT, class TEXT,section TEXT)");
+        MyDB.execSQL("create Table if not exists " + TABLE_NAME2 + "(userID INTEGER PRIMARY KEY, specialization TEXT, FOREIGN KEY (userID) references all_users (userID)  )");
+        MyDB.execSQL("create Table if not exists " + TABLE_NAME3 + "(userID INTEGER PRIMARY KEY, class TEXT,section TEXT, FOREIGN KEY (userID) references all_users (userID)  )");
         MyDB.execSQL("create Table if not exists " + TABLE_NAME4 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, courseCode TEXT, courseName TEXT, creditHrs TEXT, description TEXT)");
         MyDB.execSQL("create Table if not exists " + TABLE_NAME5 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, classTitle TEXT, classPlace TEXT, professorName TEXT, day Integer,startHr Integer,startMin Integer,endHr Integer,endMin Integer,weekday Integer)");
+        MyDB.execSQL("create Table if not exists "+ TABLE_NAME6 +"(teacherID INTEGER, courseID INTEGER, PRIMARY KEY (teacherID, courseID),FOREIGN KEY (teacherID) references teachers(userid) on delete cascade, FOREIGN KEY (courseID) references courses (id) on delete cascade)");
+        MyDB.execSQL("create Table if not exists "+ TABLE_NAME7 +"(studentID INTEGER, courseID INTEGER, PRIMARY KEY(studentID, courseID),FOREIGN KEY (studentID) references students(userid) on delete cascade, FOREIGN KEY (courseID) references courses (id) on delete cascade)");
+        if(!(doesCourseCodeExist("CS101")))
+            addCourses();
+    }
+
+    public void addCourses(){
+        this.insertCourseData("CS101","Programming Fundamentals","3","Course Coordinator: Naveed Ahmed");
+        this.insertCourseData("CS217","Object Oriented Programming","3","Course Coordinator: Subhan Ullah");
+        this.insertCourseData("CS218","Data Structures","3","Course Coordinator: Adnan Tariq");
+
+
+
+
+    }
+    public void addTeacherCourse(){
+        this.insertTeacherCoursetData(getTeacherID("bilal"),getCourseID("CS101"));
+        this.insertTeacherCoursetData(getTeacherID("bilal"),getCourseID("CS217"));
+        this.insertTeacherCoursetData(getTeacherID("bilal"),getCourseID("CS218"));
+    }
+    public void deleteTables() {
+        SQLiteDatabase MyDB=this.getWritableDatabase();
+       // MyDB.execSQL("drop Table if exists " + TABLE_NAME1);
+
+      //  MyDB.execSQL("drop Table if exists " + TABLE_NAME2);
+      //  MyDB.execSQL("drop Table if exists " + TABLE_NAME3);
+        MyDB.execSQL("drop Table if exists " + TABLE_NAME5);
+        //adminonCreate(MyDB);
     }
 
     @Override
@@ -49,6 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("drop Table if exists " + TABLE_NAME3);
         MyDB.execSQL("drop Table if exists " + TABLE_NAME4);
         MyDB.execSQL("drop Table if exists " + TABLE_NAME5);
+
         onCreate(MyDB);
     }
 
@@ -58,44 +91,58 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
+        ContentValues contentValues1 = new ContentValues();
 
         contentValues.put("name", name);
         contentValues.put("mobileNo", mobileNo);
         contentValues.put("email", email);
         contentValues.put("username", username);
         contentValues.put("password", password);
-        contentValues.put("specialization", spec);
-
-        long result = MyDB.insert(TABLE_NAME2, null, contentValues);
+        contentValues.put("user_type","teacher");
+        long result = MyDB.insert(TABLE_NAME1, null, contentValues);
         if (result == -1)
             return false;
+
+        contentValues1.put("userID",getTeacherID(username));
+        contentValues1.put("specialization", spec);
+        result=MyDB.insert(TABLE_NAME2, null, contentValues1);
+        if (result == -1)
+            return false;
+
         return true;
     }
     public Boolean updateTeacherData(int id,String name, String mobileNo, String email, String username, String password, String spec) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
+        ContentValues contentValues1 = new ContentValues();
 
         contentValues.put("name", name);
         contentValues.put("mobileNo", mobileNo);
         contentValues.put("email", email);
         contentValues.put("username", username);
         contentValues.put("password", password);
-        contentValues.put("specialization", spec);
+        contentValues1.put("specialization", spec);
         if(id==-1)
             return false;
 
-        long result = MyDB.update(TABLE_NAME2,contentValues,"userid="+id,null);
+        long result = MyDB.update(TABLE_NAME1,contentValues,"userid="+id,null);
+        if (result == -1)
+            return false;
+        result = MyDB.update(TABLE_NAME2,contentValues1,"userid="+id,null);
         if (result == -1)
             return false;
         return true;
     }
     public Boolean deleteTeacherData(int id) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
-if(id==-1)
+        if(id==-1)
             return false;
 
         long result = MyDB.delete(TABLE_NAME2,"userid="+id,null);
+        if (result == -1)
+            return false;
+        result = MyDB.delete(TABLE_NAME1,"userid="+id,null);
         if (result == -1)
             return false;
         return true;
@@ -104,7 +151,7 @@ if(id==-1)
     public Boolean doesTeacherUserNameExist (String username) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
-        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME2 + " where username = ?", new String[] {username});
+        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME1 + " where username = ?", new String[] {username});
 
         if (cursor.getCount() > 0)
             return true;
@@ -113,7 +160,7 @@ if(id==-1)
     public Boolean doesTeacherEmailExist (String email) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
-        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME2 + " where email = ?", new String[] {email});
+        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME1 + " where email = ?", new String[] {email});
 
         if (cursor.getCount() > 0)
             return true;
@@ -122,7 +169,7 @@ if(id==-1)
     public Boolean doesTeacherMobileNumberExist (String mobileNo) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
-        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME2 + " where mobileNo = ?", new String[] {mobileNo});
+        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME1 + " where mobileNo = ?", new String[] {mobileNo});
 
         if (cursor.getCount() > 0)
             return true;
@@ -132,7 +179,7 @@ if(id==-1)
 
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
-        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME2 + " where username = ?", new String[] {username});
+        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME1 + " where username = ?", new String[] {username});
 
         int idx =  cursor.getColumnIndex("userID");
         //Log.v("UserType", String.valueOf(idx));
@@ -151,37 +198,48 @@ if(id==-1)
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-
+        ContentValues contentValues1=new ContentValues();
         contentValues.put("name", name);
         contentValues.put("mobileNo", mobileNo);
         contentValues.put("email", email);
         contentValues.put("username", username);
         contentValues.put("password", password);
-        contentValues.put("class", c);
-        contentValues.put("section", section);
+        contentValues.put("user_type","student");
 
+        long result = MyDB.insert(TABLE_NAME1, null, contentValues);
 
-        long result = MyDB.insert(TABLE_NAME3, null, contentValues);
         if (result == -1)
             return false;
+        int id= this.getStudentID(username);
+        contentValues1.put("userID",id);
+        contentValues1.put("class", c);
+        contentValues1.put("section", section);
+
+        result= MyDB.insert(TABLE_NAME3,null,contentValues1);
+        if (result == -1)
+            return false;
+
         return true;
     }
     public Boolean updateStudentData(int id,String name, String mobileNo, String email, String username, String password, String c,String section) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-
+        ContentValues contentValues1 = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("mobileNo", mobileNo);
         contentValues.put("email", email);
         contentValues.put("username", username);
         contentValues.put("password", password);
-        contentValues.put("class", c);
-        contentValues.put("section", section);
+        contentValues1.put("class", c);
+        contentValues1.put("section", section);
         if(id==-1)
             return false;
 
-        long result = MyDB.update(TABLE_NAME3,contentValues,"userid="+id,null);
+        long result = MyDB.update(TABLE_NAME1,contentValues,"userid="+id,null);
+        if (result == -1)
+            return false;
+        result= MyDB.update(TABLE_NAME3,contentValues1,"userid="+id,null);
         if (result == -1)
             return false;
         return true;
@@ -194,13 +252,17 @@ if(id==-1)
         long result = MyDB.delete(TABLE_NAME3,"userid="+id,null);
         if (result == -1)
             return false;
+        result = MyDB.delete(TABLE_NAME1,"userid="+id,null);
+        if (result == -1)
+            return false;
+
         return true;
     }
 
     public Boolean doesStudentUserNameExist (String username) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
-        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME3 + " where username = ?", new String[] {username});
+        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME1 + " where username = ?", new String[] {username});
 
         if (cursor.getCount() > 0)
             return true;
@@ -209,7 +271,7 @@ if(id==-1)
     public Boolean doesStudentEmailExist (String email) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
-        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME3 + " where email = ?", new String[] {email});
+        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME1 + " where email = ?", new String[] {email});
 
         if (cursor.getCount() > 0)
             return true;
@@ -218,7 +280,7 @@ if(id==-1)
     public Boolean doesStudentMobileNumberExist (String mobileNo) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
-        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME3 + " where mobileNo = ?", new String[] {mobileNo});
+        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME1 + " where mobileNo = ?", new String[] {mobileNo});
 
         if (cursor.getCount() > 0)
             return true;
@@ -228,7 +290,7 @@ if(id==-1)
 
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
-        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME3 + " where username = ?", new String[] {username});
+        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME1 + " where username = ?", new String[] {username});
 
         int idx =  cursor.getColumnIndex("userID");
         //Log.v("UserType", String.valueOf(idx));
@@ -320,6 +382,25 @@ if(id==-1)
         //Log.v("UserType", str);
 
         return id;
+    }
+
+    int getCourseIDFromCourseName(String courseName){
+
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+
+        Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME4 + " where courseName = ?", new String[] {courseName});
+
+        int idx =  cursor.getColumnIndex("ID");
+        Log.v("Course ID column", String.valueOf(idx));
+
+        cursor.moveToFirst();
+
+        int id = cursor.getInt(idx);
+        //Log.v("UserType", str);
+
+        return id;
+
+
     }
 
 
@@ -450,7 +531,7 @@ if(id==-1)
         return null;
     }
 
-
+/////////////////////timeSlot functions--------------------------------------------
 
 
     public Boolean insertTimeSlot(Schedule schedule, int day) {
@@ -519,6 +600,21 @@ if(id==-1)
 
         return arr;
     }
+//////////////////////////////teacher-course Table-----------------------------------------------
+public Boolean insertTeacherCoursetData(int teacherID,int courseID) {
+    SQLiteDatabase MyDB = this.getWritableDatabase();
 
+    ContentValues contentValues = new ContentValues();
+    ContentValues contentValues1=new ContentValues();
+    contentValues.put("teacherID",teacherID );
+    contentValues.put("courseID",courseID );
 
+    long result = MyDB.insert(TABLE_NAME6, null, contentValues);
+
+    if (result == -1)
+        return false;
+    return true;
+}
+
+//////////////////////////////student-course Table-----------------------------------------------
 }
