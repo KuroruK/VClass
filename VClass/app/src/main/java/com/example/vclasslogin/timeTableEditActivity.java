@@ -29,8 +29,8 @@ public class timeTableEditActivity extends AppCompatActivity implements View.OnC
     private EditText classroomEdit;
     private EditText professorEdit;
     private Spinner daySpinner;
-    private TextView startTv;
-    private TextView endTv;
+    private EditText startTv;
+    private EditText endTv;
 
     //request mode
     private int mode;

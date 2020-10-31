@@ -26,9 +26,8 @@
             android:layout_height="wrap_content"
             android:text="Name: "
             android:id="@+id/t_name"
-            android:textSize="22sp"
-            android:textColor="#000"
-            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_below="@+id/t_details"
@@ -39,12 +38,11 @@
             android:layout_height="wrap_content"
             android:text="name here"
             android:id="@+id/t_name2"
-            android:textSize="22sp"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/t_name"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/t_contact"
             android:layout_below="@+id/t_details"
             />
 
@@ -58,7 +56,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/t_name"/>
+            android:layout_below="@id/t_name2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -68,10 +66,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/t_name"
-            android:layout_toRightOf="@id/t_email"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/t_name2"
+            android:layout_toRightOf="@id/t_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -83,7 +81,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/t_email"/>
+            android:layout_below="@id/t_email2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -93,10 +91,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/t_email"
-            android:layout_toRightOf="@id/t_id"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/t_email2"
+            android:layout_toRightOf="@id/t_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -108,7 +106,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/t_id"/>
+            android:layout_below="@id/t_id2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -118,10 +116,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/t_id"
-            android:layout_toRightOf="@id/t_username"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/t_id2"
+            android:layout_toRightOf="@id/t_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -133,7 +131,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/t_username"/>
+            android:layout_below="@id/t_username2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -143,10 +141,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/t_username"
-            android:layout_toRightOf="@id/t_password"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/t_username2"
+            android:layout_toRightOf="@id/t_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -158,7 +156,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/t_password"/>
+            android:layout_below="@id/t_password2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -168,8 +166,8 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_below="@id/t_password2"
             android:layout_toRightOf="@id/t_contact"/>
 
@@ -183,7 +181,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/t_contact"/>
+            android:layout_below="@id/t_contact2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -193,10 +191,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/t_contact"
-            android:layout_toRightOf="@id/t_qualification"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/t_contact2"
+            android:layout_toRightOf="@id/t_contact"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -207,7 +205,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/t_qualification"/>
+            android:layout_below="@id/t_qualification2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -217,10 +215,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_below="@id/t_qualification"
-            android:layout_toRightOf="@id/t_course"/>
+            android:layout_toRightOf="@id/t_contact"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -231,7 +229,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/t_course"/>
+            android:layout_below="@id/t_course1"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -241,10 +239,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/t_course"
-            android:layout_toRightOf="@id/t_course2"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/t_course1"
+            android:layout_toRightOf="@id/t_contact"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -255,7 +253,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/t_course2"/>
+            android:layout_below="@id/t_course21"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -265,15 +263,15 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/t_course2"
-            android:layout_toRightOf="@id/t_course3"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/t_course21"
+            android:layout_toRightOf="@id/t_contact"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/t_course3"
+            android:layout_below="@id/t_course31"
             android:weightSum="1"
             android:orientation="horizontal"
             android:layout_marginVertical="50dp"
@@ -295,7 +293,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/t_edit"
-                        android:text="Edit Bio"
+                        android:text="Edit"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textAllCaps="false"

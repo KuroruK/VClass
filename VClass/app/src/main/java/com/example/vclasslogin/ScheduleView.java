@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
@@ -79,29 +80,29 @@ public class ScheduleView extends LinearLayout {
     }
 
     private void getAttrs(AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TimetableView);
-        rowCount = a.getInt(R.styleable.TimetableView_row_count, DEFAULT_ROW_COUNT) - 1;
-        columnCount =30;// a.getInt(com.example.vclasslogin.R.styleable.TimetableView_column_count, DEFAULT_COLUMN_COUNT);
-        cellHeight = a.getDimensionPixelSize(R.styleable.TimetableView_cell_height, dp2Px(DEFAULT_CELL_HEIGHT_DP));
-        sideCellWidth = a.getDimensionPixelSize(R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
-        int titlesId = a.getResourceId(R.styleable.TimetableView_header_title, R.array.default_header_title1);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ScheduleView);
+        rowCount = a.getInt(R.styleable.ScheduleView_row_countS, DEFAULT_ROW_COUNT) - 1;
+        columnCount =a.getInt(R.styleable.ScheduleView_column_countS, DEFAULT_COLUMN_COUNT);
+        cellHeight = a.getDimensionPixelSize(R.styleable.ScheduleView_cell_heightS, dp2Px(DEFAULT_CELL_HEIGHT_DP));
+        sideCellWidth = a.getDimensionPixelSize(R.styleable.ScheduleView_side_cell_widthS, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
+        int titlesId = a.getResourceId(R.styleable.ScheduleView_header_titleS, R.array.default_header_title1);
         headerTitle = a.getResources().getStringArray(titlesId);
-        int colorsId = a.getResourceId(R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color);
+        int colorsId = a.getResourceId(R.styleable.ScheduleView_sticker_colorsS, R.array.default_sticker_color);
         stickerColors = a.getResources().getStringArray(colorsId);
-        startTime = a.getInt(R.styleable.TimetableView_start_time, DEFAULT_START_TIME);
-        headerHighlightColor = a.getColor(R.styleable.TimetableView_header_highlight_color, getResources().getColor(R.color.default_header_highlight_color));
-        int highlightTypeValue = a.getInteger(R.styleable.TimetableView_header_highlight_type,0);
+        startTime = a.getInt(R.styleable.ScheduleView_start_timeS, DEFAULT_START_TIME);
+        headerHighlightColor = a.getColor(R.styleable.ScheduleView_header_highlight_colorS, getResources().getColor(R.color.default_header_highlight_color));
+        int highlightTypeValue = a.getInteger(R.styleable.ScheduleView_header_highlight_typeS,0);
         if(highlightTypeValue == 0) highlightMode = HighlightMode.COLOR;
         else if(highlightTypeValue == 1) highlightMode = HighlightMode.IMAGE;
-        headerHighlightImageSize = a.getDimensionPixelSize(R.styleable.TimetableView_header_highlight_image_size, dp2Px(24));
-        headerHighlightImage = a.getDrawable(R.styleable.TimetableView_header_highlight_image);
+        headerHighlightImageSize = a.getDimensionPixelSize(R.styleable.ScheduleView_header_highlight_image_sizeS, dp2Px(24));
+        headerHighlightImage = a.getDrawable(R.styleable.ScheduleView_header_highlight_imageS);
         a.recycle();
     }
 
 
     private void init() {
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.view_timetable, this, false);
+        View view = layoutInflater.inflate(R.layout.schedule_row, this, false);
         addView(view);
 
         stickerBox = view.findViewById(R.id.sticker_box);
@@ -333,7 +334,7 @@ public class ScheduleView extends LinearLayout {
         Point size = new Point();
         display.getSize(size);
         int cell_w = (size.x-getPaddingLeft() - getPaddingRight()- sideCellWidth) / (columnCount - 1);
-        return 250;
+        return cell_w;
     }
 
     private int calStickerHeightPx(Schedule schedule) {

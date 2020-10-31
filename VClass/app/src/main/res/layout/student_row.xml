@@ -18,10 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name: "
+            android:textColor="@color/colorLightGrey"
             android:id="@+id/row_s_name"
-            android:textSize="18sp"
-            android:textColor="#000"
-            android:textStyle="bold"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             />
@@ -31,19 +29,17 @@
             android:layout_height="wrap_content"
             android:text="name here"
             android:id="@+id/row_s_name2"
-            android:textSize="18sp"
             android:textColor="#000"
             android:textStyle="bold"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/row_s_name"/>
+            android:layout_toRightOf="@id/row_s_section"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Class: "
             android:id="@+id/row_s_class"
-            android:textSize="14sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
@@ -55,19 +51,17 @@
             android:layout_height="wrap_content"
             android:text="Class here"
             android:id="@+id/row_s_class2"
-            android:textSize="14sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="2dp"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:layout_below="@id/row_s_name"
-            android:layout_toRightOf="@id/row_s_class"/>
+            android:layout_toRightOf="@id/row_s_section"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Section: "
             android:id="@+id/row_s_section"
-            android:textSize="14sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
@@ -79,7 +73,6 @@
             android:layout_height="wrap_content"
             android:text="Section here"
             android:id="@+id/row_s_section2"
-            android:textSize="14sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="2dp"
             android:layout_marginStart="5dp"
@@ -92,7 +85,6 @@
             android:layout_height="wrap_content"
             android:text="Email: "
             android:id="@+id/row_s_email"
-            android:textSize="12sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
@@ -104,20 +96,18 @@
             android:layout_height="wrap_content"
             android:text="email here"
             android:id="@+id/row_s_email2"
-            android:textSize="12sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="2dp"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:layout_below="@id/row_s_section"
-            android:layout_toRightOf="@id/row_s_email"/>
+            android:layout_toRightOf="@id/row_s_section"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Contact: "
             android:id="@+id/row_s_contact"
-            android:textSize="12sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
@@ -129,13 +119,12 @@
             android:layout_height="wrap_content"
             android:text="contact here"
             android:id="@+id/row_s_contact2"
-            android:textSize="12sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="2dp"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:layout_below="@id/row_s_email"
-            android:layout_toRightOf="@id/row_s_contact"/>
+            android:layout_toRightOf="@id/row_s_section"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

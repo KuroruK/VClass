@@ -16,7 +16,6 @@
         <!--Activities-->
         <activity android:name=".AdminView"
             android:parentActivityName=".LoginActivity">
-
         </activity>
 
         <activity android:name=".ListTeacherActivity"
@@ -87,9 +86,19 @@
 
         </activity>
 
+        <activity android:name=".view_schedule_activity"
+            android:parentActivityName=".StudentView">
+        </activity>
+
+
+
+
+
+
         <activity android:name=".HomeActivity" />
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:parentActivityName=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

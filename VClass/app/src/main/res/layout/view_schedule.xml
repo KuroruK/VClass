@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:padding="10dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -19,30 +19,52 @@
             android:id="@+id/save_btn_sch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save" />
+            android:text="Save"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorEdit"
+            android:layout_marginRight="5dp"
+            />
 
         <Button
             android:id="@+id/load_btn_sch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Load" />
+            android:text="Load"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorLogin"
+            android:layout_marginRight="5dp"
+            />
 
         <Button
             android:id="@+id/add_btn_sch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add" />
+            android:text="Add"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorLogin"
+            android:layout_marginRight="5dp"/>
 
         <Button
             android:id="@+id/clear_btn_sch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Clear" />
+            android:text="Clear"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorDelete"
+            />
 
     </LinearLayout>
 
-    <com.example.vclasslogin.TimetableView
-        android:id="@+id/timetable"
+    <com.example.vclasslogin.ScheduleView
+        android:id="@+id/schedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:header_title="@array/header_title" />

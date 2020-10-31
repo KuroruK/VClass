@@ -717,6 +717,9 @@ public Boolean insertStudentCourseData(int studentID,int courseID) {
     }
 
 
+
+
+
     public ArrayList<Integer> getStudentCourseIDs(int ID){
         ArrayList<Integer> arr=new ArrayList<Integer>();
 
@@ -748,13 +751,14 @@ public Boolean insertStudentCourseData(int studentID,int courseID) {
         for(Integer id:crsID){
             String crsName=getCourseName(id);
 
-            String qu = "SELECT * FROM " +TABLE_NAME5+" where classTitle  ="+crsName; //+" where weekday = "+Integer.toString(day);
+            String qu = "SELECT * FROM " +TABLE_NAME5+" where classTitle  = '"+crsName+"'"; //+" where weekday = "+Integer.toString(day);
             SQLiteDatabase MyDB=this.getReadableDatabase();
+         //   Cursor cursor=this.execReadQuery(qu);
             Cursor cursor = MyDB.rawQuery(qu,null);
             if(cursor==null||cursor.getCount()==0)
             {
-                Log.v("getStudentSchedules err","oooooo");
-                return sch;
+                Log.v("getStudentSchedules err",getCourseName(id));
+                //return sch;
             }
             else {
                 cursor.moveToFirst();
@@ -774,7 +778,6 @@ public Boolean insertStudentCourseData(int studentID,int courseID) {
                     temp.setStartTime(tS);
                     temp.setEndTime(tE);
                     temp.setDay(cursor.getInt(9));
-
                     sch.add(temp);
 
                     cursor.moveToNext();
@@ -783,9 +786,6 @@ public Boolean insertStudentCourseData(int studentID,int courseID) {
         }
         return sch;
     }
-
-
-
 
 
 

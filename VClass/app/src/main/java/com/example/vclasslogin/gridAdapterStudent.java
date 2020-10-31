@@ -75,8 +75,8 @@ public class gridAdapterStudent extends BaseAdapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                //    Intent launchinIntent = new Intent(activity, view_schedule_activity.class);
-                 //   activity.startActivity(launchinIntent);
+                    Intent launchinIntent = new Intent(activity, view_schedule_activity.class);
+                    activity.startActivity(launchinIntent);
                 }
             });
             Animation anim = new ScaleAnimation(

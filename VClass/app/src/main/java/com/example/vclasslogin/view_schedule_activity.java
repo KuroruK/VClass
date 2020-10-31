@@ -32,12 +32,13 @@ public class view_schedule_activity extends AppCompatActivity implements View.On
     private Button saveBtn;
     private Button loadBtn;
 
-    private TimetableView timetable;
+    private ScheduleView schedule;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_schedule);
 
+        getSupportActionBar().setTitle("Schedule");
         init();
     }
 
@@ -48,9 +49,20 @@ public class view_schedule_activity extends AppCompatActivity implements View.On
         saveBtn = findViewById(R.id.save_btn_sch);
         loadBtn = findViewById(R.id.load_btn_sch);
 
-        timetable = findViewById(R.id.timetable);
-        timetable.setHeaderHighlight(2);
+        schedule = findViewById(R.id.schedule);
+        schedule.setHeaderHighlight(2);
         initView();
+        setSchedule();
+    }
+
+    public void setSchedule(){
+        DBHelper db=new DBHelper(context);
+        ArrayList<Schedule> arr=db.getStudentSchedules("student1");
+        for(Schedule s:arr){
+            ArrayList<Schedule> temp=new ArrayList<Schedule>();
+            temp.add(s);
+            schedule.add(temp);
+        }
     }
 
     private void initView(){
@@ -59,7 +71,7 @@ public class view_schedule_activity extends AppCompatActivity implements View.On
         saveBtn.setOnClickListener(this);
         loadBtn.setOnClickListener(this);
 
-        timetable.setOnStickerSelectEventListener(new TimetableView.OnStickerSelectedListener() {
+        schedule.setOnStickerSelectEventListener(new ScheduleView.OnStickerSelectedListener() {
             @Override
             public void OnStickerSelected(int idx, ArrayList<Schedule> schedules) {
                 Intent i = new Intent(context, timeTableEditActivity.class);
@@ -80,10 +92,10 @@ public class view_schedule_activity extends AppCompatActivity implements View.On
                 startActivityForResult(i,REQUEST_ADD);
                 break;
             case R.id.clear_btn:
-                timetable.removeAll();
+                schedule.removeAll();
                 break;
             case R.id.save_btn:
-                saveByPreference(timetable.createSaveData());
+                saveByPreference(schedule.createSaveData());
                 break;
             case R.id.load_btn:
                 loadSavedData();
@@ -98,7 +110,7 @@ public class view_schedule_activity extends AppCompatActivity implements View.On
             case REQUEST_ADD:
                 if (resultCode == timeTableEditActivity.RESULT_OK_ADD) {
                     ArrayList<Schedule> item = (ArrayList<Schedule>) data.getSerializableExtra("schedules");
-                    timetable.add(item);
+                    schedule.add(item);
                 }
                 break;
             case REQUEST_EDIT:
@@ -106,12 +118,12 @@ public class view_schedule_activity extends AppCompatActivity implements View.On
                 if (resultCode == timeTableEditActivity.RESULT_OK_EDIT) {
                     int idx = data.getIntExtra("idx", -1);
                     ArrayList<Schedule> item = (ArrayList<Schedule>) data.getSerializableExtra("schedules");
-                    timetable.edit(idx, item);
+                    schedule.edit(idx, item);
                 }
                 /** Edit -> Delete */
                 else if (resultCode == timeTableEditActivity.RESULT_OK_DELETE) {
                     int idx = data.getIntExtra("idx", -1);
-                    timetable.remove(idx);
+                    schedule.remove(idx);
                 }
                 break;
         }
@@ -126,23 +138,8 @@ public class view_schedule_activity extends AppCompatActivity implements View.On
         Toast.makeText(this,"saved!", Toast.LENGTH_SHORT).show();
     }
 
-    /** get json data from SharedPreferences and then restore the timetable */
     private void loadSavedData(){
-        timetable.removeAll();
-/*
-        ArrayList<Schedule> temp=new ArrayList<Schedule>();
-        Schedule a=new Schedule();
-        a.setClassPlace();
-        a.setClassTitle("test class 1");
-        a.setDay(2);
-        a.setProfessorName();
-        a.setStartTime(new Time(10,10));
-        a.setEndTime(new Time(13,10));
-        Log.v("testing","before addtemp");
-        temp.add(a);
-
-        timetable.add(temp);
-*/
+        schedule.removeAll();
 
         csvLoader c=new csvLoader();
         ArrayList<timeSlot> t=c.getTable(context,"tt.csv");
@@ -167,7 +164,7 @@ public class view_schedule_activity extends AppCompatActivity implements View.On
             a.setEndTime(slot.getEndTime());
 //            a.setEndTime(new Time(13,10));
             temp.add(a);
-            timetable.add(temp);
+            schedule.add(temp);
 
         }
         Log.v("hello there",Integer.toString(t.size()));

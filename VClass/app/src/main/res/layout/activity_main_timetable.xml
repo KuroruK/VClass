@@ -8,48 +8,98 @@
     tools:context=".timeTableMainActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        >
 
-        <Spinner
-            android:layout_margin="20dp"
-            android:id="@+id/timtable_day_spinner"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_spinner_boundary"
+            >
 
+            <Spinner
+                android:id="@+id/timtable_day_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:spinnerMode="dropdown"/>
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/custom_spinner_arrow" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <Button
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save" />
+            android:text="Save"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorEdit"
+            android:layout_marginRight="5dp"
+            />
 
         <Button
             android:id="@+id/load_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Load" />
+            android:text="Load"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorLogin"
+            android:layout_marginRight="5dp"
+            />
 
         <Button
             android:id="@+id/add_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add" />
+            android:text="Add"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorLogin"
+            android:layout_marginRight="5dp"
+            />
 
         <Button
             android:id="@+id/clear_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Clear" />
+            android:text="Clear"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorDelete"
+            />
 
     </LinearLayout>
     <HorizontalScrollView

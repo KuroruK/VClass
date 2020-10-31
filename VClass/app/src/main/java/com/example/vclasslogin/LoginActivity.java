@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class LoginActivity extends AppCompatActivity {
     EditText username, password;
     AppCompatCheckBox showPasswordCheckbox;
-    TextView signUp;
     Button btnLogin;
     DBHelper DB;
 
@@ -31,8 +30,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getSupportActionBar().setTitle("VClass");
+
         DB = new DBHelper(this);
-        //DB.deleteTables();
+//        DB.deleteTables();
         DB.createTables();
         if(!DB.doesUserNameExist("admin")) {
             Boolean c = DB.insertData("Admin", "090078601", "manager.vclass@gmail.com", "admin", "pass", "admin");
@@ -51,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.username1);
         password = (EditText) findViewById(R.id.password1);
         showPasswordCheckbox = (AppCompatCheckBox) findViewById(R.id.showPassword1);
-        signUp = (TextView) findViewById(R.id.signUp);
         btnLogin = (Button) findViewById((R.id.btnSignIn));
 
 

@@ -8,16 +8,29 @@
 
     <Button
         android:id="@+id/delete_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="delete"
+        android:textColor="@color/colorWhite"
+        android:textAllCaps="false"
+        android:background="@drawable/all_curved_corners"
+        android:backgroundTint="@color/colorLogin"
+        android:layout_marginVertical="50dp"
+        android:layout_marginHorizontal="50dp"
         />
+
     <Button
         android:id="@+id/submit_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="submit"
+        android:text="Confirm"
+        android:textColor="@color/colorWhite"
+        android:textAllCaps="false"
+        android:background="@drawable/all_curved_corners"
+        android:backgroundTint="@color/colorLogin"
+        android:layout_marginVertical="50dp"
+        android:layout_marginHorizontal="50dp"
         />
 
 

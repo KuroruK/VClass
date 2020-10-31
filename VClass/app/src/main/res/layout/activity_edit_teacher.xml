@@ -332,19 +332,22 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 android:background="@android:color/transparent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown"
+                 />
 
-<!--            <ImageView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:src="@drawable/custom_spinner_arrow" />
-    -->    </RelativeLayout>
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -379,16 +382,17 @@
                 android:gravity="center"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 android:spinnerMode="dropdown"/>
-
-<!--            <ImageView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:src="@drawable/custom_spinner_arrow" />
--->        </RelativeLayout>
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -420,24 +424,27 @@
                 android:background="@android:color/transparent"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="10dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:spinnerMode="dropdown"/>
 
-<!--            <ImageView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:src="@drawable/custom_spinner_arrow" />
-    -->    </RelativeLayout>
+        </RelativeLayout>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btn_save_edit_t"
             android:padding="10dp"
+            android:layout_marginHorizontal="50dp"
             android:text="Save"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -445,8 +452,6 @@
             android:textColor="@color/colorWhite"
             android:background="@drawable/all_curved_corners"
             android:backgroundTint="@color/colorEdit"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
             android:layout_marginVertical="50dp"
             android:layout_below="@id/edit_t_course3"
             />

@@ -26,9 +26,8 @@
             android:layout_height="wrap_content"
             android:text="Name: "
             android:id="@+id/c_name"
-            android:textSize="22sp"
-            android:textColor="#000"
-            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_below="@+id/c_details"
@@ -39,12 +38,11 @@
             android:layout_height="wrap_content"
             android:text="name here"
             android:id="@+id/c_name2"
-            android:textSize="22sp"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/c_name"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/c_id"
             android:layout_below="@+id/c_details"
             />
 
@@ -58,7 +56,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/c_name"/>
+            android:layout_below="@id/c_name2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -68,9 +66,9 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/c_name"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/c_name2"
             android:layout_toRightOf="@id/c_id"/>
 
         <TextView
@@ -96,7 +94,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:layout_below="@id/c_id"
-            android:layout_toRightOf="@id/c_crd_hrs"/>
+            android:layout_toRightOf="@id/c_id"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -107,27 +105,27 @@
             android:textColor="@color/colorLightGrey"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             android:layout_below="@id/c_crd_hrs"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="t_description here"
+            android:text="description here"
             android:id="@+id/c_desc2"
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/c_crd_hrs"
-            android:layout_toRightOf="@id/c_desc"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/c_desc"
+            />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/c_desc"
+            android:layout_below="@id/c_desc2"
             android:weightSum="1"
             android:orientation="horizontal"
             android:layout_marginVertical="50dp"

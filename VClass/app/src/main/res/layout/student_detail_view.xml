@@ -26,9 +26,8 @@
             android:layout_height="wrap_content"
             android:text="Name: "
             android:id="@+id/s_name"
-            android:textSize="22sp"
-            android:textColor="#000"
-            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_below="@+id/s_details"
@@ -39,12 +38,11 @@
             android:layout_height="wrap_content"
             android:text="name here"
             android:id="@+id/s_name2"
-            android:textSize="22sp"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/s_name"
+            android:textSize="16sp"
+            android:textColor="@color/colorLightGrey"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/s_contact"
             android:layout_below="@+id/s_details"
             />
 
@@ -58,7 +56,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_name"/>
+            android:layout_below="@id/s_name2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -68,10 +66,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/s_name"
-            android:layout_toRightOf="@id/s_email"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/s_name2"
+            android:layout_toRightOf="@id/s_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -83,7 +81,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_email"/>
+            android:layout_below="@id/s_email2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -93,10 +91,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/s_email"
-            android:layout_toRightOf="@id/s_id"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/s_email2"
+            android:layout_toRightOf="@id/s_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -108,7 +106,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_id"/>
+            android:layout_below="@id/s_id2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -118,10 +116,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/s_id"
-            android:layout_toRightOf="@id/s_username"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/s_id2"
+            android:layout_toRightOf="@id/s_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -133,7 +131,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_username"/>
+            android:layout_below="@id/s_username2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -143,10 +141,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/s_username"
-            android:layout_toRightOf="@id/s_password"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/s_username2"
+            android:layout_toRightOf="@id/s_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -158,7 +156,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_password"/>
+            android:layout_below="@id/s_password2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -168,8 +166,8 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_below="@id/s_password2"
             android:layout_toRightOf="@id/s_contact"/>
 
@@ -183,7 +181,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_contact"/>
+            android:layout_below="@id/s_contact2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -193,10 +191,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/s_contact"
-            android:layout_toRightOf="@id/s_class"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/s_contact2"
+            android:layout_toRightOf="@id/s_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -208,7 +206,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_class"/>
+            android:layout_below="@id/s_class2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -218,10 +216,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/s_class"
-            android:layout_toRightOf="@id/s_section"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/s_class2"
+            android:layout_toRightOf="@id/s_contact"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -232,7 +230,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_section"/>
+            android:layout_below="@id/s_section2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -242,10 +240,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_below="@id/s_section2"
-            android:layout_toRightOf="@id/s_course"/>
+            android:layout_toRightOf="@id/s_contact"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -256,7 +254,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_course"/>
+            android:layout_below="@id/s_course1"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -266,10 +264,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/s_course"
-            android:layout_toRightOf="@id/s_course2"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/s_course1"
+            android:layout_toRightOf="@id/s_contact"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -280,7 +278,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_course2"/>
+            android:layout_below="@id/s_course21"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -290,10 +288,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/s_course2"
-            android:layout_toRightOf="@id/s_course3"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/s_course21"
+            android:layout_toRightOf="@id/s_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -305,7 +303,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_course3"/>
+            android:layout_below="@id/s_course31"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -315,10 +313,10 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/s_course3"
-            android:layout_toRightOf="@id/s_course4"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/s_course31"
+            android:layout_toRightOf="@id/s_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -330,7 +328,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/s_course4"/>
+            android:layout_below="@id/s_course41"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -340,17 +338,17 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/s_course4"
-            android:layout_toRightOf="@id/s_course5"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/s_course41"
+            android:layout_toRightOf="@id/s_contact"/>
 
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/s_course5"
+            android:layout_below="@id/s_course51"
             android:weightSum="1"
             android:orientation="horizontal"
             android:layout_marginVertical="50dp"

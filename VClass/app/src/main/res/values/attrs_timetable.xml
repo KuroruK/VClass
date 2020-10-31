@@ -16,4 +16,5 @@
         <attr name="header_highlight_image_size" format="dimension"/>
         <attr name="header_highlight_image" format="reference"/>
     </declare-styleable>
+
 </resources>

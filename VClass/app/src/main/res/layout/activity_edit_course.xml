@@ -61,9 +61,9 @@
             android:id="@+id/edit_crs_name2"
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
-            android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/edit_crs_crd_hrs"
             android:layout_below="@+id/edit_crs_details"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/edit_crs_crd_hrs" />
 
@@ -157,7 +157,7 @@
             android:textSize="16sp"
             android:textColor="@color/colorLightGrey"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:layout_below="@id/edit_crs_crd_hrs"
             android:layout_marginLeft="10dp" />
 
@@ -194,6 +194,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/btn_save_edit_crs"
             android:padding="10dp"
+            android:layout_marginHorizontal="50dp"
             android:text="Save"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -201,8 +202,6 @@
             android:textColor="@color/colorWhite"
             android:background="@drawable/all_curved_corners"
             android:backgroundTint="@color/colorEdit"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
             android:layout_marginVertical="50dp"
             android:layout_below="@id/edit_crs_desc1"
             />
