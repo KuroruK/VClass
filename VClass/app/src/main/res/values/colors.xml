@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorLightGrey">#5C5C5C</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
         <color name="colorHeader">#fcfcfc</color>
         <color name="colorHeaderText">#7d7d7d</color>
         <color name="colorTableItem">#efefef</color>
-
+    <color name="colorEdit">#20B177</color>
+    <color name="colorDelete">#DD3737</color>
         <string-array name="default_sticker_color">
             <item>#f08676</item>
             <item>#ecc369</item>

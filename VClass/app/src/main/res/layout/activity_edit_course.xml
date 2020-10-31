@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
+    android:padding="10dp"
+    tools:context=".editCourseActivity">
+
+
+    <TextView
+        android:id="@+id/regFormC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="9"
+        android:text="Edit Course Details"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="6"
+        android:textSize="25dp"
+        android:text="Course Name"
+        android:id="@+id/c_edit_name2"
+        android:layout_below="@+id/regFormC"
+        android:textColor="#000000"
+
+        />
+
+    <EditText
+        android:id="@+id/c_edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/c_edit_name2"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Name"
+        android:layout_below="@id/regFormC"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="6"
+        android:textSize="25dp"
+        android:text="Course Code "
+        android:id="@+id/c_edit_cCode2"
+        android:layout_below="@+id/c_edit_name2"
+        android:textColor="#000000"
+
+        />
+    <EditText
+        android:id="@+id/c_edit_cCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/c_edit_cCode2"
+        android:hint="Course Code"
+        android:inputType="text"
+        android:layout_below="@id/c_edit_name2"
+        android:layout_marginTop="20dp"
+        android:ems="10" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="6"
+        android:textSize="25dp"
+        android:text="Credit Hrs "
+        android:id="@+id/c_edit_crHrs2"
+        android:layout_below="@+id/c_edit_cCode2"
+        android:textColor="#000000"
+
+        />
+
+    <EditText
+        android:id="@+id/c_edit_crHrs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/c_edit_crHrs2"
+        android:hint="Credit Hrs"
+        android:inputType="textEmailAddress"
+        android:layout_below="@id/c_edit_cCode2"
+        android:layout_marginTop="20dp"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="6"
+        android:textSize="25dp"
+        android:text="Description"
+        android:id="@+id/c_edit_desc2"
+        android:layout_below="@+id/c_edit_crHrs2"
+        android:textColor="#000000"
+
+        />    <EditText
+        android:id="@+id/c_edit_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter description"
+        android:layout_toRightOf="@id/c_edit_desc2"
+        android:inputType="text"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/c_edit_crHrs"/>
+
+    <Button
+        android:id="@+id/c_save_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:background="@drawable/smooth_edged_button"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/c_edit_desc2"/>
+
+</RelativeLayout>
+</ScrollView>

@@ -82,7 +82,7 @@ public class TimetableView extends LinearLayout {
     private void getAttrs(AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, com.example.vclasslogin.R.styleable.TimetableView);
         rowCount = a.getInt(com.example.vclasslogin.R.styleable.TimetableView_row_count, DEFAULT_ROW_COUNT) - 1;
-        columnCount = a.getInt(com.example.vclasslogin.R.styleable.TimetableView_column_count, DEFAULT_COLUMN_COUNT);
+        columnCount =30;// a.getInt(com.example.vclasslogin.R.styleable.TimetableView_column_count, DEFAULT_COLUMN_COUNT);
         cellHeight = a.getDimensionPixelSize(com.example.vclasslogin.R.styleable.TimetableView_cell_height, dp2Px(DEFAULT_CELL_HEIGHT_DP));
         sideCellWidth = a.getDimensionPixelSize(com.example.vclasslogin.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
         int titlesId = a.getResourceId(com.example.vclasslogin.R.styleable.TimetableView_header_title, com.example.vclasslogin.R.array.default_header_title);
@@ -334,7 +334,7 @@ public class TimetableView extends LinearLayout {
         Point size = new Point();
         display.getSize(size);
         int cell_w = (size.x-getPaddingLeft() - getPaddingRight()- sideCellWidth) / (columnCount - 1);
-        return cell_w;
+        return 250;
     }
 
     private int calStickerHeightPx(Schedule schedule) {

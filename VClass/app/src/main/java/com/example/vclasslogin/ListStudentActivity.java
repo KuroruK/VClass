@@ -16,52 +16,50 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class ListTeacherActivity extends AppCompatActivity {
+public class ListStudentActivity extends AppCompatActivity {
     RecyclerView rv;
     TextView add;
-    MyRvTeacherListAdapter adapter;
-    ArrayList<Teacher> teacherList=new ArrayList<Teacher>();
-    static int counter=0;
+    MyRvStudentListAdapter adapter;
+    ArrayList<Student> studentList;
+    static int scounter=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.teacher_list);
-        if(counter==0) {
-            teacherList = new ArrayList<Teacher>();
-            counter++;
-        }
+        setContentView(R.layout.student_list);
+        studentList=new ArrayList<Student>();
 
-        FloatingActionButton addButton=(FloatingActionButton) findViewById(R.id.plusButton);
+        FloatingActionButton addButton=(FloatingActionButton) findViewById(R.id.plusButtonStudent);
         assert addButton!=null;
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(ListTeacherActivity.this,registerTeacherActivity.class);
+                Intent intent=new Intent(ListStudentActivity.this,registerStudentActivity.class);
                 startActivityForResult(intent,3);
             }
         });
 
-        String qu = "SELECT * FROM TEACHERS";
+        String qu = "SELECT * FROM STUDENTS";
         DBHelper db= new DBHelper(this);
         Cursor cursor = db.execReadQuery(qu);
         if(cursor==null||cursor.getCount()==0)
         {
-            Toast.makeText(getBaseContext(),"No Notes Found",Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(),"No Students Found",Toast.LENGTH_LONG).show();
         }else {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                teacherList.add(new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6)));
+                Log.v("Students: "," list student cursor");
+                studentList.add(new Student(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6),cursor.getString(7)));
                 cursor.moveToNext();
             }
         }
-            for(int i=0;i<teacherList.size();i++)
-                Log.v("teacherInfo ",teacherList.get(i).toString());
-            rv=findViewById(R.id.rvList);
+            for(int i=0;i<studentList.size();i++)
+                Log.v("StudentInfo ",studentList.get(i).toString());
+            rv=findViewById(R.id.rvListStudent);
        // add=findViewById(R.id.address);
-        RecyclerView.LayoutManager manager=new LinearLayoutManager(ListTeacherActivity.this);
+        RecyclerView.LayoutManager manager=new LinearLayoutManager(ListStudentActivity.this);
         rv.setLayoutManager(manager);
-        adapter=new MyRvTeacherListAdapter(ListTeacherActivity.this,teacherList);
+        adapter=new MyRvStudentListAdapter(ListStudentActivity.this,studentList);
         rv.setAdapter(adapter);
 
     }
@@ -70,29 +68,29 @@ public class ListTeacherActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 3) {
-                String qu = "SELECT * FROM TEACHERS";
+                String qu = "SELECT * FROM STUDENTS";
                 DBHelper db= new DBHelper(this);
                 Cursor cursor = db.execReadQuery(qu);
                 if(cursor==null||cursor.getCount()==0)
                 {
-                    Toast.makeText(getBaseContext(),"No Notes Found",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(),"No Students Found",Toast.LENGTH_LONG).show();
                 }else {
                     cursor.moveToFirst();
-                    for(int i=teacherList.size();i>0;i--){
-                        teacherList.remove(i-1);
+                    for(int i=studentList.size();i>0;i--){
+                        studentList.remove(i-1);
 
                     }
                     while (!cursor.isAfterLast()) {
-                        teacherList.add(new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6)));
+                        studentList.add(new Student(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6),cursor.getString(7)));
                         cursor.moveToNext();
                     }
                 }
 
-                rv=findViewById(R.id.rvList);
+                rv=findViewById(R.id.rvListStudent);
           //s      add=findViewById(R.id.address);
-                RecyclerView.LayoutManager manager=new LinearLayoutManager(ListTeacherActivity.this);
+                RecyclerView.LayoutManager manager=new LinearLayoutManager(ListStudentActivity.this);
                rv.setLayoutManager(manager);
-               adapter=new MyRvTeacherListAdapter(ListTeacherActivity.this,teacherList);
+               adapter=new MyRvStudentListAdapter(ListStudentActivity.this,studentList);
                 rv.setAdapter(adapter);
 
             }

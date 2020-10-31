@@ -39,7 +39,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation files('libs\\joinery-dataframe-1.9-jar-with-dependencies.jar')
     implementation 'com.android.support:multidex:1.0.3'
-
+    implementation "androidx.cardview:cardview:1.0.0"
 
 }
 repositories {

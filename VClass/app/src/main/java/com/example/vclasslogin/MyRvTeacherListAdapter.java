@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,27 +36,25 @@ public class MyRvTeacherListAdapter extends RecyclerView.Adapter<MyRvTeacherList
         holder.name.setText(teacherList.get(position).getName());
         holder.mobileNo.setText(teacherList.get(position).getMobileNo());
         holder.email.setText(teacherList.get(position).getEmail());
-        holder.username.setText(teacherList.get(position).getUsername());
-        holder.password.setText(teacherList.get(position).getPassword());
         holder.specialization.setText(teacherList.get(position).getSpecialization());
 
         Log.v("t2","yes");
-        if(holder.ll!=null) {
+        if(holder.rl!=null) {
             Log.v("t2","no");
-            holder.ll.setOnClickListener(new View.OnClickListener() {
+            holder.rl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     Log.v("t1","here");
-                    Intent intent=new Intent(view.getContext(),manageTeacherActivity.class);
-            /*        intent.putExtra("name",contactList.get(position).getName());
-                    intent.putExtra("name",contactList.get(position).getName());
-                    intent.putExtra("name",contactList.get(position).getName());
-                    intent.putExtra("name",contactList.get(position).getName());
-                    intent.putExtra("name",contactList.get(position).getName());
-                    intent.putExtra("name",contactList.get(position).getName());
+                    Intent intent=new Intent(view.getContext(),viewTeacherDetailsActivity.class);
+                    intent.putExtra("name",teacherList.get(position).getName());
+                    intent.putExtra("email",teacherList.get(position).getEmail());
+                    intent.putExtra("mobileNo",teacherList.get(position).getMobileNo());
+                    intent.putExtra("username",teacherList.get(position).getUsername());
+                    intent.putExtra("password",teacherList.get(position).getPassword());
+                    intent.putExtra("specialization",teacherList.get(position).getSpecialization());
+                    intent.putExtra("id",teacherList.get(position).getId());
 
-              */
                     c.startActivity(intent);
                 }
             });
@@ -71,17 +70,15 @@ public class MyRvTeacherListAdapter extends RecyclerView.Adapter<MyRvTeacherList
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name,mobileNo,email,username,password,specialization;
-        LinearLayout ll;
+        TextView name,mobileNo,email,specialization;
+        RelativeLayout rl;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            name=itemView.findViewById(R.id.name);
-            mobileNo=itemView.findViewById(R.id.mobileNo);
-            email=itemView.findViewById(R.id.email);
-            username=itemView.findViewById(R.id.username);
-            password=itemView.findViewById(R.id.password);
-            specialization=itemView.findViewById(R.id.specialization);
-            ll=itemView.findViewById(R.id.row);
+            name=itemView.findViewById(R.id.row_t_name2);
+            mobileNo=itemView.findViewById(R.id.row_t_contact2);
+            email=itemView.findViewById(R.id.row_t_email2);
+            specialization=itemView.findViewById(R.id.row_t_qualification2);
+            rl=itemView.findViewById(R.id.t_row);
 
 
         }

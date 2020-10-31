@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
+    android:padding="10dp"
+    tools:context=".registerStudentActivity">
+
+
+    <TextView
+        android:id="@+id/regFormS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="9"
+        android:text="Edit Student Details"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="5"
+        android:textSize="25dp"
+        android:text="Name "
+        android:id="@+id/s_edit_name2"
+        android:layout_below="@+id/regFormS"
+        android:textColor="#000000"
+
+        />
+
+    <EditText
+        android:id="@+id/s_edit_Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/s_edit_name2"
+        android:ems="9"
+        android:inputType="textPersonName"
+        android:hint="Name"
+        android:layout_below="@id/regFormS"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="5"
+        android:textSize="25dp"
+        android:text="Mobile No. "
+        android:id="@+id/s_edit_mobile2"
+        android:layout_below="@+id/s_edit_name2"
+        android:textColor="#000000"
+
+        />
+    <EditText
+        android:id="@+id/s_edit_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/s_edit_mobile2"
+        android:hint="Mobile Number"
+        android:inputType="phone"
+        android:layout_below="@id/s_edit_Name"
+        android:layout_marginTop="20dp"
+        android:ems="10" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="5"
+        android:textSize="25dp"
+        android:text="Email "
+        android:id="@+id/s_edit_email2"
+        android:layout_below="@+id/s_edit_mobile2"
+        android:textColor="#000000"
+
+        />
+
+    <EditText
+        android:id="@+id/s_edit_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/s_edit_email2"
+        android:hint="Email Address"
+        android:inputType="textEmailAddress"
+        android:layout_below="@id/s_edit_mobile"
+        android:layout_marginTop="20dp"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="5"
+        android:textSize="25dp"
+        android:text="Class"
+        android:id="@+id/s_edit_class2"
+        android:layout_below="@+id/s_edit_email2"
+        android:textColor="#000000"
+
+        />    <EditText
+        android:id="@+id/s_edit_class"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Class"
+        android:layout_toRightOf="@id/s_edit_class2"
+        android:inputType="text"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/s_edit_email"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="5"
+        android:textSize="25dp"
+        android:text="Section"
+        android:id="@+id/s_edit_section2"
+        android:layout_below="@+id/s_edit_class2"
+        android:textColor="#000000"
+
+        />    <EditText
+    android:id="@+id/s_edit_section"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter Class"
+    android:layout_toRightOf="@id/s_edit_section2"
+    android:inputType="text"
+    android:layout_marginTop="20dp"
+    android:layout_below="@id/s_edit_class"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="5"
+        android:textSize="25dp"
+        android:text="Username "
+        android:id="@+id/s_edit_username2"
+        android:layout_below="@+id/s_edit_section2"
+        android:textColor="#000000"
+
+
+        />
+    <EditText
+        android:id="@+id/s_edit_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/s_edit_username2"
+        android:hint="User Name"
+        android:layout_below="@id/s_edit_section"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="5"
+        android:textSize="25dp"
+        android:text="Password "
+        android:id="@+id/s_edit_password2"
+        android:layout_below="@+id/s_edit_username2"
+        android:textColor="#000000"
+
+        />
+
+    <EditText
+        android:id="@+id/s_edit_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:layout_marginTop="20dp"
+        android:inputType="text"
+        android:layout_toRightOf="@+id/s_edit_password2"
+        android:layout_below="@id/s_edit_username"/>
+
+    <Button
+        android:id="@+id/s_save_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:background="@drawable/smooth_edged_button"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/s_edit_password"/>
+
+</RelativeLayout>
+</ScrollView>

@@ -69,7 +69,7 @@ public class gridAdapterAdmin extends BaseAdapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent launchinIntent = new Intent(activity, manageTeacherActivity.class);
+                    Intent launchinIntent = new Intent(activity, ListTeacherActivity.class);
                     activity.startActivity(launchinIntent);
                 }
             });
@@ -91,8 +91,8 @@ public class gridAdapterAdmin extends BaseAdapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-             //       Intent launchinIntent = new Intent(activity, scheduledClassesActivity.class);
-             //       activity.startActivity(launchinIntent);
+                    Intent launchinIntent = new Intent(activity, ListStudentActivity.class);
+                    activity.startActivity(launchinIntent);
                 }
             });
             Animation anim = new ScaleAnimation(
@@ -114,7 +114,8 @@ public class gridAdapterAdmin extends BaseAdapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent launchinIntent = new Intent(activity, timeTableMainActivity.class);
+                    activity.startActivity(launchinIntent);
                 }
             });
             Animation anim = new ScaleAnimation(
@@ -134,8 +135,8 @@ public class gridAdapterAdmin extends BaseAdapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-              //      Intent launchinIntent = new Intent(activity, scheduler.class);
-              //      activity.startActivity(launchinIntent);
+                    Intent launchinIntent = new Intent(activity, ListCourseActivity.class);
+                    activity.startActivity(launchinIntent);
                 }
             });
             Animation anim = new ScaleAnimation(

@@ -14,21 +14,35 @@
         <activity android:name=".TeacherView"/>
         <activity android:name=".registerTeacherActivity"/>
         <activity android:name=".manageTeacherActivity"/>
+        <activity android:name=".viewTeacherDetailsActivity"/>
+        <activity android:name=".editTeacherActivity"/>
         <activity android:name=".ListTeacherActivity"/>
+        <activity android:name=".registerStudentActivity"/>
+        <activity android:name=".viewStudentDetailsActivity"/>
+        <activity android:name=".editStudentActivity"/>
+        <activity android:name=".ListStudentActivity"/>
+        <activity android:name=".registerCourseActivity"/>
+        <activity android:name=".viewCourseDetailsActivity"/>
+        <activity android:name=".editCourseActivity"/>
+        <activity android:name=".ListCourseActivity"/>
+
         <activity android:name=".StudentView" />
-        <activity android:name=".AdminView" />
+        <activity android:name=".AdminView" >
+        </activity>
         <activity android:name=".HomeActivity" />
 
-        <activity android:name=".LoginActivity" />
-
-        <activity android:name=".timeTableEditActivity" />
-
-        <activity android:name=".timeTableMainActivity" >
+        <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+
+        <activity android:name=".timeTableEditActivity" />
+
+        <activity android:name=".timeTableMainActivity" >
         </activity>
     </application>
 

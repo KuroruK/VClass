@@ -1,8 +1,10 @@
 package com.example.vclasslogin;
 
-public class Teacher {
+import androidx.annotation.NonNull;
+
+public class Student {
     int id;
-    String name,mobileNo,email,username,password,specialization;
+    String name,mobileNo,email,username,password,Class,section;
 
     public int getId() {
         return id;
@@ -12,14 +14,32 @@ public class Teacher {
         this.id = id;
     }
 
-    public Teacher(int id, String name, String mobileNo, String email, String username, String password, String specialization) {
+    @NonNull
+    public String getClassName() {
+        return Class;
+    }
+
+    public void setClassName(String aClass) {
+        Class = aClass;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public Student(int id, String name, String mobileNo, String email, String username, String password, String classes, String section) {
         this.id=id;
         this.name = name;
         this.mobileNo = mobileNo;
         this.email  = email;
         this.username = username;
         this.password = password;
-        this.specialization = specialization;
+        this.Class = classes;
+        this.section=section;
 
     }
 
@@ -28,7 +48,7 @@ public class Teacher {
     }
 
     public String toString(){
-        return name+" "+mobileNo+" "+email+" "+username+" "+password+" "+specialization;
+        return name+" "+mobileNo+" "+email+" "+username+" "+password+" "+Class+" "+section;
     }
 
     public void setName(String name) {
@@ -67,11 +87,5 @@ public class Teacher {
         this.password = password;
     }
 
-    public String getSpecialization() {
-        return specialization;
-    }
 
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
 }
