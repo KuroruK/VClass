@@ -32,10 +32,12 @@ import java.util.ArrayList;
 public class gridAdapterTeacher extends BaseAdapter {
     ArrayList names;
     public static Activity activity;
+    String teacherUsername;
 
-    public gridAdapterTeacher(Activity activity, ArrayList names) {
+    public gridAdapterTeacher(Activity activity, ArrayList names,String teacherUsername) {
         this.activity = activity;
         this.names = names;
+        this.teacherUsername=teacherUsername;
     }
 
     @Override
@@ -91,8 +93,10 @@ public class gridAdapterTeacher extends BaseAdapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-             //       Intent launchinIntent = new Intent(activity, scheduledClassesActivity.class);
-             //       activity.startActivity(launchinIntent);
+                    Intent launchinIntent = new Intent(activity, view_schedule_activity.class);
+                    launchinIntent.putExtra("type","teacher");
+                    launchinIntent.putExtra("name",teacherUsername);
+                    activity.startActivity(launchinIntent);
                 }
             });
             Animation anim = new ScaleAnimation(
@@ -115,7 +119,8 @@ public class gridAdapterTeacher extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(activity,timeTableMainActivity.class);
-                    intent.putExtra("type: ","teacher");
+                    intent.putExtra("type","teacher");
+                    intent.putExtra("name",teacherUsername);
                     activity.startActivity(intent);
                 }
             });
@@ -151,68 +156,6 @@ public class gridAdapterTeacher extends BaseAdapter {
             anim.setRepeatCount(Animation.INFINITE);
             imageView.startAnimation(anim);
 
-        }else if(names.get(position).toString().equals("NOTES"))
-        {
-            imageView.setImageResource(R.drawable.ic_notes);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-             //       Intent launchinIntent = new Intent(activity, noteActivity.class);
-             //       activity.startActivity(launchinIntent);
-                }
-            });
-            Animation anim = new ScaleAnimation(
-                    0.95f, 1f, // Start and end values for the X axis scaling
-                    0.95f, 1f, // Start and end values for the Y axis scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
-            anim.setFillAfter(true); // Needed to keep the result of the animation
-            anim.setDuration(2000);
-            anim.setRepeatMode(Animation.INFINITE);
-            anim.setRepeatCount(Animation.INFINITE);
-            imageView.startAnimation(anim);
-
-        }else if(names.get(position).toString().equals("PROFILE"))
-        {
-            imageView.setImageResource(R.drawable.ic_profile);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-            //        Intent launchinIntent = new Intent(activity, profile_activity.class);
-            //        activity.startActivity(launchinIntent);
-                }
-            });
-            Animation anim = new ScaleAnimation(
-                    0.95f, 1f, // Start and end values for the X axis scaling
-                    0.95f, 1f, // Start and end values for the Y axis scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
-            anim.setFillAfter(true); // Needed to keep the result of the animation
-            anim.setDuration(2000);
-            anim.setRepeatMode(Animation.INFINITE);
-            anim.setRepeatCount(Animation.INFINITE);
-            imageView.startAnimation(anim);
-        }
-        else if(names.get(position).toString().equals("CGPA CALCULATOR"))
-        {
-            imageView.setImageResource(R.drawable.ic_cgpa);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-              //      Intent launchinIntent = new Intent(activity, cgpa_activity.class);
-              //      activity.startActivity(launchinIntent);
-                }
-            });
-            Animation anim = new ScaleAnimation(
-                    0.95f, 1f, // Start and end values for the X axis scaling
-                    0.95f, 1f, // Start and end values for the Y axis scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
-                    Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
-            anim.setFillAfter(true); // Needed to keep the result of the animation
-            anim.setDuration(2000);
-            anim.setRepeatMode(Animation.INFINITE);
-            anim.setRepeatCount(Animation.INFINITE);
-            imageView.startAnimation(anim);
         }
 
         textView.setText(names.get(position).toString());

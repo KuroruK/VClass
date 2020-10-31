@@ -45,11 +45,10 @@ public class TeacherView extends AppCompatActivity {
 
         getSupportActionBar().show();
         gridView = (GridView)findViewById(R.id.grid);
-        basicFields.add("Schedule Class");
         basicFields.add("View Schedule");
         basicFields.add("View Timetable");
-        basicFields.add("Manage Tasks");
-        adapter = new gridAdapterTeacher(this,basicFields);
+       // basicFields.add("Manage Tasks");
+        adapter = new gridAdapterTeacher(this,basicFields,getIntent().getStringExtra("teacher-username"));
         gridView.setAdapter(adapter);
     }
 

@@ -4,6 +4,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -29,8 +30,8 @@ public class timeTableEditActivity extends AppCompatActivity implements View.OnC
     private EditText classroomEdit;
     private EditText professorEdit;
     private Spinner daySpinner;
-    private EditText startTv;
-    private EditText endTv;
+    private TextView startTv;
+    private TextView endTv;
 
     //request mode
     private int mode;
@@ -134,10 +135,17 @@ public class timeTableEditActivity extends AppCompatActivity implements View.OnC
                 if(mode == timeTableMainActivity.REQUEST_ADD){
                     inputDataProcessing();
                     Intent i = new Intent();
+                    String user=getIntent().getStringExtra("type");
                     ArrayList<Schedule> schedules = new ArrayList<Schedule>();
                     //you can add more schedules to ArrayList
-                    schedules.add(schedule);
+                    DBHelper dbHelper=new DBHelper(context);
+                    if(dbHelper.canClassBeAdded(schedule.getStartTime(),schedule.getEndTime(),schedule.getDay(),getIntent().getIntExtra("weekday",0))){
+                        schedules.add(schedule);
+                        dbHelper.insertTimeSlot(schedule,getIntent().getIntExtra("weekday",0));
+                        Log.v("blah","dcdc");
+                    }
                     i.putExtra("schedules",schedules);
+                    i.putExtra("type",user);
                     setResult(RESULT_OK_ADD,i);
                     finish();
                 }

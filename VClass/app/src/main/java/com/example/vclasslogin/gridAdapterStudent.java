@@ -38,10 +38,12 @@ import java.util.ArrayList;
 public class gridAdapterStudent extends BaseAdapter {
     ArrayList names;
     public static Activity activity;
+    String username;
 
-    public gridAdapterStudent(Activity activity, ArrayList names) {
+    public gridAdapterStudent(Activity activity, ArrayList names,String username) {
         this.activity = activity;
         this.names = names;
+        this.username=username;
     }
 
     @Override
@@ -71,11 +73,13 @@ public class gridAdapterStudent extends BaseAdapter {
         ImageView imageView = (ImageView)v.findViewById(R.id.imageHolder);
         if(names.get(position).toString().equals("View Schedule"))
         {
-            imageView.setImageResource(R.drawable.timetable);
+            imageView.setImageResource(R.drawable.schedule);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent launchinIntent = new Intent(activity, view_schedule_activity.class);
+                    launchinIntent.putExtra("type","student");
+                    launchinIntent.putExtra("name",username);
                     activity.startActivity(launchinIntent);
                 }
             });
@@ -98,7 +102,8 @@ public class gridAdapterStudent extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(activity,timeTableMainActivity.class);
-                    intent.putExtra("type: ","student");
+                    intent.putExtra("type","student");
+                    intent.putExtra("name",username);
                     activity.startActivity(intent);    }
             });
             Animation anim = new ScaleAnimation(

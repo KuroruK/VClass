@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("VClass");
 
         DB = new DBHelper(this);
-//        DB.deleteTables();
+       // DB.deleteTables();
         DB.createTables();
         if(!DB.doesUserNameExist("admin")) {
             Boolean c = DB.insertData("Admin", "090078601", "manager.vclass@gmail.com", "admin", "pass", "admin");
@@ -76,17 +76,20 @@ public class LoginActivity extends AppCompatActivity {
                         if (type.equalsIgnoreCase("student"))
                         {
                             Intent intent = new Intent(getApplicationContext(), StudentView.class);
+                            intent.putExtra("student-username",user);
                             startActivity(intent);
                         }
                         else if (type.equalsIgnoreCase("teacher"))
                         {
                             Intent intent = new Intent(getApplicationContext(), TeacherView.class);
+                            intent.putExtra("teacher-username",user);
                             startActivity(intent);
                         }
 
                         else if (type.equalsIgnoreCase("admin"))
                         {
                             Intent intent = new Intent(getApplicationContext(), AdminView.class);
+                            intent.putExtra("admin username",user);
                             startActivity(intent);
                         }
 

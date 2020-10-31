@@ -38,30 +38,40 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
     private Button loadBtn;
     private Spinner daySpinner;
     private TimetableView timetable;
+    String userType;
 
     private int weekday;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_timetable);
-
         getSupportActionBar().setTitle("Timetable");
-
+        userType=getIntent().getStringExtra("type");
+        if(userType==null)
+            userType="admin";
         init();
+
     }
 
     private void init(){
         this.context = this;
-        addBtn = findViewById(R.id.add_btn);
-        clearBtn = findViewById(R.id.clear_btn);
-        saveBtn = findViewById(R.id.save_btn);
-        loadBtn = findViewById(R.id.load_btn);
-        daySpinner=(Spinner)findViewById(R.id.timtable_day_spinner);
+            addBtn = findViewById(R.id.add_btn);
+            clearBtn = findViewById(R.id.clear_btn);
+            saveBtn = findViewById(R.id.save_btn);
+            loadBtn = findViewById(R.id.load_btn);
 
-        weekday=0;
+            daySpinner = (Spinner) findViewById(R.id.timtable_day_spinner);
+
+            weekday = 0;
 
 
-
+        if(!(userType.equals("admin"))){
+            if(userType.equals("student"))
+                addBtn.setVisibility(View.GONE);
+            clearBtn.setVisibility(View.GONE);
+            saveBtn.setVisibility(View.GONE);
+            loadBtn.setVisibility(View.GONE);
+        }
 
         timetable = findViewById(R.id.timetable);
         timetable.setHeaderHighlight(2);
@@ -76,7 +86,8 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
                 timetable.add(temp);
             }
 
-        loadSavedData();
+      //  loadTableForDay(0);
+        //loadSavedData();
         initView();
         String[] days=new String[]{"Monday","Tuesday","Wednesday","Thursday","Friday"};
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,days);
@@ -97,11 +108,12 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initView(){
+
         addBtn.setOnClickListener(this);
         clearBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
         loadBtn.setOnClickListener(this);
-
+        if(userType.equals("admin")){
         timetable.setOnStickerSelectEventListener(new TimetableView.OnStickerSelectedListener() {
             @Override
             public void OnStickerSelected(int idx, ArrayList<Schedule> schedules) {
@@ -112,6 +124,7 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
                 startActivityForResult(i,REQUEST_EDIT);
             }
         });
+        }
     }
 
     @Override
@@ -120,9 +133,12 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
             case R.id.add_btn:
                 Intent i = new Intent(this,timeTableEditActivity.class);
                 i.putExtra("mode",REQUEST_ADD);
+                i.putExtra("weekday",weekday);
+                i.putExtra("type",userType);
                 startActivityForResult(i,REQUEST_ADD);
                 break;
             case R.id.clear_btn:
+
                 timetable.removeAll();
                 break;
             case R.id.save_btn:
@@ -193,9 +209,8 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
 
         obj.deleteTimeSlotData(weekday);
         csvLoader c=new csvLoader();
-
-        for(int i=0;i<5;i++) {
-            ArrayList<timeSlot> s = c.getTable(context, days[i]+".csv");
+       // for(int i=0;i<5;i++) {
+            ArrayList<timeSlot> s = c.getTable(context, days[weekday]+".csv");
             List<timeSlot> t = new ArrayList<timeSlot>(s);
             Collections.sort(t);
 
@@ -212,17 +227,17 @@ public class timeTableMainActivity extends AppCompatActivity implements View.OnC
                 a.setClassPlace();
                 a.setClassTitle(slot.name);
                 a.setDay(k);
-                a.setProfessorName();
+                a.setProfessorName(" ");
                 a.setStartTime(slot.getStartTime());
 //            a.setStartTime(new Time(10,10));
                 a.setEndTime(slot.getEndTime());
 //            a.setEndTime(new Time(13,10));
 
                 temp.add(a);
-                obj.insertTimeSlot(a, i);
+                obj.insertTimeSlot(a, weekday);
                 //timetable.add(temp);
             }
-        }
+        //}
 
         ArrayList<Schedule> sch=obj.getTimeSlots(0);
         if(sch.size()!=0)

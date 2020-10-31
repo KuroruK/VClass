@@ -742,6 +742,29 @@ public Boolean insertStudentCourseData(int studentID,int courseID) {
         return arr;
     }
 
+    public ArrayList<Integer> getTeacherCourseIDs(int ID){
+        ArrayList<Integer> arr=new ArrayList<Integer>();
+
+        String qu = "SELECT * FROM " +TABLE_NAME6+" where teacherID ="+Integer.toString(ID); //+" where weekday = "+Integer.toString(day);
+        SQLiteDatabase MyDB=this.getReadableDatabase();
+        Cursor cursor = MyDB.rawQuery(qu,null);
+        if(cursor==null||cursor.getCount()==0)
+        {
+            Log.v("getTeacherCourseID err","oooooo");
+            return arr;
+        }
+        else {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                arr.add(cursor.getInt(1));
+                cursor.moveToNext();
+            }
+        }
+
+        return arr;
+    }
+
+
 
     public ArrayList<Schedule> getStudentSchedules(String username){
         ArrayList<Schedule> sch = new ArrayList<Schedule>();
@@ -752,13 +775,56 @@ public Boolean insertStudentCourseData(int studentID,int courseID) {
             String crsName=getCourseName(id);
 
             String qu = "SELECT * FROM " +TABLE_NAME5+" where classTitle  = '"+crsName+"'"; //+" where weekday = "+Integer.toString(day);
-            SQLiteDatabase MyDB=this.getReadableDatabase();
-         //   Cursor cursor=this.execReadQuery(qu);
-            Cursor cursor = MyDB.rawQuery(qu,null);
+           // SQLiteDatabase MyDB=this.getReadableDatabase();
+            Cursor cursor=this.execReadQuery(qu);
+         //   Cursor cursor = MyDB.rawQuery(qu,null);
             if(cursor==null||cursor.getCount()==0)
             {
-                Log.v("getStudentSchedules err",getCourseName(id));
-                //return sch;
+                Log.v("getStudentSchedules err","oooooo");
+           //     return sch;
+            }
+            else {
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    Schedule temp=new Schedule();
+                    cursor.getInt(0);
+                    temp.setClassTitle(cursor.getString(1));
+                    temp.setClassPlace(cursor.getString(2));
+                    temp.setProfessorName(cursor.getString(3));
+                    temp.setDay(cursor.getInt(4));
+                    Time tS=new Time();
+                    Time tE=new Time();
+                    tS.setHour(cursor.getInt(5));
+                    tS.setMinute(cursor.getInt(6));
+                    tE.setHour(cursor.getInt(7));
+                    tE.setMinute(cursor.getInt(8));
+                    temp.setStartTime(tS);
+                    temp.setEndTime(tE);
+                    temp.setDay(cursor.getInt(9));
+                    sch.add(temp);
+
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return sch;
+    }
+    public ArrayList<Schedule> getTeacherSchedules(String username){
+        ArrayList<Schedule> sch = new ArrayList<Schedule>();
+
+        ArrayList<Integer> crsID=getTeacherCourseIDs(getTeacherID(username));
+
+        for(Integer id:crsID){
+            String crsName=getCourseName(id);
+
+            String qu = "SELECT * FROM " +TABLE_NAME5+" where classTitle  = '"+crsName+"'"; //+" where weekday = "+Integer.toString(day);
+           // SQLiteDatabase MyDB=this.getReadableDatabase();
+            Cursor cursor=this.execReadQuery(qu);
+         //   Cursor cursor = MyDB.rawQuery(qu,null);
+            if(cursor==null||cursor.getCount()==0)
+            {
+                Log.v("getTeacherSchedules err","oooooo");
+           //     return sch;
             }
             else {
                 cursor.moveToFirst();
@@ -788,14 +854,53 @@ public Boolean insertStudentCourseData(int studentID,int courseID) {
     }
 
 
+    public Boolean canClassBeAdded(Time start,Time end,Integer day,Integer weekday) {
+
+        String qu = "SELECT * FROM " + TABLE_NAME5 + " where day = " + Integer.toString(day) + " and weekday = " + Integer.toString(weekday); //+" where weekday = "+Integer.toString(day);
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        Cursor cursor = MyDB.rawQuery(qu, null);
+        if (cursor == null || cursor.getCount() == 0) {
+            Log.v("canClassBeAdded", "oooooo");
+            return true;
+        } else {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Schedule temp = new Schedule();
+                cursor.getInt(0);
+                temp.setClassTitle(cursor.getString(1));
+                temp.setClassPlace(cursor.getString(2));
+                temp.setProfessorName(cursor.getString(3));
+                temp.setDay(cursor.getInt(4));
+                Time tS = new Time();
+                Time tE = new Time();
+                tS.setHour(cursor.getInt(5));
+                tS.setMinute(cursor.getInt(6));
+                tE.setHour(cursor.getInt(7));
+                tE.setMinute(cursor.getInt(8));
+                temp.setStartTime(tS);
+                temp.setEndTime(tE);
+
+                if (start.getHour() >= tS.getHour() && start.getMinute() >= tS.getMinute()) {
+                    if (start.getHour() < tE.getHour() && start.getMinute() < tE.getMinute()) {
+                        return false;
+                    }
+                }
+
+                if (end.getHour() >= tS.getHour() && end.getMinute() >= tS.getMinute()) {
+                    if (end.getHour() < tE.getHour() && end.getMinute() < tE.getMinute()) {
+                        return false;
+                    }
+                }
+
+                cursor.moveToNext();
+
+            }
+
+            return true;
+        }
 
 
-
-
-
-
-
-
+    }
 
 
 }
