@@ -1,2 +1,0 @@
-# VClass
-virtual classroom repo
