@@ -12,6 +12,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorLogin">#2487BC</color>
+    <color name="colorDarkGreen">#246E1E</color>
         <string-array name="default_sticker_color">
             <item>#f08676</item>
             <item>#ecc369</item>

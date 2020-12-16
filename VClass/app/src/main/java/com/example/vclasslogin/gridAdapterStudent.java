@@ -119,12 +119,16 @@ public class gridAdapterStudent extends BaseAdapter {
 
         }
 
-        else if(names.get(position).toString().equals("Manage Courses"))
+        else if(names.get(position).toString().equals("View Classes"))
         {
             imageView.setImageResource(R.drawable.courses);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent=new Intent(activity,StudentClassesActivity.class);
+                    intent.putExtra("type","student");
+                    intent.putExtra("name",username);
+                    activity.startActivity(intent);
                      }
             });
             Animation anim = new ScaleAnimation(

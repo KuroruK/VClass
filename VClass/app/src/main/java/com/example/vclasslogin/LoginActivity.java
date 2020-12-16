@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("VClass");
 
         DB = new DBHelper(this);
-       // DB.deleteTables();
+        //DB.deleteTables();
         DB.createTables();
         if(!DB.doesUserNameExist("admin")) {
             Boolean c = DB.insertData("Admin", "090078601", "manager.vclass@gmail.com", "admin", "pass", "admin");
@@ -94,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                         Toast.makeText(LoginActivity.this, "Welcome to VClass!", Toast.LENGTH_SHORT).show();
-
                     }
                     else {
                         Toast.makeText(LoginActivity.this, "Invalid username or password!", Toast.LENGTH_SHORT).show();
