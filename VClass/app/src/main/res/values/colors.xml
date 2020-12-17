@@ -4,31 +4,31 @@
     <color name="colorPrimary">#227DAE</color>
     <color name="colorPrimaryDark">#1A6087</color>
     <color name="colorAccent">#FF4081</color>
-        <color name="colorHeader">#fcfcfc</color>
-        <color name="colorHeaderText">#7d7d7d</color>
-        <color name="colorTableItem">#efefef</color>
+    <color name="colorHeader">#fcfcfc</color>
+    <color name="colorHeaderText">#7d7d7d</color>
+    <color name="colorTableItem">#efefef</color>
     <color name="colorEdit">#20B177</color>
     <color name="colorDelete">#DF4545</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorLogin">#2487BC</color>
     <color name="colorDarkGreen">#246E1E</color>
-        <string-array name="default_sticker_color">
-            <item>#f08676</item>
-            <item>#ecc369</item>
-            <item>#a7ca70</item>
-            <item>#7dd1c1</item>
-            <item>#7aa5e9</item>
-            <item>#fbaa68</item>
-            <item>#9f86e1</item>
-            <item>#78cb87</item>
-            <item>#d397ed</item>
-        </string-array>
+    <string-array name="default_sticker_color">
+        <item>#f08676</item>
+        <item>#ecc369</item>
+        <item>#a7ca70</item>
+        <item>#7dd1c1</item>
+        <item>#7aa5e9</item>
+        <item>#fbaa68</item>
+        <item>#9f86e1</item>
+        <item>#78cb87</item>
+        <item>#d397ed</item>
+    </string-array>
 
-        <color name="default_side_header_font_color">#7d7d7d</color>
-        <color name="default_header_font_color">#7d7d7d</color>
-        <color name="default_header_highlight_font_color">#ffffff</color>
-        <color name="default_header_highlight_color">#74a4f3</color>
-        <color name="default_sticker_font_color">#ffffff</color>
+    <color name="default_side_header_font_color">#7d7d7d</color>
+    <color name="default_header_font_color">#7d7d7d</color>
+    <color name="default_header_highlight_font_color">#ffffff</color>
+    <color name="default_header_highlight_color">#74a4f3</color>
+    <color name="default_sticker_font_color">#ffffff</color>
 
-    </resources>
+</resources>

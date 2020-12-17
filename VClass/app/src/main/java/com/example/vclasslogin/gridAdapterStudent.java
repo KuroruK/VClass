@@ -68,7 +68,7 @@ public class gridAdapterStudent extends BaseAdapter {
             v = vi.inflate(R.layout.grid_layout, null);
 
 
-}
+        }
         TextView textView = (TextView)v.findViewById(R.id.namePlacer);
         ImageView imageView = (ImageView)v.findViewById(R.id.imageHolder);
         if(names.get(position).toString().equals("View Schedule"))
@@ -129,7 +129,7 @@ public class gridAdapterStudent extends BaseAdapter {
                     intent.putExtra("type","student");
                     intent.putExtra("name",username);
                     activity.startActivity(intent);
-                     }
+                }
             });
             Animation anim = new ScaleAnimation(
                     0.95f, 1f, // Start and end values for the X axis scaling
@@ -204,16 +204,16 @@ public class gridAdapterStudent extends BaseAdapter {
                                     cr.moveToNext();
                                 }
                             }
-                      //      makeNotification(subnames);
+                            //      makeNotification(subnames);
 
                             Cursor cursor = StudentView.handler.execQuery("SELECT * FROM ATTENDANCE WHERE datex = '" +
                                     date +"' AND hour = " + hour.getText() + ";");
                             if(cursor==null||cursor.getCount()==0)
                             {
-                            //    Intent launchinIntent = new Intent(StudentView.activity, attendanceActivity.class);
-                            //    launchinIntent.putExtra("DATE", date);
-                            //    launchinIntent.putExtra("PERIOD", hour.getText().toString());
-                            //    StudentView.activity.startActivity(launchinIntent);
+                                //    Intent launchinIntent = new Intent(StudentView.activity, attendanceActivity.class);
+                                //    launchinIntent.putExtra("DATE", date);
+                                //    launchinIntent.putExtra("PERIOD", hour.getText().toString());
+                                //    StudentView.activity.startActivity(launchinIntent);
                             }else {
                                 Toast.makeText(getActivity(),"Period Already Added", Toast.LENGTH_LONG).show();
                             }

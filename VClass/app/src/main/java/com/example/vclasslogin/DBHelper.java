@@ -76,8 +76,8 @@ public class DBHelper extends SQLiteOpenHelper {
         setDefaultStudentCourse("CS218");
         setDefaultStudentCourse("EE227");
         setDefaultStudentCourse("CS211");
-    }
 
+    }
     private void setDefaultStudentCourse(String crs){
         insertStudentCourseData(getStudentID("student1"),getCourseID(crs));
         insertStudentCourseData(getStudentID("student2"),getCourseID(crs));

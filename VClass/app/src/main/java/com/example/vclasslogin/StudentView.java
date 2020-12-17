@@ -44,7 +44,8 @@ public class StudentView extends AppCompatActivity {
         basicFields.add("View Timetable");
         basicFields.add("View Schedule");
         basicFields.add("View Classes");
-      //  basicFields.add("Manage Courses");
+
+        //  basicFields.add("Manage Courses");
 
         adapter = new gridAdapterStudent(this,basicFields,getIntent().getStringExtra("student-username"));
         gridView.setAdapter(adapter);
