@@ -51,6 +51,7 @@ public class DrawingActivity extends AppCompatActivity implements ColorPickerDia
     private String selected="Thin Pen";
     private static int selectedWidth=minWidth;
     private int colorSelected=-1;
+    private DBHelper db;
     /**
      * Called when the activity is first created.
      */
@@ -58,9 +59,12 @@ public class DrawingActivity extends AppCompatActivity implements ColorPickerDia
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+
+        db = new DBHelper(getApplicationContext());
+
         final String url = intent.getStringExtra("FIREBASE_URL");
-      //  final String boardId = intent.getStringExtra("BOARD_ID");
-        final String boardId = "-MOm2vvp3pHoIWP7Rh9T";
+        final String boardId = intent.getStringExtra("BOARD_ID");
+        //final String boardId = "-MOm2vvp3pHoIWP7Rh9T";
         Log.i(TAG, "Adding DrawingView on "+url+" for boardId "+boardId);
         Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(url);

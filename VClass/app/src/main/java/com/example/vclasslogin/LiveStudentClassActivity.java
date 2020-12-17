@@ -15,24 +15,29 @@ public class LiveStudentClassActivity extends AppCompatActivity {
     ImageView whiteboard;
     public static final String TAG = "AndroidDrawing";
     private static String FIREBASE_URL = "https://vclass-47776.firebaseio.com/";
+    DBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_student_class);
 
+        db = new DBHelper(getApplicationContext());
+        //db.setClassDetailsTable();
+
         micToggle = findViewById(R.id.live_std_mic);
         voiceToggle = findViewById(R.id.live_std_voice2);
-        whiteboard=findViewById(R.id.live_std_whiteboard);
+        whiteboard = findViewById(R.id.live_std_whiteboard);
 
 
         whiteboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String key="-MNUK-Lu_PfeT0nqRHqh";//firebase boardmeta key/id
-                Log.i(TAG, "Opening board "+key);
-                Toast.makeText(LiveStudentClassActivity.this, "Opening board: "+key, Toast.LENGTH_LONG).show();
+                String key = db.getWhiteboardIDFromClassTitle(getIntent().getStringExtra("courseName"));//firebase boardmeta key/id
+                Log.i(TAG, "Opening board " + key);
+                Toast.makeText(LiveStudentClassActivity.this, "Opening board: " + key, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(LiveStudentClassActivity.this, DrawingActivity.class);
+                intent.putExtra("courseName", getIntent().getStringExtra("courseName"));
                 intent.putExtra("FIREBASE_URL", FIREBASE_URL);
                 intent.putExtra("BOARD_ID", key);
                 startActivity(intent);
@@ -44,8 +49,7 @@ public class LiveStudentClassActivity extends AppCompatActivity {
         if (micToggle.isChecked()) {
             //micToggle.setChecked(false);
             Toast.makeText(this, "Mic muted!", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             //micToggle.setChecked(true);
             Toast.makeText(this, "Mic unmuted!", Toast.LENGTH_SHORT).show();
         }
@@ -54,8 +58,7 @@ public class LiveStudentClassActivity extends AppCompatActivity {
     public void voiceToggleClick(View view) {
         if (voiceToggle.isChecked()) {
             Toast.makeText(this, "Class volume on!", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             Toast.makeText(this, "Class volume off!", Toast.LENGTH_SHORT).show();
         }
     }
