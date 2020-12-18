@@ -22,6 +22,8 @@ quick start
   you will first need to set the fire base URL in the following classes to one that u can run.
    <dd> 
      Classes : LiveStudentClassActivity, DBHelper,BoardListActivity
+   </dd>
+   <dd>
       replae        FIREBASE_URL = "<insert url here>""
    </dd>
      
