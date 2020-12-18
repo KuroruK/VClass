@@ -24,9 +24,11 @@ quick start
    <dd> 
      Classes : LiveStudentClassActivity, DBHelper,BoardListActivity
    </dd>
-   <dd>
-      replae        FIREBASE_URL = "<insert url here>""
-   </dd>
+   <dt>
+      replace        FIREBASE_URL = "<insert url here>""
+   </dt>
+     
+   To initialise databases with some values we can do.....
   
      
 </dl>
