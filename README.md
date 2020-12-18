@@ -3,7 +3,7 @@
 
 <dl>
   VClass will be an android application that will provide the features of a classroom from 
-  the comfort of people’s homes. Using virtual reality technology, a more immersive and 
+  the comfort of people’s homes. Using virtual reality technology, a more immersive and
   interactive experience can be had relative to the typical online video conferencing or 
   classroom software.
 </dl>
