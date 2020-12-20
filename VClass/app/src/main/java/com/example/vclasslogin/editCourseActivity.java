@@ -2,6 +2,7 @@ package com.example.vclasslogin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,31 +46,34 @@ public class editCourseActivity extends AppCompatActivity {
                     Toast.makeText(editCourseActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
                 else {
 
-                        Boolean checkCName = false,checkCCode = false;
-                        if(!(cName.equals(getIntent().getStringExtra("courseName")))){
-                            DB.doesCourseNameExist(cName);
-                        }
+                    Boolean checkCName = false,checkCCode = false;
+                    if(!(cName.equals(getIntent().getStringExtra("courseName")))){
+                        DB.doesCourseNameExist(cName);
+                    }
                     if(!(cCode.equals(getIntent().getStringExtra("courseCode")))){
                         checkCCode = DB.doesCourseCodeExist(cCode);
                     }
 
-                        if (!(checkCName ||  checkCCode)) {
-                            Boolean update = DB.updateCourseData(id,cCode,cName,cHrs,cDes);
-                            if (update) {
-                                Toast.makeText(editCourseActivity.this, "Course Details Updated Successfully!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), ListCourseActivity.class);
-                                startActivity(intent);
-                            }
-                            else {
-                                Toast.makeText(editCourseActivity.this, "Updation failed!", Toast.LENGTH_SHORT).show();
-                            }
+                    if (!(checkCName ||  checkCCode)) {
+                        Boolean update = DB.updateCourseData(id,cCode,cName,cHrs,cDes);
+                        if (update) {
+                            //Log.v("board60", "yes");
+                            DB.updateWhiteboardForCourse(getIntent().getStringExtra("courseName"), cName);
+                            //Log.v("board62", "yes");
+                            Toast.makeText(editCourseActivity.this, "Course Details Updated Successfully!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), ListCourseActivity.class);
+                            startActivity(intent);
                         }
                         else {
-                            if (checkCCode)
-                                Toast.makeText(editCourseActivity.this, "Updation failed!\nCourse Code already exists!\n", Toast.LENGTH_SHORT).show();
-                            else if (checkCName)
-                                Toast.makeText(editCourseActivity.this, "Updation failed!\nCourse Name already exists!\n", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(editCourseActivity.this, "Updation failed!", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                    else {
+                        if (checkCCode)
+                            Toast.makeText(editCourseActivity.this, "Updation failed!\nCourse Code already exists!\n", Toast.LENGTH_SHORT).show();
+                        else if (checkCName)
+                            Toast.makeText(editCourseActivity.this, "Updation failed!\nCourse Name already exists!\n", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             }

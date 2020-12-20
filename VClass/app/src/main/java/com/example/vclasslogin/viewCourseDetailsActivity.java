@@ -12,10 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class viewCourseDetailsActivity extends AppCompatActivity {
 
-    TextView courseName, courseCode,creditHrs,description;
-    Button edit,delete;
+    TextView courseName, courseCode, creditHrs, description;
+    Button edit, delete;
     DBHelper db;
     int courseID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +28,7 @@ public class viewCourseDetailsActivity extends AppCompatActivity {
         courseCode = findViewById(R.id.c_id2);
         creditHrs = findViewById(R.id.c_crd_hrs2);
         description = findViewById(R.id.c_desc2);
-        db=new DBHelper(this);
+        db = new DBHelper(this);
         edit = (Button) findViewById(R.id.c_edit);
         delete = (Button) findViewById(R.id.c_delete);
         init();
@@ -35,13 +36,13 @@ public class viewCourseDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(view.getContext(),editCourseActivity.class);
+                Intent intent = new Intent(view.getContext(), editCourseActivity.class);
 
-                intent.putExtra("courseName",getIntent().getStringExtra("courseName"));
-                intent.putExtra("courseCode",getIntent().getStringExtra("courseCode"));
-                intent.putExtra("creditHrs",getIntent().getStringExtra("creditHrs"));
-                intent.putExtra("description",getIntent().getStringExtra("description"));
-                intent.putExtra("id",getIntent().getIntExtra("id",-1));
+                intent.putExtra("courseName", getIntent().getStringExtra("courseName"));
+                intent.putExtra("courseCode", getIntent().getStringExtra("courseCode"));
+                intent.putExtra("creditHrs", getIntent().getStringExtra("creditHrs"));
+                intent.putExtra("description", getIntent().getStringExtra("description"));
+                intent.putExtra("id", getIntent().getIntExtra("id", -1));
                 startActivity(intent);
 
             }
@@ -49,27 +50,28 @@ public class viewCourseDetailsActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean deletion=db.deleteCourseData(courseID);
-                if(deletion==true){
-                    Toast.makeText(viewCourseDetailsActivity.this,"Deletion Successful",Toast.LENGTH_LONG).show();
-                    Intent intent=new Intent(view.getContext(),ListCourseActivity.class);
+                boolean deletion = db.deleteCourseData(courseID);
+                if (deletion == true) {
+                    db.removeWhiteboardForCourse(courseName.getText().toString());
+                    Toast.makeText(viewCourseDetailsActivity.this, "Deletion Successful", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(view.getContext(), ListCourseActivity.class);
                     startActivity(intent);
-                }
-                else{
-                    Toast.makeText(viewCourseDetailsActivity.this,"Deletion Failed",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(viewCourseDetailsActivity.this, "Deletion Failed", Toast.LENGTH_LONG).show();
                 }
 
 
             }
         });
     }
-    void init(){
+
+    void init() {
         courseName.setText(getIntent().getStringExtra("courseName"));
         courseCode.setText(getIntent().getStringExtra("courseCode"));
         creditHrs.setText(getIntent().getStringExtra("creditHrs"));
         description.setText(getIntent().getStringExtra("description"));
-        courseID=db.getCourseID(getIntent().getStringExtra("courseCode"));
-        Log.v("CourseID",Integer.toString(courseID));
+        courseID = db.getCourseID(getIntent().getStringExtra("courseCode"));
+        Log.v("CourseID", Integer.toString(courseID));
         return;
     }
 }

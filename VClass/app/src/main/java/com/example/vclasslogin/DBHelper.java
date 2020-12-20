@@ -968,7 +968,28 @@ public class DBHelper extends SQLiteOpenHelper {
             createBoard2(classTitles.get(i), classTitles.get(i));
             Log.v("board949", "yes");
         }
+    }
 
+    public void addWhiteboardForCourse(String str) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        createBoard2(str, str);
+    }
+
+    public void removeWhiteboardForCourse(String str) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        MyDB.delete(TABLE_CLASS_DETAILS, "class_title=\"" + str + "\"", null);
+    }
+
+    public void updateWhiteboardForCourse(String old, String str) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("class_title", str);
+        contentValues.put("chat_pass", str);
+        //Log.v("board990", "yes");
+        MyDB.update(TABLE_CLASS_DETAILS, contentValues, "class_title=\"" + old + "\"", null);
+        //Log.v("board992", "yes");
     }
 
 

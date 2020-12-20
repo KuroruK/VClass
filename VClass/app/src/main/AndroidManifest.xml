@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.vclasslogin">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -93,9 +94,15 @@
         <activity android:name=".BoardListActivity">
 
         </activity>
-        <activity android:name=".StudentClassesActivity"></activity>
-        <activity android:name=".LiveStudentClassActivity"></activity>
-        <activity android:name=".DrawingActivity"></activity>
+        <activity android:name=".StudentClassesActivity" />
+        <activity android:name=".LiveStudentClassActivity" />
+        <activity android:name=".StudentGroupChatsActivity" />
+        <activity android:name=".StudentGroupChatViewActivity" />
+
+        <activity android:name=".TeacherClassesActivity" />
+        <activity android:name=".LiveTeacherClassActivity" />
+
+        <activity android:name=".DrawingActivity" />
 
 
 

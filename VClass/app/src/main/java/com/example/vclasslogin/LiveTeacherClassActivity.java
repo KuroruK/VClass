@@ -1,12 +1,5 @@
 package com.example.vclasslogin;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -18,6 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class LiveStudentClassActivity extends AppCompatActivity {
+public class LiveTeacherClassActivity extends AppCompatActivity {
     ToggleButton micToggle, voiceToggle;
     ImageView whiteboard;
     public static final String TAG = "AndroidDrawing";
@@ -44,7 +44,7 @@ public class LiveStudentClassActivity extends AppCompatActivity {
     static int counter = 0;
     FirebaseDatabase database;
     DatabaseReference reference;
-    //   String senderID,receiverID;
+    String senderID, receiverID;
     EditText sendMessage;
     ImageView sendMessageButton, sendImageButton;
     String receiverPhoto;
@@ -63,9 +63,9 @@ public class LiveStudentClassActivity extends AppCompatActivity {
         className.setText(getIntent().getStringExtra("courseName"));
         username = getIntent().getStringExtra("username");
         //  senderID=getIntent().getStringExtra("senderID");
-        //      senderID="1";
+        //senderID="1";
         //  receiverID=getIntent().getStringExtra("receiverID");
-        //      receiverID="2";
+        //receiverID="2";
         sendMessage = (EditText) findViewById(R.id.c_msg);
         sendMessageButton = (ImageView) findViewById(R.id.c_send);
         database = FirebaseDatabase.getInstance();
@@ -169,8 +169,8 @@ public class LiveStudentClassActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String key = db.getWhiteboardIDFromClassTitle(getIntent().getStringExtra("courseName"));//firebase boardmeta key/id
                 Log.i(TAG, "Opening board " + key);
-                Toast.makeText(LiveStudentClassActivity.this, "Opening board: " + key, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(LiveStudentClassActivity.this, DrawingActivity.class);
+                Toast.makeText(LiveTeacherClassActivity.this, "Opening board: " + key, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LiveTeacherClassActivity.this, DrawingActivity.class);
                 intent.putExtra("courseName", getIntent().getStringExtra("courseName"));
                 intent.putExtra("FIREBASE_URL", FIREBASE_URL);
                 intent.putExtra("BOARD_ID", key);

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding ="10dp"
+    android:id="@+id/row_rec">
+
+<!--    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/row_rm_img"
+        android:src="@mipmap/ic_launcher"
+        android:layout_centerVertical="true"/>
+-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_rm_msg"
+        android:layout_marginStart="5dp"
+        android:text="This is temporary text for messaging."
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:padding="10dp"
+        android:background="@drawable/rcv_msg_box"
+        android:elevation="3dp"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_rm_username"
+        android:text="Sender"
+        android:textSize="12sp"
+        android:textColor="@color/grey_hint"
+        android:layout_below="@id/row_rm_msg"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_rm_temp"
+        android:text="at"
+        android:textSize="12sp"
+        android:textColor="@color/grey_hint"
+        android:layout_below="@id/row_rm_msg"
+        android:layout_toRightOf="@id/row_rm_username"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_rm_time"
+        android:text="Msg time"
+        android:textSize="12sp"
+        android:textColor="@color/grey_hint"
+        android:layout_toRightOf="@id/row_rm_temp"
+        android:layout_below="@id/row_rm_msg"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp" />
+
+
+
+</RelativeLayout>

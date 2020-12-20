@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -48,29 +49,31 @@ public class registerCourseActivity extends AppCompatActivity {
                     Toast.makeText(registerCourseActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
                 else {
 
-                        Boolean checkCName = DB.doesCourseNameExist(cName), checkCCode = DB.doesCourseCodeExist(cCode);
-                        if (!(checkCName || checkCCode)) {
-                            Boolean insert = DB.insertCourseData(cCode,cName,cHrs,cDes);
-                            if (insert) {
-                                Toast.makeText(registerCourseActivity.this, "Course Registration Successful!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), ListCourseActivity.class);
-                                startActivity(intent);
-                            }
-                            else {
-                                Toast.makeText(registerCourseActivity.this, "Registration failed!", Toast.LENGTH_SHORT).show();
-                            }
+                    Boolean checkCName = DB.doesCourseNameExist(cName), checkCCode = DB.doesCourseCodeExist(cCode);
+                    if (!(checkCName || checkCCode)) {
+                        Boolean insert = DB.insertCourseData(cCode,cName,cHrs,cDes);
+                        if (insert) {
+                            DB.addWhiteboardForCourse(cName);
+                            Log.v("course_whiteboard", DB.getWhiteboardIDFromClassTitle(cName));
+                            Toast.makeText(registerCourseActivity.this, "Course Registration Successful!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), ListCourseActivity.class);
+                            startActivity(intent);
                         }
                         else {
-                            if (checkCCode)
-                                Toast.makeText(registerCourseActivity.this, "Registration failed!\nCourse Code already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
-                            if (checkCName)
-                                Toast.makeText(registerCourseActivity.this, "Registration failed!\nCourse Name already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(registerCourseActivity.this, "Registration failed!", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                    else {
+                        if (checkCCode)
+                            Toast.makeText(registerCourseActivity.this, "Registration failed!\nCourse Code already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
+                        if (checkCName)
+                            Toast.makeText(registerCourseActivity.this, "Registration failed!\nCourse Name already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             }
         });
- }
+    }
 
     // return checked radio button
 }

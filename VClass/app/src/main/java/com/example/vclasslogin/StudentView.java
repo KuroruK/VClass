@@ -41,9 +41,10 @@ public class StudentView extends AppCompatActivity {
 
         getSupportActionBar().show();
         gridView = (GridView)findViewById(R.id.grid);
-        basicFields.add("View Timetable");
-        basicFields.add("View Schedule");
-        basicFields.add("View Classes");
+        basicFields.add("Timetable");
+        basicFields.add("Schedule");
+        basicFields.add("Classes");
+        basicFields.add("Chat");
 
         //  basicFields.add("Manage Courses");
 

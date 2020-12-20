@@ -158,6 +158,32 @@ public class gridAdapterTeacher extends BaseAdapter {
 
         }
 
+        else if(names.get(position).toString().equals("View Classes"))
+        {
+            imageView.setImageResource(R.drawable.courses);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(activity,TeacherClassesActivity.class);
+                    intent.putExtra("type","teacher");
+                    intent.putExtra("name",teacherUsername);
+                    activity.startActivity(intent);
+                }
+            });
+            Animation anim = new ScaleAnimation(
+                    0.95f, 1f, // Start and end values for the X axis scaling
+                    0.95f, 1f, // Start and end values for the Y axis scaling
+                    Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
+                    Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
+            anim.setFillAfter(true); // Needed to keep the result of the animation
+            anim.setDuration(2000);
+            anim.setRepeatMode(Animation.INFINITE);
+            anim.setRepeatCount(Animation.INFINITE);
+            imageView.startAnimation(anim);
+
+        }
+
+
         textView.setText(names.get(position).toString());
         return v;
     }

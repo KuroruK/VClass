@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class MyRvStudentCoursesListAdapter extends RecyclerView.Adapter<MyRvStudentCoursesListAdapter.MyViewHolder> {
+public class MyRvTeacherCoursesListAdapter extends RecyclerView.Adapter<MyRvTeacherCoursesListAdapter.MyViewHolder> {
     Context c;
     List<String> courses;
     String username;
-    public MyRvStudentCoursesListAdapter(Context c, List<String> courses,String username) {
+    public MyRvTeacherCoursesListAdapter(Context c, List<String> courses, String username) {
         this.c = c;
         this.courses = courses;
         this.username=username;
@@ -34,7 +34,6 @@ public class MyRvStudentCoursesListAdapter extends RecyclerView.Adapter<MyRvStud
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.className.setText(courses.get(position));
-        holder.className.setText(courses.get(position));
 
         Log.v("t2", "yes");
         if (holder.rl != null) {
@@ -44,9 +43,9 @@ public class MyRvStudentCoursesListAdapter extends RecyclerView.Adapter<MyRvStud
                 public void onClick(View view) {
 
                     Log.v("t1", "here");
-                    Intent intent = new Intent(view.getContext(), LiveStudentClassActivity.class);
+                    Intent intent = new Intent(view.getContext(),LiveTeacherClassActivity.class);
                     intent.putExtra("username",username);
-                    intent.putExtra("type","student");
+                    intent.putExtra("type","teacher");
                     intent.putExtra("courseName", courses.get(position));
 
                     c.startActivity(intent);

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp"
+    android:id="@+id/row">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/rac_img"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rac_name"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:layout_toRightOf="@id/rac_img"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rac_msg"
+        android:text="Message here"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:layout_toRightOf="@id/rac_img"
+        android:layout_below="@id/rac_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rac_last_seen"
+        android:text="Last seen"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_alignRight="@id/rac_name"
+        android:layout_marginLeft="10dp" />
+
+</RelativeLayout>
