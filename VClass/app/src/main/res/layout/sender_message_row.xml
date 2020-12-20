@@ -17,8 +17,7 @@
         android:background="@drawable/sent_msg_box"
         android:backgroundTint="@color/colorLogin"
         android:layout_alignParentEnd="true"
-        android:layout_marginLeft="5dp"
-        android:layout_alignParentRight="true" />
+        android:elevation="3dp"/>
 
     <TextView
         android:layout_width="wrap_content"

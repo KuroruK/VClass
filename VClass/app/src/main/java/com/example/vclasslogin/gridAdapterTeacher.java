@@ -34,10 +34,10 @@ public class gridAdapterTeacher extends BaseAdapter {
     public static Activity activity;
     String teacherUsername;
 
-    public gridAdapterTeacher(Activity activity, ArrayList names,String teacherUsername) {
+    public gridAdapterTeacher(Activity activity, ArrayList names, String teacherUsername) {
         this.activity = activity;
         this.names = names;
-        this.teacherUsername=teacherUsername;
+        this.teacherUsername = teacherUsername;
     }
 
     @Override
@@ -62,17 +62,16 @@ public class gridAdapterTeacher extends BaseAdapter {
             v = vi.inflate(R.layout.grid_layout, null);
 
 
-}
-        TextView textView = (TextView)v.findViewById(R.id.namePlacer);
-        ImageView imageView = (ImageView)v.findViewById(R.id.imageHolder);
-        if(names.get(position).toString().equals("Schedule Class"))
-        {
+        }
+        TextView textView = (TextView) v.findViewById(R.id.namePlacer);
+        ImageView imageView = (ImageView) v.findViewById(R.id.imageHolder);
+        if (names.get(position).toString().equals("Schedule Class")) {
             imageView.setImageResource(R.drawable.schedule);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-              //      Intent launchinIntent = new Intent(activity, scheduleClassActivity.class);
-              //      activity.startActivity(launchinIntent);
+                    //      Intent launchinIntent = new Intent(activity, scheduleClassActivity.class);
+                    //      activity.startActivity(launchinIntent);
                 }
             });
             Animation anim = new ScaleAnimation(
@@ -86,16 +85,14 @@ public class gridAdapterTeacher extends BaseAdapter {
             anim.setRepeatCount(Animation.INFINITE);
             imageView.startAnimation(anim);
 
-        }
-        else if(names.get(position).toString().equals("View Schedule"))
-        {
+        } else if (names.get(position).toString().equals("Schedule")) {
             imageView.setImageResource(R.drawable.timetable);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent launchinIntent = new Intent(activity, view_schedule_activity.class);
-                    launchinIntent.putExtra("type","teacher");
-                    launchinIntent.putExtra("name",teacherUsername);
+                    launchinIntent.putExtra("type", "teacher");
+                    launchinIntent.putExtra("name", teacherUsername);
                     activity.startActivity(launchinIntent);
                 }
             });
@@ -110,17 +107,14 @@ public class gridAdapterTeacher extends BaseAdapter {
             anim.setRepeatCount(Animation.INFINITE);
             imageView.startAnimation(anim);
 
-        }
-
-        else if(names.get(position).toString().equals("View Timetable"))
-        {
+        } else if (names.get(position).toString().equals("Timetable")) {
             imageView.setImageResource(R.drawable.timetable);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(activity,timeTableMainActivity.class);
-                    intent.putExtra("type","teacher");
-                    intent.putExtra("name",teacherUsername);
+                    Intent intent = new Intent(activity, timeTableMainActivity.class);
+                    intent.putExtra("type", "teacher");
+                    intent.putExtra("name", teacherUsername);
                     activity.startActivity(intent);
                 }
             });
@@ -135,14 +129,13 @@ public class gridAdapterTeacher extends BaseAdapter {
             anim.setRepeatCount(Animation.INFINITE);
             imageView.startAnimation(anim);
 
-        }else if(names.get(position).toString().equals("Manage Tasks"))
-        {
+        } else if (names.get(position).toString().equals("Manage Tasks")) {
             imageView.setImageResource(R.drawable.tasks);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-              //      Intent launchinIntent = new Intent(activity, scheduler.class);
-              //      activity.startActivity(launchinIntent);
+                    //      Intent launchinIntent = new Intent(activity, scheduler.class);
+                    //      activity.startActivity(launchinIntent);
                 }
             });
             Animation anim = new ScaleAnimation(
@@ -156,17 +149,14 @@ public class gridAdapterTeacher extends BaseAdapter {
             anim.setRepeatCount(Animation.INFINITE);
             imageView.startAnimation(anim);
 
-        }
-
-        else if(names.get(position).toString().equals("View Classes"))
-        {
+        } else if (names.get(position).toString().equals("Classes")) {
             imageView.setImageResource(R.drawable.courses);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(activity,TeacherClassesActivity.class);
-                    intent.putExtra("type","teacher");
-                    intent.putExtra("name",teacherUsername);
+                    Intent intent = new Intent(activity, TeacherClassesActivity.class);
+                    intent.putExtra("type", "teacher");
+                    intent.putExtra("name", teacherUsername);
                     activity.startActivity(intent);
                 }
             });
@@ -181,6 +171,28 @@ public class gridAdapterTeacher extends BaseAdapter {
             anim.setRepeatCount(Animation.INFINITE);
             imageView.startAnimation(anim);
 
+        } else if (names.get(position).toString().equals("Chat")) {
+            imageView.setImageResource(R.drawable.chat);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Log.v("teacher_chat", teacherUsername);
+                    Intent intent = new Intent(activity, TeacherGroupChatsActivity.class);
+                    intent.putExtra("type", "teacher");
+                    intent.putExtra("name", teacherUsername);
+                    activity.startActivity(intent);
+                }
+            });
+            Animation anim = new ScaleAnimation(
+                    0.95f, 1f, // Start and end values for the X axis scaling
+                    0.95f, 1f, // Start and end values for the Y axis scaling
+                    Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
+                    Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
+            anim.setFillAfter(true); // Needed to keep the result of the animation
+            anim.setDuration(2000);
+            anim.setRepeatMode(Animation.INFINITE);
+            anim.setRepeatCount(Animation.INFINITE);
+            imageView.startAnimation(anim);
         }
 
 
@@ -202,22 +214,21 @@ public class gridAdapterTeacher extends BaseAdapter {
             LayoutInflater inflater = getActivity().getLayoutInflater();
             final View v = inflater.inflate(R.layout.pick_period, null);
             final DatePicker datePicker = (DatePicker) v.findViewById(R.id.datePicker);
-            final EditText hour = (EditText)v.findViewById(R.id.periodID);
+            final EditText hour = (EditText) v.findViewById(R.id.periodID);
             final Spinner spn = (Spinner) v.findViewById(R.id.spinnerSubject);
 
             String qu = "SELECT DISTINCT sub FROM NOTES";
             ArrayList<String> subs = new ArrayList<>();
             subs.add("Not Specified");
             Cursor cr = StudentView.handler.execQuery(qu);
-            if(cr!=null)
-            {
+            if (cr != null) {
                 cr.moveToFirst();
-                while(!cr.isAfterLast()) {
+                while (!cr.isAfterLast()) {
                     subs.add(cr.getString(0));
                     Log.d("gridAdapter.class", "Cached " + cr.getString(0));
                     cr.moveToNext();
                 }
-            }else
+            } else
                 Log.d("gridAdapter.class", "No SUBS" + cr.getString(0));
 
             ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_dropdown_item, subs);
@@ -237,26 +248,24 @@ public class gridAdapterTeacher extends BaseAdapter {
                             String qx = "SELECT title FROM NOTES where sub = '" + subject + "'";
                             Cursor cr = StudentView.handler.execQuery(qx);
                             String subnames = "";
-                            if(cr!=null)
-                            {
+                            if (cr != null) {
                                 cr.moveToFirst();
-                                while(!cr.isAfterLast()) {
+                                while (!cr.isAfterLast()) {
                                     subnames += (cr.getString(0)) + "\n";
                                     cr.moveToNext();
                                 }
                             }
-                      //      makeNotification(subnames);
+                            //      makeNotification(subnames);
 
                             Cursor cursor = StudentView.handler.execQuery("SELECT * FROM ATTENDANCE WHERE datex = '" +
-                                    date +"' AND hour = " + hour.getText() + ";");
-                            if(cursor==null||cursor.getCount()==0)
-                            {
-                            //    Intent launchinIntent = new Intent(StudentView.activity, attendanceActivity.class);
-                            //    launchinIntent.putExtra("DATE", date);
-                            //    launchinIntent.putExtra("PERIOD", hour.getText().toString());
-                            //    StudentView.activity.startActivity(launchinIntent);
-                            }else {
-                                Toast.makeText(getActivity(),"Period Already Added", Toast.LENGTH_LONG).show();
+                                    date + "' AND hour = " + hour.getText() + ";");
+                            if (cursor == null || cursor.getCount() == 0) {
+                                //    Intent launchinIntent = new Intent(StudentView.activity, attendanceActivity.class);
+                                //    launchinIntent.putExtra("DATE", date);
+                                //    launchinIntent.putExtra("PERIOD", hour.getText().toString());
+                                //    StudentView.activity.startActivity(launchinIntent);
+                            } else {
+                                Toast.makeText(getActivity(), "Period Already Added", Toast.LENGTH_LONG).show();
                             }
                         }
                     })

@@ -25,13 +25,13 @@
         android:paddingVertical="10dp"
         android:paddingHorizontal="15dp">
 
-        <ImageView
+        <!--<ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/c_camera"
             android:src="@drawable/ic_camera"
             android:layout_centerVertical="true"
-            />
+            />-->
 
         <EditText
             android:layout_width="match_parent"
@@ -42,21 +42,16 @@
             android:textSize="14sp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="30dp"
-            android:layout_toRightOf="@id/c_camera"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:layout_toEndOf="@id/c_camera"
-            android:layout_marginRight="30dp" />
+            android:layout_centerVertical="true" />
 
         <ImageView
             android:layout_width="24dp"
             android:layout_height="22dp"
             android:id="@+id/g_send"
             android:src="@drawable/send_msg"
-            android:layout_toRightOf="@id/g_msg"
+            android:layout_toEndOf="@id/g_msg"
             android:layout_marginStart="-24dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="-24dp" />
+            android:layout_centerVertical="true" />
 
 
 

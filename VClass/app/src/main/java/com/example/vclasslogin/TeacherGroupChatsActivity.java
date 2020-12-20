@@ -1,40 +1,23 @@
 package com.example.vclasslogin;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.vclasslogin.DBHelper;
-import com.example.vclasslogin.MyRvListGroupChatsAdapter;
-import com.example.vclasslogin.R;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class StudentGroupChatsActivity extends AppCompatActivity {
+public class TeacherGroupChatsActivity extends AppCompatActivity {
 //    AutoCompleteAdapter autoCompleteAdapter;
     RecyclerView rv;
     TextView add;
@@ -49,7 +32,7 @@ public class StudentGroupChatsActivity extends AppCompatActivity {
 
 
     String username;
-    int studentID;
+    int teacherID;
     ArrayList<String> courses;
     ArrayList<Integer> coursesIDs;
     DBHelper dbHelper;
@@ -69,8 +52,8 @@ public class StudentGroupChatsActivity extends AppCompatActivity {
         coursesIDs = new ArrayList<Integer>();
         rv = findViewById(R.id.ac_rcv);
 
-        studentID = dbHelper.getStudentID(username);
-        coursesIDs = dbHelper.getStudentCourseIDs(studentID);
+        teacherID = dbHelper.getTeacherID(username);
+        coursesIDs = dbHelper.getTeacherCourseIDs(teacherID);
         for (int i = 0; i < coursesIDs.size(); ++i) {
             groupLists.add(dbHelper.getCourseName(coursesIDs.get(i)));
             Log.v("teacher_", dbHelper.getCourseName(coursesIDs.get(i)));

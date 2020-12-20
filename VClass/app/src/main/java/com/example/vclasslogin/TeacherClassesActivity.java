@@ -1,5 +1,6 @@
 package com.example.vclasslogin;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +24,7 @@ public class TeacherClassesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_classes);
 
-        getSupportActionBar().setTitle("View Classes");
+        getSupportActionBar().setTitle("Classes");
 
         dbHelper = new DBHelper(this);
         username = getIntent().getStringExtra("name");
@@ -41,5 +42,10 @@ public class TeacherClassesActivity extends AppCompatActivity {
         rv.setLayoutManager(manager);
         adapter = new MyRvTeacherCoursesListAdapter(TeacherClassesActivity.this, courses,username);
         rv.setAdapter(adapter);
+
+        //Intent intent = new Intent();
+        //intent.putExtra("name", username);
+        //setResult(RESULT_OK, intent);
+        //finish();
     }
 }

@@ -62,6 +62,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
         className = findViewById(R.id.live_std_name);
         className.setText(getIntent().getStringExtra("courseName"));
         username = getIntent().getStringExtra("username");
+        getSupportActionBar().setTitle("Class");
         //  senderID=getIntent().getStringExtra("senderID");
         //senderID="1";
         //  receiverID=getIntent().getStringExtra("receiverID");
@@ -159,7 +160,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
         db = new DBHelper(getApplicationContext());
         //db.setClassDetailsTable();
 
-        micToggle = findViewById(R.id.live_std_mic);
+        //micToggle = findViewById(R.id.live_std_mic);
         voiceToggle = findViewById(R.id.live_std_voice2);
         whiteboard = findViewById(R.id.live_std_whiteboard);
 
@@ -174,6 +175,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                 intent.putExtra("courseName", getIntent().getStringExtra("courseName"));
                 intent.putExtra("FIREBASE_URL", FIREBASE_URL);
                 intent.putExtra("BOARD_ID", key);
+                intent.putExtra("user_type", "teacher");
                 startActivity(intent);
             }
         });

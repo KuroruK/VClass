@@ -94,26 +94,28 @@
         <activity android:name=".BoardListActivity">
 
         </activity>
-        <activity android:name=".StudentClassesActivity" />
-        <activity android:name=".LiveStudentClassActivity" />
-        <activity android:name=".StudentGroupChatsActivity" />
-        <activity android:name=".StudentGroupChatViewActivity" />
+        <activity android:name=".StudentClassesActivity"
+            android:parentActivityName=".StudentView"/>
+        <activity android:name=".LiveStudentClassActivity"
+            android:parentActivityName=".StudentClassesActivity"/>
+        <activity android:name=".StudentGroupChatsActivity"
+            android:parentActivityName=".StudentView"/>
+        <activity android:name=".StudentGroupChatViewActivity"
+            android:parentActivityName=".StudentGroupChatsActivity"/>
 
-        <activity android:name=".TeacherClassesActivity" />
-        <activity android:name=".LiveTeacherClassActivity" />
+        <activity android:name=".TeacherClassesActivity"
+            android:parentActivityName=".TeacherView"/>
+        <activity android:name=".LiveTeacherClassActivity"
+            android:parentActivityName=".TeacherClassesActivity"/>
+        <activity android:name=".TeacherGroupChatsActivity"
+            android:parentActivityName=".TeacherView"/>
 
-        <activity android:name=".DrawingActivity" />
-
-
-
-
-
-
+        <activity android:name=".DrawingActivity"
+            />
 
         <activity android:name=".HomeActivity" />
 
-        <activity android:name=".LoginActivity"
-            android:parentActivityName=".HomeActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

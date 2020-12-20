@@ -114,7 +114,6 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
                 Picasso.get().load(messages.get(position).getMessage()).into(vh4.recImage);
                 vh4.recImageTime.setText(messages.get(position).getTime());
                 Picasso.get().load(photo).into(vh4.recPhoto);
-
                 break;
             default:
                 break;

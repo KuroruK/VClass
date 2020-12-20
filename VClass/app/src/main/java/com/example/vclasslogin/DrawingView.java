@@ -48,16 +48,18 @@ public class DrawingView extends View {
     private int midWidth=30;
     private int maxWidth=50;
     private int selectedWidth=minWidth;
+    private String userType;
 
     public DrawingView(Context context, Firebase ref) {
         this(context, ref, 1.0f);
     }
-    public DrawingView(Context context, Firebase ref, int width, int height,int strokeWidth) {
+    public DrawingView(Context context, Firebase ref, int width, int height,int strokeWidth, String user_type) {
         this(context, ref);
         this.setBackgroundColor(Color.DKGRAY);
         mCanvasWidth = width;
         mCanvasHeight = height;
         this.selectedWidth=strokeWidth;
+        userType = user_type;
     }
     public DrawingView(Context context, Firebase ref, float scale) {
         super(context);
@@ -265,6 +267,9 @@ public class DrawingView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (userType.equals("student"))
+            return false;
+
         float x = event.getX();
         float y = event.getY();
 

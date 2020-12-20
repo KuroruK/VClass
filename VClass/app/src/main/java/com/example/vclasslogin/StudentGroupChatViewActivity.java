@@ -57,6 +57,7 @@ public class StudentGroupChatViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_messages);
+        getSupportActionBar().setTitle("Chat");
         ////message
         messages = new ArrayList<>();
 
@@ -77,7 +78,6 @@ public class StudentGroupChatViewActivity extends AppCompatActivity {
                     );
                     adapter.notifyDataSetChanged();
                 }
-
             }
 
             @Override
@@ -138,6 +138,7 @@ public class StudentGroupChatViewActivity extends AppCompatActivity {
         // add=findViewById(R.id.address);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(manager);
+        //rv.smoothScrollToPosition(adapter.getItemCount() - 1);
         Collections.sort(messages, new Comparator<message>() {
             @Override
             public int compare(message message, message t1) {
@@ -148,7 +149,6 @@ public class StudentGroupChatViewActivity extends AppCompatActivity {
         });
         adapter = new MyRvMessagesListAdapter(getApplicationContext(), messages, username, " ");
         rv.setAdapter(adapter);
-
 ////////////
     }
 }

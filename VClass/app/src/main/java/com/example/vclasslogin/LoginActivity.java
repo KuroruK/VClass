@@ -49,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
             DB.initStudentCourse();
             DB.initTeacherCourse();
         }
+
+
         username = (EditText) findViewById(R.id.username1);
         password = (EditText) findViewById(R.id.password1);
         showPasswordCheckbox = (AppCompatCheckBox) findViewById(R.id.showPassword1);
@@ -128,12 +130,15 @@ public class LoginActivity extends AppCompatActivity {
                 Log.v("course add",Boolean.toString(DB.doesCourseCodeExist(c.code)));
             }
         }
+        ;
+
         crs=loader.getCourses(this,"crs2.csv");
         for(course c:crs){
             if(!(DB.doesCourseCodeExist(c.code))){
                 DB.insertCourseData(c.code,c.name,c.CHs,c.coordinator);
             }
         }
+        DB.setClassDetailsTable();
 /*        crs=loader.getCourses(this,"crs3.csv");
         for(course c:crs){
             if(!(DB.doesCourseCodeExist(c.code))){

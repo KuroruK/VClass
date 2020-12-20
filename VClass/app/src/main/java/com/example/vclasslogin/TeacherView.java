@@ -23,6 +23,7 @@ public class TeacherView extends AppCompatActivity {
     GridView gridView;
     public static databaseHandler handler;
     public static Activity activity;
+    String name;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,6 +39,7 @@ public class TeacherView extends AppCompatActivity {
         setContentView(R.layout.base_layout);
 
         getSupportActionBar().setTitle("Sign out");
+        name = getIntent().getStringExtra("teacher-username");
 
         basicFields = new ArrayList<>();
         handler = new databaseHandler(this);
@@ -45,12 +47,13 @@ public class TeacherView extends AppCompatActivity {
 
         getSupportActionBar().show();
         gridView = (GridView)findViewById(R.id.grid);
-        basicFields.add("View Schedule");
-        basicFields.add("View Timetable");
-        basicFields.add("View Classes");
+        basicFields.add("Schedule");
+        basicFields.add("Timetable");
+        basicFields.add("Classes");
+        basicFields.add("Chat");
 
        // basicFields.add("Manage Tasks");
-        adapter = new gridAdapterTeacher(this,basicFields,getIntent().getStringExtra("teacher-username"));
+        adapter = new gridAdapterTeacher(this,basicFields, name);
         gridView.setAdapter(adapter);
     }
 
@@ -63,4 +66,13 @@ public class TeacherView extends AppCompatActivity {
         //     Intent launchIntent = new Intent(this,About.class);
         //     startActivity(launchIntent);
     }
+
+    /*public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                name = data.getStringExtra("name");
+            }
+        }
+    }*/
 }

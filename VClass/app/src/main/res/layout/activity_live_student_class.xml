@@ -15,12 +15,10 @@
         android:textSize="22sp"
         android:textStyle="bold"
         android:layout_marginTop="10dp"
-        android:layout_toLeftOf="@id/live_std_mic"
-        android:layout_toStartOf="@id/live_std_mic"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"/>
 
-    <ToggleButton
+    <!--<ToggleButton
         android:layout_width="30dp"
         android:layout_height="47dp"
         android:id="@+id/live_std_mic"
@@ -31,12 +29,12 @@
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
         android:layout_alignParentEnd="true"
-        android:onClick="micToggleClick"/>
+        android:onClick="micToggleClick"/>-->
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/live_std_mic"
+        android:layout_below="@id/live_std_name"
         android:id="@+id/live_std_rl2"
         >
 
@@ -59,14 +57,17 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:id="@+id/live_std_voice1"
                 android:text="Voice"
+                android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
-                android:background="@color/colorLogin"
+                android:background="@drawable/all_curved_corners"
+                android:backgroundTint="@color/colorLightGrey"
                 android:gravity="left|center_vertical"
                 tools:ignore="RtlHardcoded"
                 android:padding="10dp"
+                android:clickable="false"
                 />
 
             <ToggleButton
@@ -86,15 +87,16 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:id="@+id/live_std_vr"
+            android:textAllCaps="false"
             android:layout_marginHorizontal="20dp"
             android:layout_below="@id/live_std_voice"
             android:layout_toRightOf="@id/live_std_whiteboard"
             android:text="Virtual Reality"
             android:textColor="@color/colorWhite"
-            android:background="@color/colorLightGrey"
-            android:gravity="left|center_vertical"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorLightGrey"
             tools:ignore="RtlHardcoded"
             android:padding="10dp"
             android:layout_marginTop="10dp"

@@ -964,7 +964,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         Log.v("board947", "yes");
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < classTitles.size(); i++) {
             createBoard2(classTitles.get(i), classTitles.get(i));
             Log.v("board949", "yes");
         }
