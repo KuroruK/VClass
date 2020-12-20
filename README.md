@@ -45,14 +45,14 @@ Open the project VClass in android studio and install to device
   
   some student accounts are 
   <dt>
-      username = "student1","student2","student3","student1"
+      username = "student1","student2","student3","student4"
    </dt><dt>
       password = "1234" same for all
     </dt>
     <dd></dd>
   some teacher accounts are 
   <dt>
-      username = "teacher1","teacher2","teacher3","teacher1"
+      username = "teacher1","teacher2","teacher3","teacher4"
    </dt><dt>
       password = "1234" same for all
     </dt>
