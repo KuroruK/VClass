@@ -10,6 +10,8 @@
 
 start
 ==========
+Open the project VClass in android studio and install to device
+
 <dl>
   The application uses firebasee as an online database to handle thus to use run the application
   you will first need to set the fire base URL in the following classes to one that u can run.
