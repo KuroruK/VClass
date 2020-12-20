@@ -11,15 +11,18 @@
 start
 ==========
 <dl>
-  The application uses firebasee as an online database to handle thus to thus to use run the application
+  The application uses firebasee as an online database to handle thus to use run the application
   you will first need to set the fire base URL in the following classes to one that u can run.
   <dd></dd>
    <dd> 
-     Classes : LiveStudentClassActivity, DBHelper,BoardListActivity
+     Classes : LiveStudentClassActivity, DBHelper, BoardListActivity
    </dd>
    <dt>
       replace        FIREBASE_URL = "insert url here"
    </dt><dd></dd>
+  
+  note: for multiple devices to use, the local sql databse of the initial device will need to be shared,
+        but it will run  on a single device.
      
    Currently to store credentials and other information, we are using a local SQL database.
    this is being loaded with .csv files currenly that ar using a specific format. thus loading functions
