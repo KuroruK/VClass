@@ -22,7 +22,17 @@ start
    </dt><dd></dd>
      
    Currently to store credentials and other information, we are using a local SQL database.
+   this is being loaded with .csv files currenly that ar using a specific format. thus loading functions
+   for timetable will not work without them present but the values can be manually inserted for running
    
+   default Admin account is 
+   <dt>
+      username = "admin"
+   </dt><dd>
+      password = "admin"
+    </dd>
+    <dd></dd>
+    this account can be used to set some initial accounts for students and teachers for testing
   
      
 </dl>
