@@ -28,7 +28,7 @@ start
    this is being loaded with .csv files currenly that ar using a specific format. thus loading functions
    for timetable will not work without them present(currently in assets folder as we are using the emulator)
    but the values can be manually inserted for running as well.
-   currently some values for testing are made at line 47-50 in LoginActivity.java that start up some accounts
+   currently some values for testing are initialisd at line 47-50 in LoginActivity.java, that stets up some accounts
    such as admin student and teacher
    
    default Admin account is 
@@ -44,14 +44,14 @@ start
   <dt>
       username = "student1","student2","student3","student1"
    </dt><dt>
-      password = "1234"
+      password = "1234" same for all
     </dt>
-    
+    <dd></dd>
   some teacher accounts are 
   <dt>
       username = "teacher1","teacher2","teacher3","teacher1"
    </dt><dt>
-      password = "1234"
+      password = "1234" same for all
     </dt>
      
 </dl>
