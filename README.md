@@ -1,5 +1,6 @@
 # VClass
 ==========
+By : i170204, i170120, i170071
 
 <dl>
   VClass will be an android application that will provide the features of a classroom from 
