@@ -38,7 +38,7 @@ start
       password = "pass"
     </dt>
     <dd></dd>
-    this account can be used to set some initial accounts for students and teachers for testing
+  this account can be used to set some initial accounts for students and teachers for testing
   
   some student accounts are 
   <dt>
@@ -47,7 +47,7 @@ start
       password = "1234"
     </dt>
     
-    some teacher accounts are 
+  some teacher accounts are 
   <dt>
       username = "teacher1","teacher2","teacher3","teacher1"
    </dt><dt>
