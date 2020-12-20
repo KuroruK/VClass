@@ -19,7 +19,7 @@ start
    </dd>
    <dt>
       replace        FIREBASE_URL = "insert url here"
-   </dt>
+   </dt><dd></dd>
      
    Currently to store credentials and other information, we are using a local SQL database.
    
