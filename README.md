@@ -18,7 +18,7 @@ start
      Classes : LiveStudentClassActivity, DBHelper,BoardListActivity
    </dd>
    <dt>
-      replace        FIREBASE_URL = "<insert url here>""
+      replace        FIREBASE_URL = "insert url here"
    </dt>
      
    Currently to store credentials and other information, we are using a local SQL database.
