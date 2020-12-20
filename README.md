@@ -23,17 +23,33 @@ start
      
    Currently to store credentials and other information, we are using a local SQL database.
    this is being loaded with .csv files currenly that ar using a specific format. thus loading functions
-   for timetable will not work without them present but the values can be manually inserted for running
+   for timetable will not work without them present(currently in assets folder as we are using the emulator)
+   but the values can be manually inserted for running as well.
+   currently some values for testing are made at line 47-50 in LoginActivity.java that start up some accounts
+   such as admin student and teacher
    
    default Admin account is 
    <dt>
       username = "admin"
-   </dt><dd>
-      password = "admin"
-    </dd>
+   </dt><dt>
+      password = "pass"
+    </dt>
     <dd></dd>
     this account can be used to set some initial accounts for students and teachers for testing
   
+  some student accounts are 
+  <dt>
+      username = "student1","student2","student3","student1"
+   </dt><dt>
+      password = "1234"
+    </dt>
+    
+    some teacher accounts are 
+  <dt>
+      username = "teacher1","teacher2","teacher3","teacher1"
+   </dt><dt>
+      password = "1234"
+    </dt>
      
 </dl>
 
