@@ -9,7 +9,7 @@ By : i170204, i170120, i170071
   classroom software.
 </dl>
 
-start
+Start
 ==========
 Open the project VClass in android studio and install to device
 
@@ -32,16 +32,16 @@ Open the project VClass in android studio and install to device
    for timetable will not work without them present(currently in assets folder as we are using the emulator)
    but the values can be manually inserted for running as well.
    currently some values for testing are initialisd at line 47-50 in LoginActivity.java, that stets up some accounts
-   such as admin student and teacher
+   such as admin, student, and teacher.
    
-   default Admin account is 
+   Default Admin's account is:
    <dt>
       username = "admin"
    </dt><dt>
       password = "pass"
     </dt>
     <dd></dd>
-  this account can be used to set some initial accounts for students and teachers for testing
+  This account can be used to set some initial accounts for students and teachers for testing
   
   some student accounts are 
   <dt>
@@ -59,7 +59,7 @@ Open the project VClass in android studio and install to device
      
 </dl>
 
-current implementation
+Current Implementation
 ==========
 We are currently using 2 databases, a local SQL database, that
 will be moved to a web-service later on, and firebase to manage the online functions
