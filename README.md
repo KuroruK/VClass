@@ -30,7 +30,8 @@ Open the project VClass in android studio and install to device
    Currently to store credentials and other information, we are using a local SQL database.
    this is being loaded with .csv files currenly that ar using a specific format. thus loading functions
    for timetable will not work without them present(currently in assets folder as we are using the emulator)
-   but the values can be manually inserted for running as well.
+   but the values can be manually inserted for running as well. 
+   the local database is at "data/com.example.vclasslogin/databases/VClass_Users.db" in phone
    currently some values for testing are initialisd at line 47-50 in LoginActivity.java, that stets up some accounts
    such as admin, student, and teacher.
    
