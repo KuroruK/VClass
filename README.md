@@ -86,6 +86,7 @@ course name refers to the group chat those messages belong to.
 
 References
 ==========
+<dd></dd>
 Basic UI: https://code-projects.org/teacher-classroom-assistant-in-android-with-source-code/
 <dd></dd>
 Timetable: https://github.com/tlaabs/TimetableView
