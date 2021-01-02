@@ -81,3 +81,11 @@ For the chatroom, we are again using a firebase-based implementation where
 the messages are uploaded and retrieved by the firebase handler. to set it up for a group
 chat, messages sent by different people have the course name as a receiver, where the
 course name refers to the group chat those messages belong to.
+
+
+
+References
+==========
+Virtual Whiteboard: https://github.com/googlearchive/AndroidDrawing
+Basic UI: https://code-projects.org/teacher-classroom-assistant-in-android-with-source-code/
+Timetable: https://github.com/tlaabs/TimetableView
