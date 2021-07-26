@@ -121,43 +121,56 @@ details as well as other course information.
 
 The student will be shown to the main student menu after logging in. Here the
 student can select one of the following:
+
 • Timetable: This is the global timetable.
 
 • Schedule: This is the individual schedule of the student based on their
 registered course.
 
 • Classes: These are the registered classes that lead to the classes class hub.
+
 • Chat: This is a shortcut to the group chats of each of the classes.
+
 Class Hubs:
 Each class will have its hub where the class's tasks, resources, chat, public
 whiteboard, and joining live session option are available.
+
 • Tasks: Here the student can view their tasks that are due as well as those
 which are complete. Selecting a task the user can view the uploaded files,
 and submit their solutions and if the task has been graded, they can view
 the remarks and grades.
+
 • Resource: Here the students can view all the shared resource files that are
 available for their class.
+
 • Join Session: This takes the student to a VR environment where they can
 view the virtual whiteboard and the shared slides as well as be joined to
 the voice chat of the live session.
 
 The teacher will be shown to the main teacher menu after logging in. This is similar
 to the student side with the main differences being in the classroom hub.
+
 • Timetable: This is the global timetable
+
 • Schedule: This is the individual schedule of the teacher based on the
 courses they are teaching.
+
 • Classes: These are the registered classes that lead to the classes class hub.
+
 • Chat: This is a shortcut to the group chats of each of the classes.
 
 Class Hubs:
 Each class will have its hub where the class's tasks, resources, chat, public
 whiteboard, and creating live session option are available.
+
 • Tasks: Here the teacher can view the tasks they have placed for the
 students as well as add a new task. They can upload the required files for
 the task as well as review students submitted tasks and give grades and
 feedback.
+
 • Resource: Here the teacher can share and view the resource files for the
 class.
+
 • Create Session: This takes the teacher to an interface where they can write
 on the whiteboard as well as select the pdf they want to share with the
 students. The teacher will also join the voice chat of the classroom and
