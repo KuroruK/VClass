@@ -121,9 +121,11 @@ details as well as other course information.
 
 The student will be shown to the main student menu after logging in. Here the
 student can select one of the following:
-• Timetable: This is the global timetable
+• Timetable: This is the global timetable.
+
 • Schedule: This is the individual schedule of the student based on their
 registered course.
+
 • Classes: These are the registered classes that lead to the classes class hub.
 • Chat: This is a shortcut to the group chats of each of the classes.
 Class Hubs:
