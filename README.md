@@ -84,6 +84,25 @@ the messages are uploaded and retrieved by the firebase handler. to set it up fo
 chat, messages sent by different people have the course name as a receiver, where the
 course name refers to the group chat those messages belong to.
 
+Resources such as pdf, doc files, etc. can be shared by the students and
+teachers. This has been implemented using Realtime Database and Firebase
+Storage. Students and teachers can share resources in the class chat. Teachers
+can also upload resources in a specialized tab for Resource Sharing. Students
+can only view resources from this tab. Resources are unique to each course
+which is why the course name of the resource is stored in the Realtime
+database and this property is used to decide which resources will be shown.
+
+Teachers can upload tasks in the task tab. A task can be of multiple types such
+as pdf, doc file, etc. Students can view these tasks and submit files about these
+tasks. This feature has been implemented using Realtime Database and
+Firebase storage. Similar to resources, tasks are also unique to each course
+and are identified similarly. Tasks can be ongoing or finished. The data
+property of a task is used to tell whether a task is ongoing or finished. A
+student can only submit if a task is ongoing.
+
+Teachers can grade the submitted tasks and provide feedback as well. This
+can be viewed by the students. This feature has also been implemented using
+Realtime Database and Firebase Storage.
 
 
 =====================================================================================
