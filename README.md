@@ -86,6 +86,26 @@ course name refers to the group chat those messages belong to.
 
 
 
+=====================================================================================
+Unity Component
+The unity components for teacher and students are built as separate unity projects (later made 
+into different scenes). Photon is used for the networking between different users.
+
+Teacher side
+This is a 3d unity project used to show a 2d user interface. The teacher side has 3 key 
+functionalities; shared whiteboard(editable by teacher), shared document(changed and navigated 
+by teacher) and voice functionalities.
+
+Student side
+This is a full 3d environment that can be viewed in either a 3d video mode or a VR mode by
+using google cardboard. The students can use this to view the shared whiteboard, shared document
+and voice chat with the rest of the class and teacher when so desired.
+
+Photon networking
+We photon for unity for the networking and voice aspect of our project. Photon voice is used for the 
+voice call functionality for each room and photon pun is used to trigger events so as all the students 
+who are in a session will be shown the same changes to their respective sides.
+
 References
 ==========
 <dd></dd>
