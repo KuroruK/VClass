@@ -87,7 +87,7 @@ course name refers to the group chat those messages belong to.
 
 
 =====================================================================================
-Unity Component
+# Unity Component
 The unity components for teacher and students are built as separate unity projects (later made 
 into different scenes). Photon is used for the networking between different users.
 
