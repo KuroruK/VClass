@@ -1,2 +1,11 @@
+include ':unity vr test 7-debug'
+include ':unitygvr'
+include ':unity-classes'
+include ':libprotobuf-java-nano'
+include ':gvr'
+include ':gvr-permissionsupport-release'
+include ':gvr-keyboardsupport-release'
+include ':gvr-keyboard'
+include ':audioinaec'
 include ':app'
 rootProject.name = "VClassLogin"

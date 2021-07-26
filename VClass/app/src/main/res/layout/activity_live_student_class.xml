@@ -105,7 +105,7 @@
             tools:ignore="RtlHardcoded" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/live_std_attendance"
+            android:id="@+id/live_std_VRMode"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@id/live_std_resources"
@@ -113,12 +113,13 @@
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/live_std_whiteboard"
             android:background="@drawable/all_curved_corners"
-            android:backgroundTint="@color/colorLightGrey"
+            android:backgroundTint="@color/colorLogin"
             android:padding="10dp"
-            android:text="Attendance"
+            android:text="Join Session"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             tools:ignore="RtlHardcoded" />
+
     </RelativeLayout>
 
     <RelativeLayout

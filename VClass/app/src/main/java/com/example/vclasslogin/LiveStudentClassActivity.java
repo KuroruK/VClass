@@ -35,6 +35,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.unity3d.player.UnityPlayer;
+import com.vclasstestv2.vrVclass.UnityPlayerActivity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ import java.util.Objects;
 
 public class LiveStudentClassActivity extends AppCompatActivity {
     //ToggleButton micToggle, voiceToggle;
-    AppCompatButton taskBtn, resourcesBtn, attendanceBtn;
+    AppCompatButton taskBtn, resourcesBtn, VRButton;
     ImageView whiteboard;
     public static final String TAG = "AndroidDrawing";
     private static String FIREBASE_URL = "https://vclass-47776.firebaseio.com/";
@@ -81,6 +83,27 @@ public class LiveStudentClassActivity extends AppCompatActivity {
         //className = findViewById(R.id.live_std_name);
         //className.setText(getIntent().getStringExtra("courseName"));
         username = getIntent().getStringExtra("username");
+
+
+        // VR
+
+        VRButton = findViewById(R.id.live_std_VRMode);
+        VRButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  UnityPlayer.UnitySendMessage("SceneSwitcher","ShowMessage","student");
+                Intent intent=new Intent(LiveStudentClassActivity.this, UnityPlayerActivity.class);
+                intent.putExtra("arguments","student");
+                intent.putExtra("sessionName ",getIntent().getStringExtra("courseName"));
+                startActivity(intent);
+
+            }
+        });
+
+
+
+
+
 
 
         //  senderID=getIntent().getStringExtra("senderID");
@@ -211,7 +234,6 @@ public class LiveStudentClassActivity extends AppCompatActivity {
         // buttons
         taskBtn = findViewById(R.id.live_std_tasks);
         resourcesBtn = findViewById(R.id.live_std_resources);
-        attendanceBtn = findViewById(R.id.live_std_attendance);
 
         taskBtn.setOnClickListener(new View.OnClickListener() {
             @Override

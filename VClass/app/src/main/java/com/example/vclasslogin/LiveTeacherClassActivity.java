@@ -35,6 +35,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.unity3d.player.UnityPlayer;
+import com.vclasstestv2.vrVclass.UnityPlayerActivity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ import java.util.Objects;
 
 public class LiveTeacherClassActivity extends AppCompatActivity {
     //ToggleButton micToggle, voiceToggle;
-    AppCompatButton taskBtn, resourcesBtn, attendanceBtn;
+    AppCompatButton taskBtn, resourcesBtn, VRButton;
     ImageView whiteboard;
     public static final String TAG = "AndroidDrawing";
     private static String FIREBASE_URL = "https://vclass-47776.firebaseio.com/";
@@ -75,6 +77,27 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Class");
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+
+
+        // VR
+
+        VRButton = findViewById(R.id.live_std_VRMode);
+        VRButton.setText("Start Session");
+        VRButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  UnityPlayer.UnitySendMessage("SceneSwitcher", "ShowMessage", "teacher");
+                Intent intent = new Intent(LiveTeacherClassActivity.this, UnityPlayerActivity.class);
+                intent.putExtra("arguments","teacher");
+                intent.putExtra("sessionName",getIntent().getStringExtra("courseName"));
+                startActivity(intent);
+
+            }
+        });
+
+
 
         ////message
         stdShareBtn = findViewById(R.id.c_share);
@@ -285,7 +308,6 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
         // buttons
         taskBtn = findViewById(R.id.live_std_tasks);
         resourcesBtn = findViewById(R.id.live_std_resources);
-        attendanceBtn = findViewById(R.id.live_std_attendance);
 
         taskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
