@@ -108,6 +108,10 @@ who are in a session will be shown the same changes to their respective sides.
 
 =====================================================================================
 # User Manual
+
+Admin Side:
+==========
+
 The administrator has numerous functions he can do.
 1. Admin can load a premade timetable into the database by loading CSV
 files for specific days. This table is used for scheduling and can be viewed
@@ -118,6 +122,10 @@ registered courses, their details as well as other student information.
 courses, their details as well as other teacher information.
 4. Admin can add, edit and remove courses. Admin can edit the courses, their
 details as well as other course information.
+
+
+Student Side:
+=============
 
 The student will be shown to the main student menu after logging in. Here the
 student can select one of the following:
@@ -146,6 +154,10 @@ available for their class.
 • Join Session: This takes the student to a VR environment where they can
 view the virtual whiteboard and the shared slides as well as be joined to
 the voice chat of the live session.
+
+
+Teacher Side:
+=============
 
 The teacher will be shown to the main teacher menu after logging in. This is similar
 to the student side with the main differences being in the classroom hub.
