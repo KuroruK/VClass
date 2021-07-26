@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:background="@color/colorBackground"
+    android:padding="20dp">
+
+
+    <TextView
+        android:id="@+id/regFormC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Add Task"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/regFormC"
+        android:layout_marginTop="40dp">
+
+        <EditText
+            android:id="@+id/task_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Task Title" />
+
+        <EditText
+            android:id="@+id/task_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/task_name"
+            android:layout_marginTop="20dp"
+            android:hint="Description"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/task_due_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/task_details"
+            android:layout_marginTop="20dp"
+            android:hint="Deadline (dd/mm/yyyy)"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/task_marks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/task_due_date"
+            android:layout_marginTop="20dp"
+            android:hint="Total Marks (10)"
+            android:inputType="number" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/at_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/task_marks"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:id="@+id/task_attach_file"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_below="@id/at_rv"
+            android:layout_marginTop="20dp"
+            android:text="Attach file"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:backgroundTint="@color/colorPrimary"
+            app:borderWidth="0dp" />
+
+        <Button
+            android:id="@+id/btn_upload_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/task_attach_file"
+            android:layout_marginHorizontal="90dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorLogin"
+            android:padding="10dp"
+            android:text="Upload"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite" />
+    </RelativeLayout>
+
+</RelativeLayout>

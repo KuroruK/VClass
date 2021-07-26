@@ -28,7 +28,7 @@ public class ListStudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_list);
 
-        getSupportActionBar().setTitle("Students' List");
+        getSupportActionBar().setTitle("Students");
 
         studentList=new ArrayList<Student>();
 

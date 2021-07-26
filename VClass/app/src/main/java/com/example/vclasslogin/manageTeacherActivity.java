@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class manageTeacherActivity extends AppCompatActivity {
 
     ArrayList<String> basicFields;
-    gridAdapterAdmin adapter;
+    GridAdapterAdmin adapter;
     public static ArrayList<String> divisions ;
     public static ArrayList<String> timeSlots;
     GridView gridView;
@@ -58,8 +58,8 @@ public class manageTeacherActivity extends AppCompatActivity {
         basicFields.add("Register Teacher");
         basicFields.add("Edit Teacher");
         basicFields.add("Remove Teacher");
-        adapter = new gridAdapterAdmin(this,basicFields);
-        gridView.setAdapter(adapter);
+        //adapter = new gridAdapterAdmin(this,basicFields);
+        //gridView.setAdapter(adapter);
     }
 
     public void loadSettings(MenuItem item) {

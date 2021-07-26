@@ -1,8 +1,11 @@
 package com.example.vclasslogin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +27,11 @@ public class StudentClassesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_classes);
 
+
+        // action bar
         getSupportActionBar().setTitle("Classes");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         dbHelper = new DBHelper(this);
         username = getIntent().getStringExtra("name");
@@ -43,5 +50,12 @@ public class StudentClassesActivity extends AppCompatActivity {
         rv.setLayoutManager(manager);
         adapter = new MyRvStudentCoursesListAdapter(StudentClassesActivity.this, courses,username);
         rv.setAdapter(adapter);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), StudentView.class);
+        myIntent.putExtra("student-username", username);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
 }

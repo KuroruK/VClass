@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -21,12 +19,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MyRvListGroupChatsAdapter extends RecyclerView.Adapter<MyRvListGroupChatsAdapter.MyViewHolder> {
     Context c;
     List<String> groupList;
-    String username;
+    String username, type;
 
-    public MyRvListGroupChatsAdapter(Context c, List<String> contactList, String username) {
+    public MyRvListGroupChatsAdapter(Context c, List<String> contactList, String username, String type) {
         this.username = username;
         this.c = c;
         this.groupList = contactList;
+        this.type = type;
     }
 
     @NonNull
@@ -52,14 +51,13 @@ public class MyRvListGroupChatsAdapter extends RecyclerView.Adapter<MyRvListGrou
                     Log.v("t1", "here");
                     Intent intent = new Intent(view.getContext(), StudentGroupChatViewActivity.class);
                     intent.putExtra("username", username);
-                    intent.putExtra("type", "student");
+                    intent.putExtra("type", type);
                     intent.putExtra("courseName", groupList.get(position));
 
                     c.startActivity(intent);
                 }
             });
         }
-
     }
 
     @Override
@@ -77,7 +75,7 @@ public class MyRvListGroupChatsAdapter extends RecyclerView.Adapter<MyRvListGrou
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.rac_name);
-            bio = itemView.findViewById(R.id.rac_msg);
+            //bio = itemView.findViewById(R.id.rac_msg);
             //   contactProfilePhoto=itemView.findViewById(R.id.rac_img);
             ll = itemView.findViewById(R.id.row);
 

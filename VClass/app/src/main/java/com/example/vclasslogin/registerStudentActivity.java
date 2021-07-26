@@ -27,7 +27,7 @@ public class registerStudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_student);
 
-        getSupportActionBar().setTitle("Register Student");
+        getSupportActionBar().setTitle("Add Student Details");
 
         firstName = (EditText) findViewById(R.id.firstNameS);
         lastName = (EditText) findViewById(R.id.lastNameS);

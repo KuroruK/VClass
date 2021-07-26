@@ -4,48 +4,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.vclasslogin.DBHelper;
-import com.example.vclasslogin.MyRvListGroupChatsAdapter;
-import com.example.vclasslogin.R;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StudentGroupChatsActivity extends AppCompatActivity {
-//    AutoCompleteAdapter autoCompleteAdapter;
+    //    AutoCompleteAdapter autoCompleteAdapter;
     RecyclerView rv;
-    TextView add;
     MyRvListGroupChatsAdapter adapter;
-    ArrayList<String> groupLists=new ArrayList<>();
+    ArrayList<String> groupLists = new ArrayList<>();
     FirebaseDatabase database;
     DatabaseReference reference;
     CircleImageView viewProfilePhoto;
     ImageView menu;
     AutoCompleteTextView search;
-
 
 
     String username;
@@ -59,9 +42,11 @@ public class StudentGroupChatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_group_chats);
         groupLists = new ArrayList<>();
-        getSupportActionBar().setTitle("Chat App");
-        //menu=(ImageView)findViewById(R.id.ac_menu);
 
+        // back button - action bar
+        getSupportActionBar().setTitle("Chat App");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         dbHelper = new DBHelper(this);
         username = getIntent().getStringExtra("name");
@@ -78,12 +63,10 @@ public class StudentGroupChatsActivity extends AppCompatActivity {
 
 
         // add=findViewById(R.id.address);
-        RecyclerView.LayoutManager manager=new LinearLayoutManager(this);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         rv.setLayoutManager(manager);
-        adapter=new MyRvListGroupChatsAdapter(this,groupLists,getIntent().getStringExtra("name"));
+        adapter = new MyRvListGroupChatsAdapter(this, groupLists, getIntent().getStringExtra("name"), "student");
         rv.setAdapter(adapter);
-
-
 
         //----------search
 
@@ -107,7 +90,8 @@ public class StudentGroupChatsActivity extends AppCompatActivity {
         */
 
     }
-    void searchArray(){
+
+    void searchArray() {
         //search=(AutoCompleteTextView)findViewById(R.id.ac_search2);
  /*       autoCompleteAdapter=new AutoCompleteAdapter(this,contactLists);
         search.setAdapter(autoCompleteAdapter);
@@ -128,4 +112,10 @@ public class StudentGroupChatsActivity extends AppCompatActivity {
 */
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent myIntent = new Intent(getApplicationContext(), StudentView.class);
+        myIntent.putExtra("student-username", username);
+        startActivityForResult(myIntent, 0);
+        return true;
+    }
 }

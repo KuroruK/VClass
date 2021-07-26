@@ -82,7 +82,7 @@ public class TimetableView extends LinearLayout {
     private void getAttrs(AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, com.example.vclasslogin.R.styleable.TimetableView);
         rowCount = a.getInt(com.example.vclasslogin.R.styleable.TimetableView_row_count, DEFAULT_ROW_COUNT) - 1;
-        columnCount =30;// a.getInt(com.example.vclasslogin.R.styleable.TimetableView_column_count, DEFAULT_COLUMN_COUNT);
+        columnCount = 30;// a.getInt(com.example.vclasslogin.R.styleable.TimetableView_column_count, DEFAULT_COLUMN_COUNT);
         cellHeight = a.getDimensionPixelSize(com.example.vclasslogin.R.styleable.TimetableView_cell_height, dp2Px(DEFAULT_CELL_HEIGHT_DP));
         sideCellWidth = a.getDimensionPixelSize(com.example.vclasslogin.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
         int titlesId = a.getResourceId(com.example.vclasslogin.R.styleable.TimetableView_header_title, com.example.vclasslogin.R.array.default_header_title);
@@ -91,9 +91,9 @@ public class TimetableView extends LinearLayout {
         stickerColors = a.getResources().getStringArray(colorsId);
         startTime = a.getInt(com.example.vclasslogin.R.styleable.TimetableView_start_time, DEFAULT_START_TIME);
         headerHighlightColor = a.getColor(com.example.vclasslogin.R.styleable.TimetableView_header_highlight_color, getResources().getColor(com.example.vclasslogin.R.color.default_header_highlight_color));
-        int highlightTypeValue = a.getInteger(com.example.vclasslogin.R.styleable.TimetableView_header_highlight_type,0);
-        if(highlightTypeValue == 0) highlightMode = HighlightMode.COLOR;
-        else if(highlightTypeValue == 1) highlightMode = HighlightMode.IMAGE;
+        int highlightTypeValue = a.getInteger(com.example.vclasslogin.R.styleable.TimetableView_header_highlight_type, 0);
+        if (highlightTypeValue == 0) highlightMode = HighlightMode.COLOR;
+        else if (highlightTypeValue == 1) highlightMode = HighlightMode.IMAGE;
         headerHighlightImageSize = a.getDimensionPixelSize(com.example.vclasslogin.R.styleable.TimetableView_header_highlight_image_size, dp2Px(24));
         headerHighlightImage = a.getDrawable(com.example.vclasslogin.R.styleable.TimetableView_header_highlight_image);
         a.recycle();
@@ -166,7 +166,7 @@ public class TimetableView extends LinearLayout {
             tv.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(stickerSelectedListener != null)
+                    if (stickerSelectedListener != null)
                         stickerSelectedListener.OnStickerSelected(count, schedules);
                 }
             });
@@ -221,33 +221,31 @@ public class TimetableView extends LinearLayout {
     }
 
     public void setHeaderHighlight(int idx) {
-        if(idx < 0)return;
+        if (idx < 0) return;
         TableRow row = (TableRow) tableHeader.getChildAt(0);
         View element = row.getChildAt(idx);
-        if(highlightMode == HighlightMode.COLOR) {
-            TextView tx = (TextView)element;
+        if (highlightMode == HighlightMode.COLOR) {
+            TextView tx = (TextView) element;
             tx.setTextColor(Color.parseColor("#FFFFFF"));
             tx.setBackgroundColor(headerHighlightColor);
             tx.setTypeface(null, Typeface.BOLD);
             tx.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_HEADER_HIGHLIGHT_FONT_SIZE_DP);
-        }
-        else if(highlightMode == HighlightMode.IMAGE){
+        } else if (highlightMode == HighlightMode.IMAGE) {
             RelativeLayout outer = new RelativeLayout(context);
             outer.setLayoutParams(createTableRowParam(cellHeight));
             ImageView iv = new ImageView(context);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(headerHighlightImageSize,headerHighlightImageSize);
-            params.addRule(RelativeLayout.CENTER_IN_PARENT,RelativeLayout.TRUE);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(headerHighlightImageSize, headerHighlightImageSize);
+            params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
             iv.setLayoutParams(params);
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             row.removeViewAt(idx);
             outer.addView(iv);
-            row.addView(outer,idx);
+            row.addView(outer, idx);
 
-            if(headerHighlightImage != null) {
+            if (headerHighlightImage != null) {
                 iv.setImageDrawable(headerHighlightImage);
             }
-
         }
     }
 
@@ -329,11 +327,11 @@ public class TimetableView extends LinearLayout {
         return param;
     }
 
-    private int calCellWidth(){
+    private int calCellWidth() {
         Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int cell_w = (size.x-getPaddingLeft() - getPaddingRight()- sideCellWidth) / (columnCount - 1);
+        int cell_w = (size.x - getPaddingLeft() - getPaddingRight() - sideCellWidth) / (columnCount - 1);
         return 250;
     }
 

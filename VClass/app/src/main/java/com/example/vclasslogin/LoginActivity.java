@@ -1,8 +1,5 @@
 package com.example.vclasslogin;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatCheckBox;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -12,10 +9,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatCheckBox;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -24,26 +27,28 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatCheckBox showPasswordCheckbox;
     Button btnLogin;
     DBHelper DB;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mAuth = FirebaseAuth.getInstance();
 
+        // back button - action bar
         getSupportActionBar().setTitle("VClass");
 
         DB = new DBHelper(this);
-       // DB.deleteTables();
+        // DB.deleteTables();
         DB.createTables();
-        if(!DB.doesUserNameExist("admin")) {
+        if (!DB.doesUserNameExist("admin")) {
             Boolean c = DB.insertData("Admin", "090078601", "manager.vclass@gmail.com", "admin", "pass", "admin");
             if (c)
                 Log.v("insertinsert", "hogaya");
-        }
-        else
-            Log.v("insertinsert","nai hogaya");
+        } else
+            Log.v("insertinsert", "nai hogaya");
 
-        if(!DB.doesStudentUserNameExist("student1")) {
+        if (!DB.doesStudentUserNameExist("student1")) {
             DB.initTeachersAndStudents();
             this.initCourses();
             DB.initStudentCourse();
@@ -75,30 +80,23 @@ public class LoginActivity extends AppCompatActivity {
 
                         //Log.v("UserType", type);
 
-                        if (type.equalsIgnoreCase("student"))
-                        {
+                        if (type.equalsIgnoreCase("student")) {
                             Intent intent = new Intent(getApplicationContext(), StudentView.class);
-                            intent.putExtra("student-username",user);
+                            intent.putExtra("student-username", user);
                             startActivity(intent);
-                        }
-                        else if (type.equalsIgnoreCase("teacher"))
-                        {
+                        } else if (type.equalsIgnoreCase("teacher")) {
                             Intent intent = new Intent(getApplicationContext(), TeacherView.class);
-                            intent.putExtra("teacher-username",user);
+                            intent.putExtra("teacher-username", user);
                             startActivity(intent);
-                        }
-
-                        else if (type.equalsIgnoreCase("admin"))
-                        {
+                        } else if (type.equalsIgnoreCase("admin")) {
                             Intent intent = new Intent(getApplicationContext(), AdminView.class);
-                            intent.putExtra("admin username",user);
+                            intent.putExtra("admin-username", user);
                             startActivity(intent);
                         }
 
                         Toast.makeText(LoginActivity.this, "Welcome to VClass!", Toast.LENGTH_SHORT).show();
 
-                    }
-                    else {
+                    } else {
                         Toast.makeText(LoginActivity.this, "Invalid username or password!", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -120,22 +118,22 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void initCourses(){
-        csvLoader loader=new csvLoader();
+    private void initCourses() {
+        csvLoader loader = new csvLoader();
 
-        ArrayList<course> crs=loader.getCourses(this,"crs.csv");
-        for(course c:crs){
-            if(!(DB.doesCourseCodeExist(c.code))){
-                DB.insertCourseData(c.code,c.name,c.CHs,c.coordinator);
-                Log.v("course add",Boolean.toString(DB.doesCourseCodeExist(c.code)));
+        ArrayList<course> crs = loader.getCourses(this, "crs.csv");
+        for (course c : crs) {
+            if (!(DB.doesCourseCodeExist(c.code))) {
+                DB.insertCourseData(c.code, c.name, c.CHs, c.coordinator);
+                Log.v("course add", Boolean.toString(DB.doesCourseCodeExist(c.code)));
             }
         }
         ;
 
-        crs=loader.getCourses(this,"crs2.csv");
-        for(course c:crs){
-            if(!(DB.doesCourseCodeExist(c.code))){
-                DB.insertCourseData(c.code,c.name,c.CHs,c.coordinator);
+        crs = loader.getCourses(this, "crs2.csv");
+        for (course c : crs) {
+            if (!(DB.doesCourseCodeExist(c.code))) {
+                DB.insertCourseData(c.code, c.name, c.CHs, c.coordinator);
             }
         }
         DB.setClassDetailsTable();
@@ -147,4 +145,30 @@ public class LoginActivity extends AppCompatActivity {
         }*/
     }
 
+    private void signInAnonymously() {
+        mAuth.signInAnonymously().addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                // do your stuff
+                Log.v("Loglog", "success");
+
+            }
+        })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Log.v("Loglog", "fail");
+                    }
+                });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mAuth.getCurrentUser() != null) {
+            // do your stuff
+        } else {
+            signInAnonymously();
+        }
+    }
 }

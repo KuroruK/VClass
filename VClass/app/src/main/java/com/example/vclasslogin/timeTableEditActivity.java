@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -44,12 +46,15 @@ public class timeTableEditActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_timetable);
 
+        // back button - action bar
         getSupportActionBar().setTitle("Edit Timetable");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         init();
     }
 
-    private void init(){
+    private void init() {
         this.context = this;
         deleteBtn = findViewById(R.id.delete_btn);
         submitBtn = findViewById(R.id.submit_btn);
@@ -62,24 +67,27 @@ public class timeTableEditActivity extends AppCompatActivity implements View.OnC
 
         //set the default time
         schedule = new Schedule();
-        schedule.setStartTime(new Time(10,0));
-        schedule.setEndTime(new Time(13,30));
+        schedule.setStartTime(new Time(9, 0));
+        schedule.setEndTime(new Time(17, 30));
 
         checkMode();
         initView();
     }
 
-    /** check whether the mode is ADD or EDIT */
-    private void checkMode(){
+    /**
+     * check whether the mode is ADD or EDIT
+     */
+    private void checkMode() {
         Intent i = getIntent();
-        mode = i.getIntExtra("mode",timeTableMainActivity.REQUEST_ADD);
+        mode = i.getIntExtra("mode", timeTableMainActivity.REQUEST_ADD);
 
-        if(mode == timeTableMainActivity.REQUEST_EDIT){
+        if (mode == timeTableMainActivity.REQUEST_EDIT) {
             loadScheduleData();
             deleteBtn.setVisibility(View.VISIBLE);
         }
     }
-    private void initView(){
+
+    private void initView() {
         submitBtn.setOnClickListener(this);
         deleteBtn.setOnClickListener(this);
 
@@ -97,7 +105,7 @@ public class timeTableEditActivity extends AppCompatActivity implements View.OnC
         startTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog dialog = new TimePickerDialog(context,listener,schedule.getStartTime().getHour(), schedule.getStartTime().getMinute(), false);
+                TimePickerDialog dialog = new TimePickerDialog(context, listener, schedule.getStartTime().getHour(), schedule.getStartTime().getMinute(), false);
                 dialog.show();
             }
 
@@ -113,7 +121,7 @@ public class timeTableEditActivity extends AppCompatActivity implements View.OnC
         endTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog dialog = new TimePickerDialog(context,listener,schedule.getEndTime().getHour(), schedule.getEndTime().getMinute(), false);
+                TimePickerDialog dialog = new TimePickerDialog(context, listener, schedule.getEndTime().getHour(), schedule.getEndTime().getMinute(), false);
                 dialog.show();
             }
 
@@ -130,49 +138,48 @@ public class timeTableEditActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.submit_btn:
-                if(mode == timeTableMainActivity.REQUEST_ADD){
+                if (mode == timeTableMainActivity.REQUEST_ADD) {
                     inputDataProcessing();
                     Intent i = new Intent();
-                    String user=getIntent().getStringExtra("type");
+                    String user = getIntent().getStringExtra("type");
                     ArrayList<Schedule> schedules = new ArrayList<Schedule>();
                     //you can add more schedules to ArrayList
-                    DBHelper dbHelper=new DBHelper(context);
-                    if(dbHelper.canClassBeAdded(schedule.getStartTime(),schedule.getEndTime(),schedule.getDay(),getIntent().getIntExtra("weekday",0))){
+                    DBHelper dbHelper = new DBHelper(context);
+                    if (dbHelper.canClassBeAdded(schedule.getStartTime(), schedule.getEndTime(), schedule.getDay(), getIntent().getIntExtra("weekday", 0))) {
                         schedules.add(schedule);
-                        dbHelper.insertTimeSlot(schedule,getIntent().getIntExtra("weekday",0));
-                        Log.v("blah","dcdc");
+                        dbHelper.insertTimeSlot(schedule, getIntent().getIntExtra("weekday", 0));
+                        Log.v("blah", "dcdc");
                     }
-                    i.putExtra("schedules",schedules);
-                    i.putExtra("type",user);
-                    setResult(RESULT_OK_ADD,i);
+                    i.putExtra("schedules", schedules);
+                    i.putExtra("type", user);
+                    setResult(RESULT_OK_ADD, i);
                     finish();
-                }
-                else if(mode == timeTableMainActivity.REQUEST_EDIT){
+                } else if (mode == timeTableMainActivity.REQUEST_EDIT) {
                     inputDataProcessing();
                     Intent i = new Intent();
                     ArrayList<Schedule> schedules = new ArrayList<Schedule>();
                     schedules.add(schedule);
-                    i.putExtra("idx",editIdx);
-                    i.putExtra("schedules",schedules);
-                    setResult(RESULT_OK_EDIT,i);
+                    i.putExtra("idx", editIdx);
+                    i.putExtra("schedules", schedules);
+                    setResult(RESULT_OK_EDIT, i);
                     finish();
                 }
                 break;
             case R.id.delete_btn:
                 Intent i = new Intent();
-                i.putExtra("idx",editIdx);
+                i.putExtra("idx", editIdx);
                 setResult(RESULT_OK_DELETE, i);
                 finish();
                 break;
         }
     }
 
-    private void loadScheduleData(){
+    private void loadScheduleData() {
         Intent i = getIntent();
-        editIdx = i.getIntExtra("idx",-1);
-        ArrayList<Schedule> schedules = (ArrayList<Schedule>)i.getSerializableExtra("schedules");
+        editIdx = i.getIntExtra("idx", -1);
+        ArrayList<Schedule> schedules = (ArrayList<Schedule>) i.getSerializableExtra("schedules");
         schedule = schedules.get(0);
         subjectEdit.setText(schedule.getClassTitle());
         classroomEdit.setText(schedule.getClassPlace());
@@ -180,9 +187,17 @@ public class timeTableEditActivity extends AppCompatActivity implements View.OnC
         daySpinner.setSelection(schedule.getDay());
     }
 
-    private void inputDataProcessing(){
+    private void inputDataProcessing() {
         schedule.setClassTitle(subjectEdit.getText().toString());
         schedule.setClassPlace(classroomEdit.getText().toString());
         schedule.setProfessorName(professorEdit.getText().toString());
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), timeTableMainActivity.class);
+        myIntent.putExtra("type", getIntent().getStringExtra("type"));
+        Log.v("timetableedit", getIntent().getStringExtra("type"));
+        startActivityForResult(myIntent, 0);
+        return true;
     }
 }

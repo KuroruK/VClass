@@ -70,7 +70,7 @@ public class MyRvStudentCoursesListAdapter extends RecyclerView.Adapter<MyRvStud
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             className = itemView.findViewById(R.id.row_class_name);
-            isLive = itemView.findViewById(R.id.row_class_is_live);
+            //isLive = itemView.findViewById(R.id.row_class_is_live);
 
             rl = itemView.findViewById(R.id.class_row);
 

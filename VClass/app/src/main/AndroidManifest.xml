@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.vclasslogin">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -14,106 +17,91 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--Activities-->
-        <activity android:name=".AdminView"
-            android:parentActivityName=".LoginActivity">
-        </activity>
+        <!-- Activities -->
+        <activity
+            android:name=".AdminView"
+            android:parentActivityName=".LoginActivity" />
+        <activity
+            android:name=".ListTeacherActivity"
+            android:parentActivityName=".AdminView" />
+        <activity
+            android:name=".TeacherView"
+            android:parentActivityName=".LoginActivity" />
+        <activity
+            android:name=".StudentView"
+            android:parentActivityName=".LoginActivity" />
 
-        <activity android:name=".ListTeacherActivity"
-            android:parentActivityName=".AdminView">
-        </activity>
+        <activity android:name=".AttachFileActivity" />
+        <activity android:name=".TeacherViewUploadedTaskActivity" />
+        <activity android:name=".TeacherViewPreviousTaskActivity" />
+        <activity android:name=".TeacherViewStudentPreviousTaskActivity" />
+        <activity android:name=".StudentViewPreviousTaskActivity" />
+        <activity android:name=".ViewSharedResourcesActivity" />
+        <activity android:name=".ShareFileActivity" />
+        <activity android:name=".ResourceSharingActivity" />
+        <activity android:name=".manageTeacherActivity" />
 
-        <activity android:name=".manageTeacherActivity">
-        </activity>
+        <activity
+            android:name=".registerTeacherActivity"
+            android:parentActivityName=".ListTeacherActivity" />
+        <activity
+            android:name=".viewTeacherDetailsActivity"
+            android:parentActivityName=".ListTeacherActivity" />
+        <activity
+            android:name=".editTeacherActivity"
+            android:parentActivityName=".ListTeacherActivity" />
+        <activity
+            android:name=".registerStudentActivity"
+            android:parentActivityName=".ListStudentActivity" />
+        <activity
+            android:name=".viewStudentDetailsActivity"
+            android:parentActivityName=".ListStudentActivity" />
+        <activity
+            android:name=".editStudentActivity"
+            android:parentActivityName=".ListStudentActivity" />
+        <activity
+            android:name=".ListStudentActivity"
+            android:parentActivityName=".AdminView" />
+        <activity
+            android:name=".registerCourseActivity"
+            android:parentActivityName=".ListCourseActivity" />
+        <activity
+            android:name=".viewCourseDetailsActivity"
+            android:parentActivityName=".ListCourseActivity" />
+        <activity
+            android:name=".editCourseActivity"
+            android:parentActivityName=".ListCourseActivity" />
+        <activity
+            android:name=".ListCourseActivity"
+            android:parentActivityName=".AdminView" />
 
-        <activity android:name=".registerTeacherActivity"
-            android:parentActivityName=".ListTeacherActivity">
-        </activity>
+        <activity android:name=".timeTableMainActivity" />
+        <activity android:name=".timeTableEditActivity" />
+        <activity android:name=".view_schedule_activity" />
 
-        <activity android:name=".viewTeacherDetailsActivity"
-            android:parentActivityName=".ListTeacherActivity">
-        </activity>
+        <activity android:name=".BoardListActivity" />
 
-        <activity android:name=".editTeacherActivity"
-            android:parentActivityName=".ListTeacherActivity">
-        </activity>
+        <activity android:name=".StudentClassesActivity" />
+        <activity android:name=".LiveStudentClassActivity" />
 
-        <activity android:name=".registerStudentActivity"
-            android:parentActivityName=".ListStudentActivity">
-        </activity>
+        <activity android:name=".StudentGroupChatsActivity" />
+        <activity android:name=".TeacherGroupChatsActivity" />
+        <activity android:name=".StudentGroupChatViewActivity" />
 
-        <activity android:name=".viewStudentDetailsActivity"
-            android:parentActivityName=".ListStudentActivity">
-        </activity>
+        <activity android:name=".TeacherClassesActivity" />
+        <activity android:name=".LiveTeacherClassActivity" />
 
-        <activity android:name=".editStudentActivity"
-            android:parentActivityName=".ListStudentActivity">
-        </activity>
+        <activity android:name=".EditTaskActivity" />
+        <activity android:name=".ViewTaskActivity" />
+        <activity android:name=".UploadTaskActivity" />
+        <activity android:name=".StudentViewOngoingTaskActivity" />
 
-        <activity android:name=".ListStudentActivity"
-            android:parentActivityName=".AdminView">
-        </activity>
-
-        <activity android:name=".registerCourseActivity"
-            android:parentActivityName=".ListCourseActivity">
-        </activity>
-
-        <activity android:name=".viewCourseDetailsActivity"
-            android:parentActivityName=".ListCourseActivity">
-        </activity>
-
-        <activity android:name=".editCourseActivity"
-            android:parentActivityName=".ListCourseActivity">
-        </activity>
-
-        <activity android:name=".ListCourseActivity"
-            android:parentActivityName=".AdminView">
-        </activity>
-
-        <activity android:name=".timeTableEditActivity"
-            android:parentActivityName=".timeTableMainActivity">
-        </activity>
-
-        <activity android:name=".timeTableMainActivity"
-            android:parentActivityName=".AdminView">
-        </activity>
-
-        <activity android:name=".TeacherView"
-            android:parentActivityName=".LoginActivity">
-        </activity>
-
-        <activity android:name=".StudentView"
-            android:parentActivityName=".LoginActivity">
-
-        </activity>
-
-        <activity android:name=".view_schedule_activity"
-            android:parentActivityName=".StudentView">
-        </activity>
-
-        <activity android:name=".BoardListActivity">
-
-        </activity>
-        <activity android:name=".StudentClassesActivity"
-            android:parentActivityName=".StudentView"/>
-        <activity android:name=".LiveStudentClassActivity"
-            android:parentActivityName=".StudentClassesActivity"/>
-        <activity android:name=".StudentGroupChatsActivity"
-            android:parentActivityName=".StudentView"/>
-        <activity android:name=".StudentGroupChatViewActivity"
-            android:parentActivityName=".StudentGroupChatsActivity"/>
-
-        <activity android:name=".TeacherClassesActivity"
-            android:parentActivityName=".TeacherView"/>
-        <activity android:name=".LiveTeacherClassActivity"
-            android:parentActivityName=".TeacherClassesActivity"/>
-        <activity android:name=".TeacherGroupChatsActivity"
-            android:parentActivityName=".TeacherView"/>
-
-        <activity android:name=".DrawingActivity"
-            />
-
+        <activity android:name=".DrawingActivity" />
         <activity android:name=".HomeActivity" />
+
+        <activity
+            android:name=".TaskActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -121,7 +109,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

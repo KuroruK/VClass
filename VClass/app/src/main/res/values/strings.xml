@@ -102,7 +102,6 @@
     </string-array>
 
 
-
     <string-array name="days">
         <item>1</item>
         <item>2</item>
@@ -138,8 +137,8 @@
 
 
     <string-array name="default_header_title">
-        <item></item>
-        <item></item>
+        <item />
+        <item />
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -172,11 +171,7 @@
         <item>30</item>
 
 
-
-
     </string-array>
-
-
 
 
     <string-array name="header_title1">
@@ -191,11 +186,11 @@
     </string-array>
 
     <string-array name="days1">
-        <item >Mon</item>
-        <item >Tue</item>
-        <item >Wed</item>
-        <item >Thu</item>
-        <item >Fri</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
         <item>Sat</item>
         <item>Sun</item>
     </string-array>
@@ -211,5 +206,8 @@
         <item>Sat</item>
         <item>Sun</item>
     </string-array>
+
+    <string name="tab_text_1">Ongoing</string>
+    <string name="tab_text_2">Finished</string>
 </resources>
 

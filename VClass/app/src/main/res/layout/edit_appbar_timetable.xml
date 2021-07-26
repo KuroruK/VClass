@@ -6,12 +6,12 @@
     android:orientation="horizontal"
     >
 
+
     <Button
         android:id="@+id/delete_btn"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="delete"
+        android:text="Delete"
         android:textColor="@color/colorWhite"
         android:textAllCaps="false"
         android:background="@drawable/all_curved_corners"

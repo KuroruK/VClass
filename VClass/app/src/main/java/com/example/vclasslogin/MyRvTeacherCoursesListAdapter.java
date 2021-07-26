@@ -18,10 +18,11 @@ public class MyRvTeacherCoursesListAdapter extends RecyclerView.Adapter<MyRvTeac
     Context c;
     List<String> courses;
     String username;
+
     public MyRvTeacherCoursesListAdapter(Context c, List<String> courses, String username) {
         this.c = c;
         this.courses = courses;
-        this.username=username;
+        this.username = username;
     }
 
     @NonNull
@@ -43,9 +44,9 @@ public class MyRvTeacherCoursesListAdapter extends RecyclerView.Adapter<MyRvTeac
                 public void onClick(View view) {
 
                     Log.v("t1", "here");
-                    Intent intent = new Intent(view.getContext(),LiveTeacherClassActivity.class);
-                    intent.putExtra("username",username);
-                    intent.putExtra("type","teacher");
+                    Intent intent = new Intent(view.getContext(), LiveTeacherClassActivity.class);
+                    intent.putExtra("username", username);
+                    intent.putExtra("type", "teacher");
                     intent.putExtra("courseName", courses.get(position));
 
                     c.startActivity(intent);
@@ -69,7 +70,7 @@ public class MyRvTeacherCoursesListAdapter extends RecyclerView.Adapter<MyRvTeac
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             className = itemView.findViewById(R.id.row_class_name);
-            isLive = itemView.findViewById(R.id.row_class_is_live);
+            //isLive = itemView.findViewById(R.id.row_class_is_live);
 
             rl = itemView.findViewById(R.id.class_row);
 

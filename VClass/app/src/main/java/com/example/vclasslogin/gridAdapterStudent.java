@@ -4,19 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.provider.Settings;
-//import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +25,15 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+//import android.support.v4.app.NotificationCompat;
 
-public class gridAdapterStudent extends BaseAdapter {
+
+public class GridAdapterStudent extends BaseAdapter {
     ArrayList names;
     public static Activity activity;
     String username;
 
-    public gridAdapterStudent(Activity activity, ArrayList names, String username) {
+    public GridAdapterStudent(Activity activity, ArrayList names, String username) {
         this.activity = activity;
         this.names = names;
         this.username = username;
@@ -76,10 +69,10 @@ public class gridAdapterStudent extends BaseAdapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent launchinIntent = new Intent(activity, view_schedule_activity.class);
-                    launchinIntent.putExtra("type", "student");
-                    launchinIntent.putExtra("name", username);
-                    activity.startActivity(launchinIntent);
+                    Intent launchingIntent = new Intent(activity, view_schedule_activity.class);
+                    launchingIntent.putExtra("type", "student");
+                    launchingIntent.putExtra("name", username);
+                    activity.startActivity(launchingIntent);
                 }
             });
             Animation anim = new ScaleAnimation(
@@ -116,7 +109,7 @@ public class gridAdapterStudent extends BaseAdapter {
             imageView.startAnimation(anim);
 
         } else if (names.get(position).toString().equals("Classes")) {
-            imageView.setImageResource(R.drawable.courses);
+            imageView.setImageResource(R.drawable.main_class);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

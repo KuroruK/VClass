@@ -5,22 +5,43 @@ public class message {
     String senderID;
     String message;
     String time;
-    Boolean isImage;
+    Boolean isResource;
+    String resourceType;
+    String resourceBy;
 
-    public Boolean getImage() {
-        return isImage;
+
+    public Boolean getResource() {
+        return isResource;
     }
 
-    public void setImage(Boolean image) {
-        isImage = image;
+    public String getResourceBy() {
+        return resourceBy;
     }
 
-    public message(String receiverID, String senderID, String message, String time, Boolean isImage) {
+    public void setResourceBy(String resourceBy) {
+        this.resourceBy = resourceBy;
+    }
+
+    public void setResource(Boolean resource) {
+        isResource = resource;
+    }
+
+    public String getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public message(String receiverID, String senderID, String message, String time, Boolean isResource, String resourceType,String resourceBy) {
         this.receiverID = receiverID;
         this.senderID = senderID;
         this.message = message;
         this.time = time;
-        this.isImage=isImage;
+        this.isResource=isResource;
+        this.resourceType=resourceType;
+        this.resourceBy=resourceBy;
     }
     public message(){
 

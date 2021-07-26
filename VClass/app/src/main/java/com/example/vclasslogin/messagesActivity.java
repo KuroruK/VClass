@@ -36,7 +36,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class messagesActivity extends AppCompatActivity {
-    RecyclerView rv;
+   /* RecyclerView rv;
     MyRvMessagesListAdapter adapter;
     ArrayList<message> messages=new ArrayList<message>();
     static int counter=0;
@@ -229,4 +229,5 @@ public class messagesActivity extends AppCompatActivity {
         }
 
     }
+*/
 }

@@ -1,11 +1,14 @@
 package com.example.vclasslogin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,17 +21,16 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TeacherGroupChatsActivity extends AppCompatActivity {
-//    AutoCompleteAdapter autoCompleteAdapter;
+    //    AutoCompleteAdapter autoCompleteAdapter;
     RecyclerView rv;
     TextView add;
     MyRvListGroupChatsAdapter adapter;
-    ArrayList<String> groupLists=new ArrayList<>();
+    ArrayList<String> groupLists = new ArrayList<>();
     FirebaseDatabase database;
     DatabaseReference reference;
     CircleImageView viewProfilePhoto;
     ImageView menu;
     AutoCompleteTextView search;
-
 
 
     String username;
@@ -42,8 +44,11 @@ public class TeacherGroupChatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_group_chats);
         groupLists = new ArrayList<>();
+
+        // back button - action bar
         getSupportActionBar().setTitle("Chat App");
-        //menu=(ImageView)findViewById(R.id.ac_menu);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
 
         dbHelper = new DBHelper(this);
@@ -61,54 +66,20 @@ public class TeacherGroupChatsActivity extends AppCompatActivity {
 
 
         // add=findViewById(R.id.address);
-        RecyclerView.LayoutManager manager=new LinearLayoutManager(this);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         rv.setLayoutManager(manager);
-        adapter=new MyRvListGroupChatsAdapter(this,groupLists,getIntent().getStringExtra("name"));
+        adapter = new MyRvListGroupChatsAdapter(this, groupLists, getIntent().getStringExtra("name"), "teacher");
         rv.setAdapter(adapter);
-
-
-
-        //----------search
-
-       /* SearchAdapter searchAdapter=new SearchAdapter(this,R.layout.activity_contacts,R.id.rac_name,contactLists);
-        search.setAdapter(searchAdapter);
-        search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(view.getContext(),messagesActivity.class);
-                Profile x=(Profile) adapterView.getItemAtPosition(i);
-                intent.putExtra("receiverID",x.getId());
-                intent.putExtra("receiverPhoto",x.getDp());
-
-                intent.putExtra("senderID",getIntent().getStringExtra("id"));
-
-                startActivity(intent);
-
-            }
-        });
-
-        */
-
     }
-    void searchArray(){
-        //search=(AutoCompleteTextView)findViewById(R.id.ac_search2);
- /*       autoCompleteAdapter=new AutoCompleteAdapter(this,contactLists);
-        search.setAdapter(autoCompleteAdapter);
-        search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(view.getContext(),messagesActivity.class);
-                intent.putExtra("receiverID",contactLists.get(i).getId());
 
-                intent.putExtra("receiverPhoto",contactLists.get(i).getDp());
+    void searchArray() {
+    }
 
-                intent.putExtra("senderID",getIntent().getStringExtra("id"));
-
-                startActivity(intent);
-
-            }
-        });
-*/
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent myIntent = new Intent(getApplicationContext(), TeacherView.class);
+        myIntent.putExtra("teacher-username", username);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
 
 }

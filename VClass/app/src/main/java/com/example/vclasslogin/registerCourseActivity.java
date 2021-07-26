@@ -26,7 +26,7 @@ public class registerCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
 
-        getSupportActionBar().setTitle("Register Course");
+        getSupportActionBar().setTitle("Add Course Details");
 
         courseName = (EditText) findViewById(R.id.courseName);
         courseCode = (EditText) findViewById(R.id.courseCode);

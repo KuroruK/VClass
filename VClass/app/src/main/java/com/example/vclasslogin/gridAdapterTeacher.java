@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -29,15 +28,15 @@ import java.util.ArrayList;
 //import android.support.v4.app.NotificationCompat;
 
 
-public class gridAdapterTeacher extends BaseAdapter {
+public class GridAdapterTeacher extends BaseAdapter {
     ArrayList names;
     public static Activity activity;
-    String teacherUsername;
+    String username;
 
-    public gridAdapterTeacher(Activity activity, ArrayList names, String teacherUsername) {
+    public GridAdapterTeacher(Activity activity, ArrayList names, String username) {
         this.activity = activity;
         this.names = names;
-        this.teacherUsername = teacherUsername;
+        this.username = username;
     }
 
     @Override
@@ -86,13 +85,13 @@ public class gridAdapterTeacher extends BaseAdapter {
             imageView.startAnimation(anim);
 
         } else if (names.get(position).toString().equals("Schedule")) {
-            imageView.setImageResource(R.drawable.timetable);
+            imageView.setImageResource(R.drawable.schedule);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent launchinIntent = new Intent(activity, view_schedule_activity.class);
                     launchinIntent.putExtra("type", "teacher");
-                    launchinIntent.putExtra("name", teacherUsername);
+                    launchinIntent.putExtra("name", username);
                     activity.startActivity(launchinIntent);
                 }
             });
@@ -114,7 +113,7 @@ public class gridAdapterTeacher extends BaseAdapter {
                 public void onClick(View v) {
                     Intent intent = new Intent(activity, timeTableMainActivity.class);
                     intent.putExtra("type", "teacher");
-                    intent.putExtra("name", teacherUsername);
+                    intent.putExtra("name", username);
                     activity.startActivity(intent);
                 }
             });
@@ -134,8 +133,8 @@ public class gridAdapterTeacher extends BaseAdapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //      Intent launchinIntent = new Intent(activity, scheduler.class);
-                    //      activity.startActivity(launchinIntent);
+                    //      Intent launchingIntent = new Intent(activity, scheduler.class);
+                    //      activity.startActivity(launchingIntent);
                 }
             });
             Animation anim = new ScaleAnimation(
@@ -150,13 +149,13 @@ public class gridAdapterTeacher extends BaseAdapter {
             imageView.startAnimation(anim);
 
         } else if (names.get(position).toString().equals("Classes")) {
-            imageView.setImageResource(R.drawable.courses);
+            imageView.setImageResource(R.drawable.main_class);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(activity, TeacherClassesActivity.class);
                     intent.putExtra("type", "teacher");
-                    intent.putExtra("name", teacherUsername);
+                    intent.putExtra("name", username);
                     activity.startActivity(intent);
                 }
             });
@@ -176,10 +175,10 @@ public class gridAdapterTeacher extends BaseAdapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Log.v("teacher_chat", teacherUsername);
+                    //Log.v("teacher_chat", username);
                     Intent intent = new Intent(activity, TeacherGroupChatsActivity.class);
                     intent.putExtra("type", "teacher");
-                    intent.putExtra("name", teacherUsername);
+                    intent.putExtra("name", username);
                     activity.startActivity(intent);
                 }
             });

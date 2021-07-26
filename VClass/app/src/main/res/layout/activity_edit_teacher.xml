@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".editTeacherActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorBackground"
         android:padding="20dp">
 
         <TextView
@@ -19,326 +19,317 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="50dp"
-            android:text="Edit Teacher"
-            android:textStyle="bold"
             android:gravity="center"
-            android:textSize="25dp"
+            android:text="Edit Teacher"
             android:textAllCaps="false"
             android:textColor="#000000"
-            />
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name: "
             android:id="@+id/edit_t_name"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_t_details"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_below="@+id/edit_t_details"
-            />
+            android:text="Name: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/edit_t_name1"
-            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_t_details"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@drawable/custom_spinner_boundary"
             android:textColor="#000"
-            android:textStyle="bold"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/custom_spinner_boundary"
-            android:layout_toRightOf="@id/edit_t_contact"
-            android:layout_below="@+id/edit_t_details"
-            />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="name here"
-            android:background="@null"
             android:id="@+id/edit_t_name2"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/edit_t_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/edit_t_details"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email:"
-            android:id="@+id/edit_t_email"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/edit_t_name"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_t_email1"
-            android:textSize="16sp"
-            android:background="@drawable/custom_spinner_boundary"
-            android:textColor="@color/colorLightGrey"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/edit_t_name"
-            android:layout_toRightOf="@id/edit_t_contact"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="email here"
-            android:id="@+id/edit_t_email2"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:layout_marginTop="10dp"
-            android:background="@null"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@id/edit_t_name"
-            android:layout_toRightOf="@id/edit_t_contact"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Teacher's ID:"
-            android:id="@+id/edit_t_id"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/edit_t_email"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_t_id1"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:background="@drawable/custom_spinner_boundary"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/edit_t_email"
-            android:layout_toRightOf="@id/edit_t_contact"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="id here"
-            android:id="@+id/edit_t_id2"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@null"
-            android:layout_below="@id/edit_t_email"
-            android:layout_toRightOf="@id/edit_t_contact"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Username:"
-            android:id="@+id/edit_t_username"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/edit_t_id"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_t_username1"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:background="@drawable/custom_spinner_boundary"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/edit_t_id"
-            android:layout_toRightOf="@id/edit_t_contact"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_t_username2"
-            android:hint="username here"
-            android:textSize="16sp"
-            android:background="@null"
-            android:textColor="@color/colorLightGrey"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@id/edit_t_id"
-            android:layout_toRightOf="@id/edit_t_contact"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Password:"
-            android:id="@+id/edit_t_password"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/edit_t_username"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_t_password1"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:background="@drawable/custom_spinner_boundary"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/edit_t_username"
-            android:layout_toRightOf="@id/edit_t_contact"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="password here"
-            android:id="@+id/edit_t_password2"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:background="@null"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@id/edit_t_username"
-            android:layout_toRightOf="@id/edit_t_contact"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Contact Number:"
-            android:id="@+id/edit_t_contact"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/edit_t_password"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_t_contact1"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:background="@drawable/custom_spinner_boundary"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/edit_t_password2"
-            android:layout_toRightOf="@id/edit_t_contact"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="number here"
-            android:ems="7"
-            android:id="@+id/edit_t_contact2"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:background="@null"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@id/edit_t_password2"
-            android:layout_toRightOf="@id/edit_t_contact"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Qualification: "
-            android:id="@+id/edit_t_qualification"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/edit_t_contact"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_t_qualification1"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
-            android:background="@drawable/custom_spinner_boundary"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/edit_t_contact"
-            android:layout_below="@id/edit_t_contact"
-            />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="qualification here"
-            android:id="@+id/edit_t_qualification2"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
             android:background="@null"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@id/edit_t_contact"
-            android:layout_toRightOf="@id/edit_t_contact"/>
+            android:hint="name here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/edit_t_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Course 1: "
-            android:id="@+id/edit_t_course1"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
+            android:layout_below="@id/edit_t_name"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/edit_t_qualification"/>
+            android:text="Email:"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_email1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_name"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_t_email2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_name"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@null"
+            android:hint="email here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_email"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Teacher's ID:"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_id1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_email"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_t_id2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_email"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@null"
+            android:hint="id here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_id"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Username:"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_username1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_id"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_t_username2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_id"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@null"
+            android:hint="username here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_username"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Password:"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_password1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_username"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_t_password2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_username"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@null"
+            android:hint="password here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_password"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Contact Number:"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_contact1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_password2"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_t_contact2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_password2"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@null"
+            android:ems="7"
+            android:hint="number here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_qualification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_contact"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Qualification: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_qualification1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_contact"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_t_qualification2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_contact"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@null"
+            android:hint="qualification here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_t_course1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_t_qualification"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Course 1: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_spinner_boundary"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
             android:layout_below="@id/edit_t_qualification"
-            android:layout_toRightOf="@id/edit_t_contact">
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/edit_t_contact"
+            android:background="@drawable/custom_spinner_boundary">
 
             <Spinner
                 android:id="@+id/edit_t_course11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@android:color/transparent"
                 android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
                 android:gravity="center"
-                android:spinnerMode="dropdown"
-                 />
+                android:spinnerMode="dropdown" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -350,41 +341,42 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/edit_t_course2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Course 2: "
-            android:id="@+id/edit_t_course2"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
+            android:layout_below="@id/edit_t_course1"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/edit_t_course1"/>
+            android:text="Course 2: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_spinner_boundary"
-            android:layout_marginTop="10dp"
+            android:layout_below="@id/edit_t_course1"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_below="@id/edit_t_course1"
-            android:layout_toRightOf="@id/edit_t_contact">
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@drawable/custom_spinner_boundary">
 
             <Spinner
                 android:id="@+id/edit_t_course21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:background="@android:color/transparent"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:spinnerMode="dropdown"/>
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -395,40 +387,40 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/edit_t_course3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Course 3: "
-            android:id="@+id/edit_t_course3"
-            android:textSize="16sp"
-            android:textColor="@color/colorLightGrey"
+            android:layout_below="@id/edit_t_course2"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/edit_t_course2"/>
+            android:text="Course 3: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_spinner_boundary"
-            android:layout_marginTop="10dp"
+            android:layout_below="@id/edit_t_course2"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_below="@id/edit_t_course2"
-            android:layout_toRightOf="@id/edit_t_contact">
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_t_contact"
+            android:background="@drawable/custom_spinner_boundary">
 
             <Spinner
                 android:id="@+id/edit_t_course31"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:background="@android:color/transparent"
+                android:layout_gravity="center"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="10dp"
-                android:layout_gravity="center"
+                android:background="@android:color/transparent"
                 android:gravity="center"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -440,20 +432,19 @@
         </RelativeLayout>
 
         <Button
+            android:id="@+id/btn_save_edit_t"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_save_edit_t"
-            android:padding="10dp"
+            android:layout_below="@id/edit_t_course3"
             android:layout_marginHorizontal="50dp"
-            android:text="Save"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
+            android:layout_marginVertical="50dp"
             android:background="@drawable/all_curved_corners"
             android:backgroundTint="@color/colorEdit"
-            android:layout_marginVertical="50dp"
-            android:layout_below="@id/edit_t_course3"
-            />
+            android:padding="10dp"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 </ScrollView>
