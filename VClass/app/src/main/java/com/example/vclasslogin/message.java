@@ -1,6 +1,6 @@
 package com.example.vclasslogin;
 
-public class message {
+public class Message {
     String receiverID;
     String senderID;
     String message;
@@ -34,7 +34,7 @@ public class message {
         this.resourceType = resourceType;
     }
 
-    public message(String receiverID, String senderID, String message, String time, Boolean isResource, String resourceType,String resourceBy) {
+    public Message(String receiverID, String senderID, String message, String time, Boolean isResource, String resourceType, String resourceBy) {
         this.receiverID = receiverID;
         this.senderID = senderID;
         this.message = message;
@@ -43,7 +43,7 @@ public class message {
         this.resourceType=resourceType;
         this.resourceBy=resourceBy;
     }
-    public message(){
+    public Message(){
 
     }
 

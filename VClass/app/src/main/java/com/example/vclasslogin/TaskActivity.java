@@ -3,7 +3,6 @@ package com.example.vclasslogin;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -24,7 +23,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class TaskActivity extends AppCompatActivity {
-    String courseName, userType, username, fragment;
+    String courseName, userType, username;
+    String fragment;    // to keep trace which fragment was opened
     ArrayList<String> studentTaskTitles = new ArrayList<>();
     FirebaseDatabase database;
     DatabaseReference reference;
@@ -35,76 +35,86 @@ public class TaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
+        // getting some data from previous activity
         courseName = getIntent().getStringExtra("courseName");
         userType = getIntent().getStringExtra("userType");
         username = getIntent().getStringExtra("username");
         fragment = getIntent().getStringExtra("fragment");
 
+        // back button to go to last opened activity
         back = findViewById(R.id.back_ta);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent;
+
+                // condition to check user type and then go to a particular activity
                 if (userType.equalsIgnoreCase("student"))
-                     myIntent = new Intent(getApplicationContext(), LiveStudentClassActivity.class);
+                    myIntent = new Intent(getApplicationContext(), LiveStudentClassActivity.class);
                 else
                     myIntent = new Intent(getApplicationContext(), LiveTeacherClassActivity.class);
 
+                // putting require information in intent
                 myIntent.putExtra("username", username);
                 myIntent.putExtra("courseName", courseName);
+
+                //starting activity with result - back button does not send resultCode=RESULT_OK, but a zero
                 startActivityForResult(myIntent, 0);
             }
         });
 
+
+        // if user is student, then get all the tasks from firebase and display on student's screeen
         if (userType.equals("student")) {
             database = FirebaseDatabase.getInstance();
             reference = database.getReference("Tasks");
-            //    if(userType.equals("teacher")){
             reference.addChildEventListener(new ChildEventListener() {
                 @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     ClassTask tem = snapshot.getValue(ClassTask.class);
 
+                    //  condition to check courseName and display all tasks of particular course
                     if (tem.getCourseName().equals(courseName) && tem.getSubmittedBy().equals(username)) {
-                        Log.v("tagidUser", username);
                         studentTaskTitles.add(
                                 Objects.requireNonNull(snapshot.getValue(ClassTask.class)).getTaskTitle()
                         );
                     }
                 }
+
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String
                         previousChildName) {
                 }
+
                 @Override
                 public void onChildRemoved(@NonNull DataSnapshot snapshot) {
                 }
+
                 @Override
                 public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String
                         previousChildName) {
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
-
             });
-            Log.v("tagid1", "student task titles length " + Integer.toString(studentTaskTitles.size()));
         }
 
+        // view pager to display content of fragments
         com.example.vclasslogin.ui.main.SectionsPagerAdapter sectionsPagerAdapter = new com.example.vclasslogin.ui.main.SectionsPagerAdapter(this, getSupportFragmentManager(), userType, courseName, username, studentTaskTitles);
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
+
+        // checking fragment name and then display that fragment
         if (fragment.equals("ongoing"))
             viewPager.setCurrentItem(0);
         else
             viewPager.setCurrentItem(1);
 
+        // layout to display all fragments
         TabLayout tabs = findViewById(R.id.tabs);
-
-
-        Log.v("tabid", "0");
         tabs.setupWithViewPager(viewPager);
     }
-
 }

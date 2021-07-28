@@ -40,12 +40,11 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
     Button uploadFile, reSubmit, back;
     String fileType = "";
     Uri selectedImage = null;
-    int count = 0;
+    int count = 0;  // add a number at the end of attached file names by increasing 1-by-1
     String userName;
     TextView title, desc, dueDate, tMarks;
     FirebaseDatabase database;
     DatabaseReference reference;
-
     RecyclerView rv1, rv2;
     MyRvTaskListAdapter adapter1, adapter2;
     ArrayList<ClassTask> tasks1 = new ArrayList<ClassTask>();
@@ -57,7 +56,14 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_task_student);
 
+        // actionbar - back button and title
+        getSupportActionBar().setTitle(taskTitle);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // getting require data from previous activity
         userName = getIntent().getStringExtra("userName");
         courseName = getIntent().getStringExtra("courseName");
         taskTitle = getIntent().getStringExtra("taskTitle");
@@ -71,49 +77,45 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
         id = getIntent().getStringExtra("id");
         alreadySubmitted = getIntent().getStringExtra("alreadySubmitted");
 
+        // getting firebase instance and reference
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Tasks");
-        setContentView(R.layout.activity_view_task_student);
 
-        // back button - action bar
-        getSupportActionBar().setTitle(taskTitle);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
+        // getting fields from layout
         title = findViewById(R.id.task_submit_std_title);
-        title.setText(taskTitle);
         desc = findViewById(R.id.task_submit_std_desc2);
-        desc.setText(description);
         dueDate = findViewById(R.id.task_submit_std_due2);
-        dueDate.setText(deadline);
         tMarks = findViewById(R.id.task_submit_std_marks2);
-        tMarks.setText(totalMarks);
         uploadFile = findViewById(R.id.task_submit_attach_file);
         reSubmit = findViewById(R.id.task_submit_std_r_btn);
         back = findViewById(R.id.task_submit_std_b_btn);
+        rv1 = findViewById(R.id.rvList_files);
+        rv2 = findViewById(R.id.rvList_task_files);
 
+        // putting text data in layout fields
+        title.setText(taskTitle);
+        desc.setText(description);
+        dueDate.setText(deadline);
+        tMarks.setText(totalMarks);
+
+        // change button text if task is submitted before
         if (alreadySubmitted.equals("0"))
             reSubmit.setText("Submit");
         else
             reSubmit.setText("Resubmit");
 
-        rv1 = findViewById(R.id.rvList_files);
+        //  getting particular task details from firebase
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 ClassTask tem = snapshot.getValue(ClassTask.class);
-                Log.v("tagid", tem.getTaskTitle() + ";;;" + taskTitle);
-                Log.v("tagid", tem.getSubmittedBy() + ":::" + userName);
                 if (tem.getTaskTitle().equals(taskTitle) && tem.getSubmittedBy().equals(userName)) {
                     ids1.add(snapshot.getKey());
                     count++;
                     tem.taskTitle = taskTitle + "_" + userName + "_" + count;
-                    Log.v("tagid", "1");
                     tasks1.add(
                             tem
-                            //  snapshot.getValue(ClassTask.class)
                     );
-
                     adapter1.notifyDataSetChanged();
                 }
             }
@@ -139,40 +141,34 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
             }
         });
 
-
-        //teacher files
-
+        // no of files upload by teacher as a helping material for task
         int noOfFiles = 0;
         for (int i = 0; i < file.length() - 1; i++) {
             if (file.charAt(i) == '#' && file.charAt(i + 1) == '#') {
                 noOfFiles++;
-                Log.v("check updatingNoOfIfles", "yup");
             }
         }
-        Log.v("check nooffiles", Integer.toString(noOfFiles));
+
+        // getting file names attached with a particular task
         String getFiles = null;
         int index = 0;
         ids2.add(id);
         if (noOfFiles > 0) {
-            getFiles = file.substring(2, file.length());
+            getFiles = file.substring(2);
         }
-        String temp = null;
+        String temp;
         for (int i = 0; i < noOfFiles; i++) {
 
             if (getFiles.contains("##"))
                 temp = getFiles.substring(0, getFiles.indexOf('#'));
             else
                 temp = getFiles;
-            Log.v("check temp", temp);
             ids2.add(temp);
             index = getFiles.indexOf('#') + 2;
             getFiles = getFiles.substring(index);
-            //      Log.v("check getFiles",getFiles);
-        }
-        for (int i = 0; i < ids2.size(); i++) {
-            Log.v("check ids", ids2.get(i));
         }
 
+        // getting those files and display them in this activity
         for (int i = 0; i < noOfFiles; i++) {
             tasks2.add(new ClassTask(
                     "File No. " + Integer.toString(i + 1),
@@ -189,36 +185,17 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
             ));
         }
 
-
-        rv2 = findViewById(R.id.rvList_task_files);
+        // setting layout manager and adapter for rv
         RecyclerView.LayoutManager manager2 = new LinearLayoutManager(getApplicationContext());
         rv2.setLayoutManager(manager2);
-        Log.v("tagid", "0");
         adapter2 = new MyRvTaskListAdapter(getApplicationContext(), tasks2, "ongoingTeacherView", ids2, submittedBy, null);
         rv2.setAdapter(adapter2);
 
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
+        // button to upload files
         uploadFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                /*Intent intent = new Intent(getApplicationContext(), AttachFileActivity.class);
-
-                intent.putExtra("courseName", courseName);
-                intent.putExtra("taskTitle", taskTitle);
-                intent.putExtra("description", description);
-                intent.putExtra("deadline", deadline);
-                intent.putExtra("obtainedMarks", obtainedMarks);
-                intent.putExtra("totalMarks", totalMarks);
-                intent.putExtra("submittedBy", submittedBy);
-                intent.putExtra("file", file);
-                intent.putExtra("date", date);
-
-                startActivity(intent);*/
-
-                //code here - neeche wala kaam AttachFileActivity.java me kiya hai
+                // options contains types of files that can be sent
                 CharSequence options[] = new CharSequence[]
                         {
                                 "Images",
@@ -227,6 +204,8 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
                                 "MS Word File",
                                 "Zip file"
                         };
+
+                // builder used to select type of file student wants to send
                 AlertDialog.Builder builder = new AlertDialog.Builder(StudentViewOngoingTaskActivity.this);
                 builder.setTitle("Select File");
                 builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -260,19 +239,12 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             intent.setType("*/*");
                             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-                            //intent.setType("*/*");
                             startActivityForResult(intent, 110);
                         }
                         if (i == 3) {
                             fileType = "Word";
-                            //    Intent intent = new Intent();
-                            //    intent.setAction(Intent.ACTION_GET_CONTENT);
-                            //    intent.setType("application/msword");
-                            //    intent.setType("docx/*");
-                            // intent.setType("application/docx");
 
                             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                            // intent.addCategory(Intent.CATEGORY_);
                             intent.setType("*/*");
                             String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"};
                             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
@@ -284,13 +256,6 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             String[] mimeTypes = {"application/zip"};
-                            /*String[] mimeTypes =
-                                    {"application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
-                                            "application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
-                                            "text/plain",
-                                            "application/zip"};
-
-                             */
                             intent.setType("*/*");
                             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
                             startActivityForResult(intent, 110);
@@ -301,18 +266,16 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
             }
         });
 
-
+        // setting layout manager and adapter for rv
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
         rv1.setLayoutManager(manager);
-        Log.v("tagid", "0");
         adapter1 = new MyRvTaskListAdapter(getApplicationContext(), tasks1, "ongoingStudent", ids1, userName, null);
         rv1.setAdapter(adapter1);
-
 
         reSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // to submit task by uploading files in it
                 Intent intent = new Intent(StudentViewOngoingTaskActivity.this, TaskActivity.class);
                 intent.putExtra("courseName", getIntent().getStringExtra("courseName"));
                 intent.putExtra("userType", "student");
@@ -322,6 +285,7 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
             }
         });
 
+        // to go to the last opened activity
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -338,8 +302,8 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
 
     }
 
-
-    //code here - neeche wala kaam bhi AttachFileActivity.java me kiya hai
+    /*following code used to store file/resource in firebase storage and then linking a reference to that file
+    in a message that is stored in realtime firebase so that it can be shared with others in almost real time*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -396,8 +360,6 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
                             }
                         })
                 ;
-
-
             } else if (fileType.equals("PDF")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/Pdf" + userName + "/" + taskTitle + ids1.size() + ".pdf");
@@ -448,7 +410,6 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
                             }
                         })
                 ;
-
             } else if (fileType.equals("PPT")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/PowerPoint" + userName + "/" + taskTitle + ids1.size() + ".ppt");
@@ -499,7 +460,6 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
                             }
                         })
                 ;
-
             } else if (fileType.equals("Word")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/msWord" + userName + "/" + taskTitle + ids1.size() + ".docx");
@@ -550,7 +510,6 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
                             }
                         })
                 ;
-
             } else if (fileType.equals("zip")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/zip" + userName + "/" + taskTitle + ids1.size() + ".zip");
@@ -604,6 +563,7 @@ public class StudentViewOngoingTaskActivity extends AppCompatActivity {
         }
     }
 
+    // method use to go to previous activity when back button is pressed
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), TaskActivity.class);
         myIntent.putExtra("username", userName);

@@ -2,7 +2,6 @@ package com.example.vclasslogin;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class MyRvListGroupChatsAdapter extends RecyclerView.Adapter<MyRvListGroupChatsAdapter.MyViewHolder> {
     Context c;
-    List<String> groupList;
+    List<String> groupList; // contains list of group chats
     String username, type;
 
     public MyRvListGroupChatsAdapter(Context c, List<String> contactList, String username, String type) {
@@ -28,6 +25,7 @@ public class MyRvListGroupChatsAdapter extends RecyclerView.Adapter<MyRvListGrou
         this.type = type;
     }
 
+    // setting row layout for group chat
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,21 +33,17 @@ public class MyRvListGroupChatsAdapter extends RecyclerView.Adapter<MyRvListGrou
         return new MyViewHolder(itemView);
     }
 
+    // placing name of group chat in each row
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.name.setText(groupList.get(position));
 
-        //  holder.name.setText(contactList.get(position).getFirstName()+" "+contactList.get(position).getLastName());
-        // holder.bio.setText(contactList.get(position).getBio());
-        Log.v("t2", "yes");
+        // if a group chat is selected from list, a new Activity that shows group chat of selected class is opened.
         if (holder.ll != null) {
-            Log.v("t2", "no");
             holder.ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    Log.v("t1", "here");
-                    Intent intent = new Intent(view.getContext(), StudentGroupChatViewActivity.class);
+                    Intent intent = new Intent(view.getContext(), GroupChatViewActivity.class);
                     intent.putExtra("username", username);
                     intent.putExtra("type", type);
                     intent.putExtra("courseName", groupList.get(position));
@@ -60,6 +54,7 @@ public class MyRvListGroupChatsAdapter extends RecyclerView.Adapter<MyRvListGrou
         }
     }
 
+    // returns number of group chats in list
     @Override
     public int getItemCount() {
         if (groupList == null)
@@ -67,16 +62,14 @@ public class MyRvListGroupChatsAdapter extends RecyclerView.Adapter<MyRvListGrou
         return groupList.size();
     }
 
+    // class to define elements of group chat row
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name, bio;
         RelativeLayout ll;
-        CircleImageView contactProfilePhoto;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.rac_name);
-            //bio = itemView.findViewById(R.id.rac_msg);
-            //   contactProfilePhoto=itemView.findViewById(R.id.rac_img);
             ll = itemView.findViewById(R.id.row);
 
 

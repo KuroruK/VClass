@@ -1,6 +1,5 @@
 package com.example.vclasslogin;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,14 +14,9 @@ import java.util.ArrayList;
 
 public class TeacherView extends AppCompatActivity {
 
-    ArrayList<String> basicFields;
-    GridAdapterTeacher adapter;
-    public static ArrayList<String> divisions;
-    public static ArrayList<String> timeSlots;
-    GridView gridView;
-    public static databaseHandler handler;
-    public static Activity activity;
-    String name;
+    ArrayList<String> basicFields; // to store main menu item names
+    TeacherGridAdapter adapter;   // to set adapter for main menu
+    GridView gridView;  // grid view for main menu items
 
     // actionbar menu
     @Override
@@ -38,28 +32,24 @@ public class TeacherView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_layout);
 
+        // action bar - setting title
         getSupportActionBar().setTitle("Main Menu");
-
-        basicFields = new ArrayList<>();
-
-        //handler = new databaseHandler(this);
-        //activity = this;
-
-        //getSupportActionBar().show();
 
         gridView = (GridView) findViewById(R.id.grid);
 
-        name = getIntent().getStringExtra("teacher-username");
+        // setting profile name as Teacher
         TextView profileName = findViewById(R.id.profile_name);
         profileName.setText("Teacher");
 
+        basicFields = new ArrayList<>();
+        // adding main menu item names into the list
         basicFields.add("Timetable");
         basicFields.add("Schedule");
         basicFields.add("Classes");
         basicFields.add("Chat");
 
-        // basicFields.add("Manage Tasks");
-        adapter = new GridAdapterTeacher(this, basicFields, name);
+        // setting adapter for teacher menu by passing this activity, menu items names and teacher username
+        adapter = new TeacherGridAdapter(this, basicFields, getIntent().getStringExtra("teacher-username"));
         gridView.setAdapter(adapter);
     }
 

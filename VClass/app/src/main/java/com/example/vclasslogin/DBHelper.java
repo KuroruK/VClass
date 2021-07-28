@@ -55,10 +55,9 @@ public class DBHelper extends SQLiteOpenHelper {
         SyncedBoardManager.restoreSyncedBoards(mSegmentsRef);
         //  MyDB.execSQL("create Table if not exists " + TABLE_NAME1 + "(userID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, mobileNo TEXT, email TEXT, username TEXT, password TEXT, user_type TEXT)");
         //  MyDB.execSQL("create Table if not exists " + TABLE_NAME2 + "(userID INTEGER PRIMARY KEY, specialization TEXT, FOREIGN KEY (userID) references all_users (userID)  )");
-
-
     }
 
+    //create sql databases to store local information
     public void createTables() {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -72,6 +71,7 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("create Table if not exists " + TABLE_CLASS_DETAILS + "(class_title TEXT PRIMARY KEY, whiteboard_id TEXT, chat_pass TEXT)");
     }
 
+    //setup the sql database with default credentials
     public void initTeachersAndStudents() {
         insertStudentData("student1", "0123456781", "s1@gmail.com", "student1", "1234", "2017", "A");
         insertStudentData("student2", "0123456782", "s2@gmail.com", "student2", "1234", "2017", "A");
@@ -95,6 +95,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    //set some default student registered courses
     public void initStudentCourse() {
         setDefaultStudentCourse("CS118");
         setDefaultStudentCourse("CS217");
@@ -103,7 +104,6 @@ public class DBHelper extends SQLiteOpenHelper {
         setDefaultStudentCourse("CS211");
 
     }
-
     private void setDefaultStudentCourse(String crs) {
         insertStudentCourseData(getStudentID("student1"), getCourseID(crs));
         insertStudentCourseData(getStudentID("student2"), getCourseID(crs));
@@ -117,6 +117,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    //initialise default teacher courses
     public void initTeacherCourse() {
         insertTeacherCourseData(getTeacherID("teacher1"), getCourseID("CS118"));
         insertTeacherCourseData(getTeacherID("teacher2"), getCourseID("CS217"));
@@ -152,7 +153,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    //////////////Teacher Table Functions------------------------------------------------
+    //Teacher Table Functions------------------------------------------------
+
+    //insert teacher data into database
     public Boolean insertTeacherData(String name, String mobileNo, String email, String username, String password, String spec) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -178,6 +181,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //update a specific teacher entry
     public Boolean updateTeacherData(int id, String name, String mobileNo, String email, String username, String password, String spec) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -202,6 +206,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //delete a teacher entry from database
     public Boolean deleteTeacherData(int id) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         if (id == -1)
@@ -216,6 +221,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //check if teacher exists as a user
     public Boolean doesTeacherUserNameExist(String username) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -226,6 +232,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //check if teachers email exists in database
     public Boolean doesTeacherEmailExist(String email) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -236,6 +243,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //check if teachers mobile number exists in database
     public Boolean doesTeacherMobileNumberExist(String mobileNo) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -246,6 +254,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //return teacher id with corresponding to a specific username
     int getTeacherID(String username) {
 
         SQLiteDatabase MyDB = this.getWritableDatabase();
@@ -253,18 +262,18 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME1 + " where username = ?", new String[]{username});
 
         int idx = cursor.getColumnIndex("userID");
-        //Log.v("UserType", String.valueOf(idx));
 
         cursor.moveToFirst();
 
         int id = cursor.getInt(idx);
-        //Log.v("UserType", str);
 
         return id;
     }
 
 
-    ////////////////////Student Table Functions------------------------------------------
+    //Student Table Functions------------------------------------------
+
+    //insert student data into database
     public Boolean insertStudentData(String name, String mobileNo, String email, String username, String password, String c, String section) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -293,6 +302,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //update a student entry in database
     public Boolean updateStudentData(int id, String name, String mobileNo, String email, String username, String password, String c, String section) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -317,6 +327,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //delete a student from database whose id is given
     public Boolean deleteStudentData(int id) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         if (id == -1)
@@ -332,6 +343,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //check if student exists in database
     public Boolean doesStudentUserNameExist(String username) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -342,6 +354,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //check if student email exists
     public Boolean doesStudentEmailExist(String email) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -352,6 +365,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //check if student mobile number exists
     public Boolean doesStudentMobileNumberExist(String mobileNo) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -362,6 +376,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //get student id corresponding to its username
     int getStudentID(String username) {
 
         SQLiteDatabase MyDB = this.getWritableDatabase();
@@ -369,18 +384,18 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME1 + " where username = ?", new String[]{username});
 
         int idx = cursor.getColumnIndex("userID");
-        //Log.v("UserType", String.valueOf(idx));
 
         cursor.moveToFirst();
 
         int id = cursor.getInt(idx);
-        //Log.v("UserType", str);
 
         return id;
     }
 
 
-    ////////////////////Course Table Functions------------------------------------------
+    //Course Table Functions------------------------------------------
+
+    //insert course data into database
     public Boolean insertCourseData(String courseCode, String courseName, String creditHrs, String description) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -398,6 +413,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //update a course data in database based on id
     public Boolean updateCourseData(int id, String courseCode, String courseName, String creditHrs, String description) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -416,6 +432,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //delete course data corresponding to row id
     public Boolean deleteCourseData(int id) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         if (id == -1)
@@ -427,6 +444,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //check if course name exists in database
     public Boolean doesCourseNameExist(String name) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -437,6 +455,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //check if course code exists in database
     public Boolean doesCourseCodeExist(String code) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -447,6 +466,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //get course id based on corresponding course code
     int getCourseID(String courseCode) {
 
         SQLiteDatabase MyDB = this.getWritableDatabase();
@@ -454,16 +474,15 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME4 + " where courseCode = ?", new String[]{courseCode});
 
         int idx = cursor.getColumnIndex("ID");
-        Log.v("Course ID column", String.valueOf(idx));
 
         cursor.moveToFirst();
 
         int id = cursor.getInt(idx);
-        //Log.v("UserType", str);
 
         return id;
     }
 
+    //get course name based on corresponding id from database
     String getCourseName(int id) {
 
         String query = "Select * from courses where id=" + id;
@@ -473,11 +492,11 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         String cname = cursor.getString(idx);
-        //Log.v("UserType", str);
 
         return cname;
     }
 
+    //get course id based on corresponding course name
     int getCourseIDFromCourseName(String courseName) {
 
         SQLiteDatabase MyDB = this.getWritableDatabase();
@@ -489,18 +508,14 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         int id = cursor.getInt(idx);
-        Log.v("Course ID column", String.valueOf(id));
-
-        //Log.v("UserType", str);
 
         return id;
-
-
     }
 
 
-    ////////////////////////////////////////User Table-------------------------------------------
+    //User Table-------------------------------------------
 
+    //insert user data into database
     public Boolean insertData(String name, String mobileNo, String email, String username, String password, String type) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -519,6 +534,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //check if user name exists in database
     public Boolean doesUserNameExist(String username) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -529,6 +545,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //check if email exists in database
     public Boolean doesEmailExist(String email) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -539,7 +556,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
-
+    //check if mobile number exists in database
     public Boolean doesMobileNumberExist(String mobileNo) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -550,7 +567,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
-
+    //check if username and its matching password exist in database
     public Boolean checkUsernamePassword(String username, String password) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -560,6 +577,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //check if teacher username and its matching password exist in database
     public Boolean checkTeacherUsernamePassword(String username, String password) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -569,6 +587,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //check if username and its matching password and thee users type(admin, student or teacher) exist and match in database
     public Boolean checkUser(String username, String password, String type) {
 
         SQLiteDatabase MyDB = this.getWritableDatabase();
@@ -581,6 +600,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    //get the type of user based on the username and password (student, teacher or admin)
     public String getUserType(String username, String password) {
 
         SQLiteDatabase MyDB = this.getWritableDatabase();
@@ -588,43 +608,42 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = MyDB.rawQuery("Select * from " + TABLE_NAME1 + " where username = ? and password = ?", new String[]{username, password});
 
         int idx = cursor.getColumnIndex("user_type");
-        //Log.v("UserType", String.valueOf(idx));
 
         cursor.moveToFirst();
 
         String str = cursor.getString(idx);
-        //Log.v("UserType", str);
 
         return str;
     }
 
 
-    //////////////////////// Other Functions------------------------------------------
+    // Other Functions------------------------------------------
+
+    //sql database write query
     Cursor execWriteQuery(String qu) {
         try {
             SQLiteDatabase MyDB = this.getWritableDatabase();
             return MyDB.rawQuery(qu, null);
         } catch (Exception e) {
-            Log.e("databaseHandler", qu);
-//            Toast.makeText(activity,"Error Occured for execAction",Toast.LENGTH_LONG).show();
+
         }
         return null;
     }
 
+    //sql database read query
     Cursor execReadQuery(String qu) {
         try {
             SQLiteDatabase MyDB = this.getReadableDatabase();
             return MyDB.rawQuery(qu, null);
         } catch (Exception e) {
-            Log.e("databaseHandler", qu);
-//            Toast.makeText(activity,"Error Occured for execAction",Toast.LENGTH_LONG).show();
+
         }
         return null;
     }
 
-/////////////////////timeSlot functions--------------------------------------------
+    //timeSlot functions--------------------------------------------
 
-
+    //insert time slot for the time table into database
     public Boolean insertTimeSlot(Schedule schedule, int day) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -641,32 +660,29 @@ public class DBHelper extends SQLiteOpenHelper {
 
         long result = MyDB.insert(TABLE_NAME5, null, contentValues);
         if (result == -1) {
-            Log.v("inserting into timeslot", "failed");
+
             return false;
         }
         return true;
     }
 
+    //delete all time slots for a given day from database
     public void deleteTimeSlotData(int weekday) {
 
         SQLiteDatabase MyDB = this.getWritableDatabase();
-        //MyDB.execSQL("drop Table if exists " + TABLE_NAME5);
-
-        //MyDB.execSQL("create Table if not exists " + TABLE_NAME5 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, classTitle TEXT, classPlace TEXT, professorName TEXT, day Integer,startHr Integer,startMin Integer,endHr Integer,endMin Integer,weekday Integer)");
 
         long result = MyDB.delete(TABLE_NAME5, "weekday=" + weekday, null);
-
-
     }
 
+    //get a list of all timeslots for a corresponding day
     public ArrayList<Schedule> getTimeSlots(int day) {
         ArrayList<Schedule> arr = new ArrayList<Schedule>();
 
-        String qu = "SELECT * FROM " + TABLE_NAME5 + " where weekday =" + Integer.toString(day); //+" where weekday = "+Integer.toString(day);
+        String qu = "SELECT * FROM " + TABLE_NAME5 + " where weekday =" + Integer.toString(day);
         SQLiteDatabase MyDB = this.getReadableDatabase();
         Cursor cursor = MyDB.rawQuery(qu, null);
         if (cursor == null || cursor.getCount() == 0) {
-            Log.v("inGetTimeSlot", "oooooo");
+
             return arr;
         } else {
             cursor.moveToFirst();
@@ -695,7 +711,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return arr;
     }
 
-    //////////////////////////////teacher-course Table-----------------------------------------------
+    //teacher-course Table-----------------------------------------------
+
+    //insert value into database to represent a teacher teaching a course
+    //i.e. teacherX teaches courseY
     public Boolean insertTeacherCourseData(int teacherID, int courseID) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -706,13 +725,14 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             result = MyDB.insert(TABLE_NAME6, null, contentValues);
         } catch (Exception e) {
-            Log.v("Exception", "insertTeacherCourseData");
+
         }
         if (result == -1)
             return false;
         return true;
     }
 
+    //remove a teacher teaching course relationship
     public Boolean deleteTeacherCourseData(int teacherid) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         if (teacherid == -1)
@@ -724,7 +744,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    //////////////////////////////student-course Table-----------------------------------------------
+    //student-course Table-----------------------------------------------
+
+    //insert value into database to represent a student registering a course
+    //i.e. studentX registers courseY
     public Boolean insertStudentCourseData(int studentID, int courseID) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -735,13 +758,14 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             result = MyDB.insert(TABLE_NAME7, null, contentValues);
         } catch (Exception e) {
-            Log.v("Exception", "insertTeacherCourseData");
+
         }
         if (result == -1)
             return false;
         return true;
     }
 
+    //remove a student registers course relationship
     public Boolean deleteStudentCourseData(int studentid) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         if (studentid == -1)
@@ -753,15 +777,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-
+    //get id for student registers course relationship table
     public ArrayList<Integer> getStudentCourseIDs(int ID) {
         ArrayList<Integer> arr = new ArrayList<Integer>();
 
-        String qu = "SELECT * FROM " + TABLE_NAME7 + " where studentID =" + Integer.toString(ID); //+" where weekday = "+Integer.toString(day);
+        String qu = "SELECT * FROM " + TABLE_NAME7 + " where studentID =" + Integer.toString(ID);
         SQLiteDatabase MyDB = this.getReadableDatabase();
         Cursor cursor = MyDB.rawQuery(qu, null);
         if (cursor == null || cursor.getCount() == 0) {
-            Log.v("getStudentCourseID err", "oooooo");
+
             return arr;
         } else {
             cursor.moveToFirst();
@@ -774,6 +798,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return arr;
     }
 
+    //get id for teacher teaches course relationship table
     public ArrayList<Integer> getTeacherCourseIDs(int ID) {
         ArrayList<Integer> arr = new ArrayList<Integer>();
 
@@ -781,7 +806,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase MyDB = this.getReadableDatabase();
         Cursor cursor = MyDB.rawQuery(qu, null);
         if (cursor == null || cursor.getCount() == 0) {
-            Log.v("getTeacherCourseID err", "oooooo");
+
             return arr;
         } else {
             cursor.moveToFirst();
@@ -794,7 +819,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return arr;
     }
 
-
+    //get scheduled classes list for for a given student using their username
     public ArrayList<Schedule> getStudentSchedules(String username) {
         ArrayList<Schedule> sch = new ArrayList<Schedule>();
 
@@ -804,12 +829,11 @@ public class DBHelper extends SQLiteOpenHelper {
             String crsName = getCourseName(id);
 
             String qu = "SELECT * FROM " + TABLE_NAME5 + " where classTitle  = '" + crsName + "'"; //+" where weekday = "+Integer.toString(day);
-            // SQLiteDatabase MyDB=this.getReadableDatabase();
+
             Cursor cursor = this.execReadQuery(qu);
-            //   Cursor cursor = MyDB.rawQuery(qu,null);
+
             if (cursor == null || cursor.getCount() == 0) {
-                Log.v("getStudentSchedules err", "oooooo");
-                //     return sch;
+
             } else {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
@@ -837,6 +861,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return sch;
     }
 
+    //get list of scheduled classes for teacher using teachers username
     public ArrayList<Schedule> getTeacherSchedules(String username) {
         ArrayList<Schedule> sch = new ArrayList<Schedule>();
 
@@ -846,12 +871,12 @@ public class DBHelper extends SQLiteOpenHelper {
             String crsName = getCourseName(id);
 
             String qu = "SELECT * FROM " + TABLE_NAME5 + " where classTitle  = '" + crsName + "'"; //+" where weekday = "+Integer.toString(day);
-            // SQLiteDatabase MyDB=this.getReadableDatabase();
+
             Cursor cursor = this.execReadQuery(qu);
-            //   Cursor cursor = MyDB.rawQuery(qu,null);
+
             if (cursor == null || cursor.getCount() == 0) {
-                Log.v("getTeacherSchedules err", "oooooo");
-                //     return sch;
+
+
             } else {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
@@ -879,14 +904,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return sch;
     }
 
-
+    //check if a class can be added, i.e. there is no previous class scheduled for that duration
     public Boolean canClassBeAdded(Time start, Time end, Integer day, Integer weekday) {
 
         String qu = "SELECT * FROM " + TABLE_NAME5 + " where day = " + Integer.toString(day) + " and weekday = " + Integer.toString(weekday); //+" where weekday = "+Integer.toString(day);
         SQLiteDatabase MyDB = this.getReadableDatabase();
         Cursor cursor = MyDB.rawQuery(qu, null);
         if (cursor == null || cursor.getCount() == 0) {
-            Log.v("canClassBeAdded", "oooooo");
+
             return true;
         } else {
             cursor.moveToFirst();
@@ -928,7 +953,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    //////////////////////////////Chat Table-----------------------------------------------
+    //Chat Table-----------------------------------------------
+
+    //get all class titles, i.e. coursename+section name if any = class name
     ArrayList<String> getClassTitles() {
         ArrayList<String> classTitles = new ArrayList<>();
 
@@ -937,8 +964,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = this.execReadQuery(qu);
 
         if (cursor == null || cursor.getCount() == 0) {
-            Log.v("getTeacherSchedules err", "oooooo");
-            //     return sch;
+
         } else {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -950,36 +976,32 @@ public class DBHelper extends SQLiteOpenHelper {
         return classTitles;
     }
 
+    //set details in database for a class hub/class room
     public void setClassDetailsTable() {
-        Log.v("board933", "yes");
         SQLiteDatabase MyDB = this.getWritableDatabase();
         MyDB.execSQL("drop Table if exists " + TABLE_CLASS_DETAILS);
         MyDB.execSQL("create Table if not exists " + TABLE_CLASS_DETAILS + "(class_title TEXT PRIMARY KEY, whiteboard_id TEXT, chat_pass TEXT)");
 
-        Log.v("board938", "yes");
         ArrayList<String> classTitles = getClassTitles();
 
-        for (int i = 0; i < 10; i++) {
-            Log.v("class_title", classTitles.get(i));
-        }
-
-        Log.v("board947", "yes");
         for (int i = 0; i < classTitles.size(); i++) {
             createBoard2(classTitles.get(i), classTitles.get(i));
-            Log.v("board949", "yes");
         }
     }
 
+    //add a whiteboard for a specific class/course
     public void addWhiteboardForCourse(String str) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         createBoard2(str, str);
     }
 
+    //remove a whiteboard for a specific class/course
     public void removeWhiteboardForCourse(String str) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         MyDB.delete(TABLE_CLASS_DETAILS, "class_title=\"" + str + "\"", null);
     }
 
+    //update whiteboard for a specific class/course
     public void updateWhiteboardForCourse(String old, String str) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -987,32 +1009,30 @@ public class DBHelper extends SQLiteOpenHelper {
 
         contentValues.put("class_title", str);
         contentValues.put("chat_pass", str);
-        //Log.v("board990", "yes");
+
         MyDB.update(TABLE_CLASS_DETAILS, contentValues, "class_title=\"" + old + "\"", null);
-        //Log.v("board992", "yes");
+
     }
 
 
+    //insert class details using class title, whiteboard id/key and chatroom password
     public Boolean insertClassDetails(String ct, String key, String c_pass) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("class_title", ct);
-        //contentValues.put("whiteboard_id", "-MOlP3_hHvHq4lldVqbI");
         contentValues.put("whiteboard_id", key);
         contentValues.put("chat_pass", c_pass);
 
-        Log.v("class", "yes");
         long result = MyDB.insert(TABLE_CLASS_DETAILS, null, contentValues);
         if (result == -1)
             return false;
         return true;
     }
 
+    //create a whiteboard
     public void createBoard2(final String ct, final String c_pass) {
-        // create a new board
-        //final String[] str = new String[1];
         Firebase.setAndroidContext(context);
         mRef = new Firebase(FIREBASE_URL);
         mBoardsRef = mRef.child("boardmetas");
@@ -1032,32 +1052,22 @@ public class DBHelper extends SQLiteOpenHelper {
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase ref) {
                 if (firebaseError != null) {
-                    Log.v("board176", ct + "__" + "__" + c_pass);
-                    //throw firebaseError.toException();
                 } else {
-                    // once the board is created, start a DrawingActivity on it
-                    //openBoard(newBoardRef.getKey());
-                    Log.v("board1022", ct + "__" + newBoardRef.getKey() + "__" + c_pass);
                     insertClassDetails(ct, newBoardRef.getKey(), c_pass);
-                    // str[0] =  newBoardRef.getKey();
-
                 }
             }
         });
     }
 
+    //get a whiteboard id/key using its corresponding class name/title
     public String getWhiteboardIDFromClassTitle(String classTitle) {
 
         String qu = "SELECT whiteboard_id FROM " + TABLE_CLASS_DETAILS + " where class_title  = '" + classTitle + "'";
-        // SQLiteDatabase MyDB=this.getReadableDatabase();
+
         Cursor cursor = this.execReadQuery(qu);
-        //   Cursor cursor = MyDB.rawQuery(qu,null);
         if (cursor == null || cursor.getCount() == 0) {
-            Log.v("board1037", "no");
-            //     return sch;
         } else {
             cursor.moveToFirst();
-            Log.v("board1041", cursor.getString(0));
             return cursor.getString(0);
         }
         return "";

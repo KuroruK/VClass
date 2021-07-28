@@ -1,17 +1,17 @@
+// CODE REFERENCE : https://github.com/googlearchive/AndroidDrawing
+// Code modified to fit our requirements
+
 package com.example.vclasslogin;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author greg
- * @since 6/26/13
- */
 public class Segment {
+    //this class stores the segments of a line in the form of a list of points
 
     private List<Point> points = new ArrayList<Point>();
-    private int color;
-    private int width=10;
+    private int color;//color of the line segment
+    private int width=10;//thickness of the line segment, default at 10
 
     // Required default constructor for Firebase serialization / deserialization
     @SuppressWarnings("unused")

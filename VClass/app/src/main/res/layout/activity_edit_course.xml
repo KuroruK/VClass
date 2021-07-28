@@ -6,7 +6,7 @@
     android:background="@color/colorBackground"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".editCourseActivity">
+    tools:context=".EditCourseActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

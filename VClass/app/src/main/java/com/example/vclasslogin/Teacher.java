@@ -1,77 +1,40 @@
 package com.example.vclasslogin;
 
-public class Teacher {
-    int id;
-    String name,mobileNo,email,username,password,specialization;
+public class Teacher extends User{
+    String specialization;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+// CONSTRUCTORS
 
     public Teacher(int id, String name, String mobileNo, String email, String username, String password, String specialization) {
-        this.id=id;
-        this.name = name;
-        this.mobileNo = mobileNo;
-        this.email  = email;
-        this.username = username;
-        this.password = password;
+        super(id,name,mobileNo,email,username,password,"Teacher");
         this.specialization = specialization;
+    }
+
+    public Teacher(){
 
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public String toString(){
-        return name+" "+mobileNo+" "+email+" "+username+" "+password+" "+specialization;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMobileNo() {
-        return mobileNo;
-    }
-
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+// GETTERS
 
     public String getSpecialization() {
         return specialization;
     }
 
+
+// SETTERS
+
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
     }
+
+
+// OTHER FUNCTIONS
+
+    public String toString(){
+        return name+" "+mobileNo+" "+email+" "+username+" "+password+" "+specialization;
+    }
+
+
+
 }

@@ -27,27 +27,29 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatCheckBox showPasswordCheckbox;
     Button btnLogin;
     DBHelper DB;
-    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mAuth = FirebaseAuth.getInstance();
 
-        // back button - action bar
+        // actionbar - title
         getSupportActionBar().setTitle("VClass");
 
+        // getting fields from layout
+        username = (EditText) findViewById(R.id.username1);
+        password = (EditText) findViewById(R.id.password1);
+        showPasswordCheckbox = (AppCompatCheckBox) findViewById(R.id.showPassword1);
+        btnLogin = (Button) findViewById((R.id.btnSignIn));
+
+        // initializing DB and creating necessary tables to run
         DB = new DBHelper(this);
-        // DB.deleteTables();
         DB.createTables();
         if (!DB.doesUserNameExist("admin")) {
             Boolean c = DB.insertData("Admin", "090078601", "manager.vclass@gmail.com", "admin", "pass", "admin");
-            if (c)
-                Log.v("insertinsert", "hogaya");
-        } else
-            Log.v("insertinsert", "nai hogaya");
+        }
 
+        // adding dummy data into DB to run application
         if (!DB.doesStudentUserNameExist("student1")) {
             DB.initTeachersAndStudents();
             this.initCourses();
@@ -55,30 +57,21 @@ public class LoginActivity extends AppCompatActivity {
             DB.initTeacherCourse();
         }
 
-
-        username = (EditText) findViewById(R.id.username1);
-        password = (EditText) findViewById(R.id.password1);
-        showPasswordCheckbox = (AppCompatCheckBox) findViewById(R.id.showPassword1);
-        btnLogin = (Button) findViewById((R.id.btnSignIn));
-
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
 
+                //  condition to check if username and password is entered or not
                 if (user.isEmpty() || pass.isEmpty())
                     Toast.makeText(LoginActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
                 else {
+                    Boolean checkCredentials = DB.checkUsernamePassword(user, pass);    // checking credentials for DB
 
-                    Boolean checkCredentials = DB.checkUsernamePassword(user, pass);
-                    //Log.v("UserType", "ye lo");
-
+                    // if credentials are correct, load a particular view for a particular user i.e, AdminView for Admin and so on
                     if (checkCredentials) {
                         String type = DB.getUserType(user, pass);
-
-                        //Log.v("UserType", type);
 
                         if (type.equalsIgnoreCase("student")) {
                             Intent intent = new Intent(getApplicationContext(), StudentView.class);
@@ -118,57 +111,26 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // function to get Courses from csv and load into the DB
     private void initCourses() {
-        csvLoader loader = new csvLoader();
+        CsvLoader loader = new CsvLoader();
 
-        ArrayList<course> crs = loader.getCourses(this, "crs.csv");
-        for (course c : crs) {
+        // loading programming Courses
+        ArrayList<Course> crs = loader.getCourses(this, "crs.csv");
+        for (Course c : crs) {
             if (!(DB.doesCourseCodeExist(c.code))) {
                 DB.insertCourseData(c.code, c.name, c.CHs, c.coordinator);
-                Log.v("course add", Boolean.toString(DB.doesCourseCodeExist(c.code)));
             }
         }
-        ;
 
+        // loading other Courses
         crs = loader.getCourses(this, "crs2.csv");
-        for (course c : crs) {
+        for (Course c : crs) {
             if (!(DB.doesCourseCodeExist(c.code))) {
                 DB.insertCourseData(c.code, c.name, c.CHs, c.coordinator);
             }
         }
+
         DB.setClassDetailsTable();
-/*        crs=loader.getCourses(this,"crs3.csv");
-        for(course c:crs){
-            if(!(DB.doesCourseCodeExist(c.code))){
-                DB.insertCourseData(c.code,c.name,c.CHs,c.coordinator);
-            }
-        }*/
-    }
-
-    private void signInAnonymously() {
-        mAuth.signInAnonymously().addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                // do your stuff
-                Log.v("Loglog", "success");
-
-            }
-        })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Log.v("Loglog", "fail");
-                    }
-                });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (mAuth.getCurrentUser() != null) {
-            // do your stuff
-        } else {
-            signInAnonymously();
-        }
     }
 }

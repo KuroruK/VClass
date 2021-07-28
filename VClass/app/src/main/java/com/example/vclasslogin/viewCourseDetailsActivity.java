@@ -10,7 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class viewCourseDetailsActivity extends AppCompatActivity {
+// this is used by admin to view course details
+public class ViewCourseDetailsActivity extends AppCompatActivity {
 
     TextView courseName, courseCode, creditHrs, description;
     Button edit, delete;
@@ -32,11 +33,13 @@ public class viewCourseDetailsActivity extends AppCompatActivity {
         edit = (Button) findViewById(R.id.c_edit);
         delete = (Button) findViewById(R.id.c_delete);
         init();
+
+        //listener for edit button - opens EditCourseActivity
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(view.getContext(), editCourseActivity.class);
+                Intent intent = new Intent(view.getContext(), EditCourseActivity.class);
 
                 intent.putExtra("courseName", getIntent().getStringExtra("courseName"));
                 intent.putExtra("courseCode", getIntent().getStringExtra("courseCode"));
@@ -47,17 +50,19 @@ public class viewCourseDetailsActivity extends AppCompatActivity {
 
             }
         });
+
+        // listener for delete button -> deletes course from database
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean deletion = db.deleteCourseData(courseID);
                 if (deletion == true) {
                     db.removeWhiteboardForCourse(courseName.getText().toString());
-                    Toast.makeText(viewCourseDetailsActivity.this, "Deletion Successful", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ViewCourseDetailsActivity.this, "Deletion Successful", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(view.getContext(), ListCourseActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(viewCourseDetailsActivity.this, "Deletion Failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ViewCourseDetailsActivity.this, "Deletion Failed", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -65,13 +70,13 @@ public class viewCourseDetailsActivity extends AppCompatActivity {
         });
     }
 
+    // the following method places information regarding course in text boxes
     void init() {
         courseName.setText(getIntent().getStringExtra("courseName"));
         courseCode.setText(getIntent().getStringExtra("courseCode"));
         creditHrs.setText(getIntent().getStringExtra("creditHrs"));
         description.setText(getIntent().getStringExtra("description"));
         courseID = db.getCourseID(getIntent().getStringExtra("courseCode"));
-        Log.v("CourseID", Integer.toString(courseID));
         return;
     }
 }

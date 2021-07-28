@@ -14,10 +14,9 @@ import java.util.ArrayList;
 
 public class StudentView extends AppCompatActivity {
 
-    ArrayList<String> basicFields;
-    GridAdapterStudent adapter;
-    GridView gridView;
-    public static databaseHandler handler;
+    ArrayList<String> basicFields; // to store main menu item names
+    StudentGridAdapter adapter;   // to set adapter for main menu
+    GridView gridView;  // grid view for main menu items
 
     // actionbar menu
     @Override
@@ -25,7 +24,6 @@ public class StudentView extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mai_menu, menu);
-        handler = new databaseHandler(this);
         return true;
     }
 
@@ -34,23 +32,24 @@ public class StudentView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_layout);
 
-        getSupportActionBar().setTitle("Sign out");
+        // action bar - setting title
+        getSupportActionBar().setTitle("Main Menu");
+
+        gridView = (GridView) findViewById(R.id.grid);
+
+        // setting profile name as Student
+        TextView profileName = findViewById(R.id.profile_name);
+        profileName.setText("Student");
 
         basicFields = new ArrayList<>();
-
-        getSupportActionBar().show();
-        gridView = (GridView) findViewById(R.id.grid);
+        // adding main menu item names into the list
         basicFields.add("Timetable");
         basicFields.add("Schedule");
         basicFields.add("Classes");
         basicFields.add("Chat");
 
-        //  basicFields.add("Manage Courses");
-        String name = getIntent().getStringExtra("student-username");
-        TextView profileName = findViewById(R.id.profile_name);
-        profileName.setText("Student");
-
-        adapter = new GridAdapterStudent(this, basicFields, name);
+        // setting adapter for student menu by passing this activity, menu items names and student username
+        adapter = new StudentGridAdapter(this, basicFields, getIntent().getStringExtra("student-username"));
         gridView.setAdapter(adapter);
     }
 

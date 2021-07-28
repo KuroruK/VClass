@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -37,8 +36,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class EditTaskActivity extends AppCompatActivity {
-    static int count = 0;
-    EditText title, descriptionEdit, deadlineEdit, totalMarksEdit, course;
+    static int count = 0;   // add a number at the end of attached file names by increasing 1-by-1
+    EditText title, descriptionEdit, deadlineEdit, totalMarksEdit;
     String courseName, taskTitle, description, deadline, obtainedMarks, totalMarks, submittedBy, file, date, id;
     Button attachTask, uploadTask, cancelBtn;
     String fileType = "";
@@ -46,23 +45,23 @@ public class EditTaskActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference reference;
     boolean fileChange = false;
-
     RecyclerView rv;
     MyRvTaskListAdapter adapter;
     ArrayList<ClassTask> tasks = new ArrayList<ClassTask>();
     ArrayList<String> ids = new ArrayList<String>();
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit_task);
 
-        // back button - action bar
+        // actionbar - back button and title
         getSupportActionBar().setTitle("Edit Task");
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        // getting require data from previous activity
         courseName = getIntent().getStringExtra("courseName");
         taskTitle = getIntent().getStringExtra("taskTitle");
         description = getIntent().getStringExtra("description");
@@ -72,56 +71,54 @@ public class EditTaskActivity extends AppCompatActivity {
         submittedBy = getIntent().getStringExtra("submittedBy");
         file = getIntent().getStringExtra("file");
         date = getIntent().getStringExtra("date");
-        database = FirebaseDatabase.getInstance();
         id = getIntent().getStringExtra("id");
+        uploadTask = findViewById(R.id.t_et_r_btn);
 
+        // getting firebase instance and reference
+        database = FirebaseDatabase.getInstance();
         reference = database.getReference("Tasks");
-        setContentView(R.layout.activity_edit_task);
+
+        // getting fields from layout
         title = findViewById(R.id.t_et_title2);
         descriptionEdit = findViewById(R.id.t_et_desc2);
         deadlineEdit = findViewById(R.id.t_et_due2);
         totalMarksEdit = findViewById(R.id.t_et_marks2);
         attachTask = findViewById(R.id.t_et_attach_files);
+        rv = findViewById(R.id.t_et_rvList_files);
 
+        // putting text data in layout fields
         title.setText(taskTitle);
         descriptionEdit.setText(description);
         deadlineEdit.setText(deadline);
         totalMarksEdit.setText(totalMarks);
 
-        rv = findViewById(R.id.t_et_rvList_files);
-
+        //  getting count of reference files
         int noOfFiles = 0;
         for (int i = 0; i < file.length() - 1; i++) {
             if (file.charAt(i) == '#' && file.charAt(i + 1) == '#') {
                 noOfFiles++;
-                Log.v("check updatingNoOfIfles", "yup");
             }
         }
-        Log.v("check nooffiles", Integer.toString(noOfFiles));
+
+        // getting file names attached with a particular task
         String getFiles = null;
-        int index = 0;
+        int index;
         ids.add(id + "##" + taskTitle);
         if (noOfFiles > 0) {
-            getFiles = file.substring(2, file.length());
+            getFiles = file.substring(2);
         }
-        String temp = null;
+        String temp;
         for (int i = 0; i < noOfFiles; i++) {
-
             if (getFiles.contains("##"))
                 temp = getFiles.substring(0, getFiles.indexOf('#'));
             else
                 temp = getFiles;
-            Log.v("check temp", temp);
             ids.add(temp);
             index = getFiles.indexOf('#') + 2;
             getFiles = getFiles.substring(index);
-            //      Log.v("check getFiles",getFiles);
-        }
-        for (int i = 0; i < ids.size(); i++) {
-            Log.v("check ids", ids.get(i));
         }
 
-
+        // getting those files and display them in this activity
         for (int i = 0; i < noOfFiles; i++) {
 
             tasks.add(new ClassTask(
@@ -140,17 +137,17 @@ public class EditTaskActivity extends AppCompatActivity {
         }
 
 
+        // setting layout manager and adapter for rv
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(manager);
-        Log.v("tagid", "0");
         adapter = new MyRvTaskListAdapter(getApplicationContext(), tasks, "ongoingTeacherEdit", ids, submittedBy, null);
         rv.setAdapter(adapter);
-
 
         attachTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharSequence options[] = new CharSequence[]
+                // options contains types of files that can be sent
+                CharSequence[] options = new CharSequence[]
                         {
                                 "Images",
                                 "PDF",
@@ -158,6 +155,8 @@ public class EditTaskActivity extends AppCompatActivity {
                                 "MS Word File",
                                 "Zip file"
                         };
+
+                // builder used to select type of file student wants to send
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditTaskActivity.this);
                 builder.setTitle("Select File");
                 builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -185,7 +184,6 @@ public class EditTaskActivity extends AppCompatActivity {
                             fileType = "PPT";
                             String[] mimeTypes =
                                     {"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
-
                                     };
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -220,13 +218,12 @@ public class EditTaskActivity extends AppCompatActivity {
         });
 
 
-        uploadTask = findViewById(R.id.t_et_r_btn);
         uploadTask.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                if (fileChange == false) {
-
+                if (!fileChange) {
+                    // get task info from firebase realtime database
                     reference.addChildEventListener(new ChildEventListener() {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
@@ -273,6 +270,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
                 }
                 Toast.makeText(getApplicationContext(), "Task successfully modified!", Toast.LENGTH_SHORT).show();
+
                 //go back to list of ongoing task
                 Intent intent = new Intent(EditTaskActivity.this, TaskActivity.class);
                 intent.putExtra("courseName", courseName);
@@ -280,15 +278,14 @@ public class EditTaskActivity extends AppCompatActivity {
                 intent.putExtra("username", submittedBy);
                 intent.putExtra("fragment", "ongoing");
                 startActivity(intent);
-                //finish();
             }
         });
 
+        // button to go back to the last activity when is pressed
         cancelBtn = findViewById(R.id.t_et_b_btn);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //finish();
                 Intent intent = new Intent(EditTaskActivity.this, TaskActivity.class);
                 intent.putExtra("courseName", courseName);
                 intent.putExtra("userType", "teacher");
@@ -297,11 +294,10 @@ public class EditTaskActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 
-
+    /*following code used to store file/resource in firebase storage and then linking a reference to that file
+    in a message that is stored in realtime firebase so that it can be shared with others in almost real time*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -356,14 +352,12 @@ public class EditTaskActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(
                                         EditTaskActivity.this,
-                                        "Failed to upload picture neechay",
+                                        "Failed to upload picture",
                                         Toast.LENGTH_LONG
                                 ).show();
                             }
                         })
                 ;
-
-
             } else if (fileType.equals("PDF")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/Pdf" + count + ".pdf");
@@ -412,13 +406,12 @@ public class EditTaskActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(
                                         EditTaskActivity.this,
-                                        "Failed to upload pdf neechay",
+                                        "Failed to upload pdf",
                                         Toast.LENGTH_LONG
                                 ).show();
                             }
                         })
                 ;
-
             } else if (fileType.equals("PPT")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/PowerPoint" + count + ".ppt");
@@ -467,13 +460,12 @@ public class EditTaskActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(
                                         EditTaskActivity.this,
-                                        "Failed to upload powerpoint neechay",
+                                        "Failed to upload powerpoint",
                                         Toast.LENGTH_LONG
                                 ).show();
                             }
                         })
                 ;
-
             } else if (fileType.equals("Word")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/msWord" + count + ".docx");
@@ -522,13 +514,12 @@ public class EditTaskActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(
                                         EditTaskActivity.this,
-                                        "Failed to upload msword neechay",
+                                        "Failed to upload ms word",
                                         Toast.LENGTH_LONG
                                 ).show();
                             }
                         })
                 ;
-
             } else if (fileType.equals("zip")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/zip" + count + ".zip");
@@ -577,36 +568,37 @@ public class EditTaskActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(
                                         EditTaskActivity.this,
-                                        "Failed to upload other neechay",
+                                        "Failed to upload zip folder",
                                         Toast.LENGTH_LONG
                                 ).show();
                             }
                         })
                 ;
-
             }
-
         }
-
     }
 
+    // function to update attached files with the task because no of attached files are changing but not the task
     @RequiresApi(api = Build.VERSION_CODES.O)
     void updateRV() {
+        // clearing attached files
         tasks.clear();
         ids.clear();
+
+        // no of files uploaded by teacher as a helping material for task
         int noOfFiles = 0;
         for (int i = 0; i < file.length() - 1; i++) {
             if (file.charAt(i) == '#' && file.charAt(i + 1) == '#') {
                 noOfFiles++;
-                Log.v("check updatingNoOfIfles", "yup");
             }
         }
-        Log.v("check nooffiles", Integer.toString(noOfFiles));
+
+        // getting file names attached with a particular task
         String getFiles = null;
         int index = 0;
         ids.add(id + "##" + taskTitle);
         if (noOfFiles > 0) {
-            getFiles = file.substring(2, file.length());
+            getFiles = file.substring(2);
         }
         String temp = null;
         for (int i = 0; i < noOfFiles; i++) {
@@ -615,19 +607,15 @@ public class EditTaskActivity extends AppCompatActivity {
                 temp = getFiles.substring(0, getFiles.indexOf('#'));
             else
                 temp = getFiles;
-            Log.v("check temp", temp);
             ids.add(temp);
             index = getFiles.indexOf('#') + 2;
             getFiles = getFiles.substring(index);
-            //      Log.v("check getFiles",getFiles);
-        }
-        for (int i = 0; i < ids.size(); i++) {
-            Log.v("check ids", ids.get(i));
         }
 
+        // getting those files and display them in this activity
         for (int i = 0; i < noOfFiles; i++) {
             tasks.add(new ClassTask(
-                    "File No. " + Integer.toString(i + 1),
+                    "File No. " + (i + 1),
                     courseName,
                     description,
                     deadline,
@@ -643,6 +631,7 @@ public class EditTaskActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    // method use to go to previous activity when back button is pressed
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(getApplicationContext(), TeacherViewUploadedTaskActivity.class);
 

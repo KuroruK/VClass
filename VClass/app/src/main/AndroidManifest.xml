@@ -38,67 +38,61 @@
         <activity android:name=".TeacherViewStudentPreviousTaskActivity" />
         <activity android:name=".StudentViewPreviousTaskActivity" />
         <activity android:name=".ViewSharedResourcesActivity" />
-        <activity android:name=".ShareFileActivity" />
         <activity android:name=".ResourceSharingActivity" />
-        <activity android:name=".manageTeacherActivity" />
 
         <activity
-            android:name=".registerTeacherActivity"
+            android:name=".RegisterTeacherActivity"
             android:parentActivityName=".ListTeacherActivity" />
         <activity
-            android:name=".viewTeacherDetailsActivity"
+            android:name=".ViewTeacherDetailsActivity"
             android:parentActivityName=".ListTeacherActivity" />
         <activity
-            android:name=".editTeacherActivity"
+            android:name=".EditTeacherActivity"
             android:parentActivityName=".ListTeacherActivity" />
         <activity
-            android:name=".registerStudentActivity"
+            android:name=".RegisterStudentActivity"
             android:parentActivityName=".ListStudentActivity" />
         <activity
-            android:name=".viewStudentDetailsActivity"
+            android:name=".ViewStudentDetailsActivity"
             android:parentActivityName=".ListStudentActivity" />
         <activity
-            android:name=".editStudentActivity"
+            android:name=".EditStudentActivity"
             android:parentActivityName=".ListStudentActivity" />
         <activity
             android:name=".ListStudentActivity"
             android:parentActivityName=".AdminView" />
         <activity
-            android:name=".registerCourseActivity"
+            android:name=".RegisterCourseActivity"
             android:parentActivityName=".ListCourseActivity" />
         <activity
-            android:name=".viewCourseDetailsActivity"
+            android:name=".ViewCourseDetailsActivity"
             android:parentActivityName=".ListCourseActivity" />
         <activity
-            android:name=".editCourseActivity"
+            android:name=".EditCourseActivity"
             android:parentActivityName=".ListCourseActivity" />
         <activity
             android:name=".ListCourseActivity"
             android:parentActivityName=".AdminView" />
 
-        <activity android:name=".timeTableMainActivity" />
-        <activity android:name=".timeTableEditActivity" />
-        <activity android:name=".view_schedule_activity" />
+        <activity android:name=".TimeTableActivity" />
+        <activity android:name=".ViewScheduleActivity" />
 
-        <activity android:name=".BoardListActivity" />
 
         <activity android:name=".StudentClassesActivity" />
         <activity android:name=".LiveStudentClassActivity" />
 
         <activity android:name=".StudentGroupChatsActivity" />
         <activity android:name=".TeacherGroupChatsActivity" />
-        <activity android:name=".StudentGroupChatViewActivity" />
+        <activity android:name=".GroupChatViewActivity" />
 
         <activity android:name=".TeacherClassesActivity" />
         <activity android:name=".LiveTeacherClassActivity" />
 
         <activity android:name=".EditTaskActivity" />
-        <activity android:name=".ViewTaskActivity" />
         <activity android:name=".UploadTaskActivity" />
         <activity android:name=".StudentViewOngoingTaskActivity" />
 
         <activity android:name=".DrawingActivity" />
-        <activity android:name=".HomeActivity" />
 
         <activity
             android:name=".TaskActivity"

@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:padding="20dp"
-        tools:context=".registerStudentActivity">
+        tools:context=".RegisterStudentActivity">
 
 
         <TextView

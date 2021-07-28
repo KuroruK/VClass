@@ -4,26 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 
-public class registerTeacherActivity extends AppCompatActivity {
+// this activity is used by admin to add new teachers
+public class RegisterTeacherActivity extends AppCompatActivity {
 
     EditText firstName, lastName, mobileNo, email, username, password, cPassword,specialization;
     AppCompatCheckBox showPasswordCheckbox;
     Button signUp;
     DBHelper DB;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +54,10 @@ public class registerTeacherActivity extends AppCompatActivity {
                 String cPass = cPassword.getText().toString();
                 String spec= specialization.getText().toString();
 
+
+                // following code makes sure all fields are filled correctly.
                 if (fName.isEmpty() || mobile.isEmpty() || mail.isEmpty() || user.isEmpty() || pass.isEmpty() || cPass.isEmpty() || spec.isEmpty())
-                    Toast.makeText(registerTeacherActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterTeacherActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
                 else {
                     if (pass.equals(cPass)) {
 
@@ -68,25 +66,25 @@ public class registerTeacherActivity extends AppCompatActivity {
                         if (!(checkUser || checkEmail || checkMobile)) {
                             Boolean insert = DB.insertTeacherData((fName + " " + lName) , mobile, mail, user, pass,spec);
                             if (insert) {
-                                Toast.makeText(registerTeacherActivity.this, "Register Successfully!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterTeacherActivity.this, "Register Successfully!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), ListTeacherActivity.class);
                                 startActivity(intent);
                             }
                             else {
-                                Toast.makeText(registerTeacherActivity.this, "Registration failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterTeacherActivity.this, "Registration failed!", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else {
                             if (checkUser)
-                                Toast.makeText(registerTeacherActivity.this, "Registration failed!\nUsername already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterTeacherActivity.this, "Registration failed!\nUsername already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
                             else if (checkEmail)
-                                Toast.makeText(registerTeacherActivity.this, "Registration failed!\nEmail already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterTeacherActivity.this, "Registration failed!\nEmail already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
                             else if (checkMobile)
-                                Toast.makeText(registerTeacherActivity.this, "Registration failed!\nMobile number already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterTeacherActivity.this, "Registration failed!\nMobile number already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
                         }
                     }
                     else {
-                        Toast.makeText(registerTeacherActivity.this, "Passwords are not matching!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterTeacherActivity.this, "Passwords are not matching!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -109,5 +107,4 @@ public class registerTeacherActivity extends AppCompatActivity {
         });
     }
 
-    // return checked radio button
 }

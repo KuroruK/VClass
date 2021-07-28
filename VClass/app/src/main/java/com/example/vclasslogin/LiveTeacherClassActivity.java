@@ -35,7 +35,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.unity3d.player.UnityPlayer;
 import com.vclasstestv2.vrVclass.UnityPlayerActivity;
 
 import java.time.LocalDateTime;
@@ -44,6 +43,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Objects;
 
+// class hub - teacher side
 public class LiveTeacherClassActivity extends AppCompatActivity {
     //ToggleButton micToggle, voiceToggle;
     AppCompatButton taskBtn, resourcesBtn, VRButton;
@@ -55,17 +55,13 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
 
     RecyclerView rv;
     MyRvMessagesListAdapter adapter;
-    ArrayList<message> messages = new ArrayList<message>();
-    static int counter = 0;
+    ArrayList<Message> messages = new ArrayList<Message>();
     FirebaseDatabase database;
     DatabaseReference reference;
-    String senderID, receiverID;
     EditText sendMessage;
     ImageView sendMessageButton, stdShareBtn;
-    String receiverPhoto;
-    Uri selectedImage = null;
+    Uri selectedFile = null;
     static int count = 1;
-    TextView className;
     String username;
 
     @Override
@@ -79,16 +75,12 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
 
-
-
-        // VR
-
         VRButton = findViewById(R.id.live_std_VRMode);
         VRButton.setText("Start Session");
+        // clicking on this button opens VR Classroom - teacher side
         VRButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  UnityPlayer.UnitySendMessage("SceneSwitcher", "ShowMessage", "teacher");
                 Intent intent = new Intent(LiveTeacherClassActivity.this, UnityPlayerActivity.class);
                 intent.putExtra("arguments","teacher");
                 intent.putExtra("sessionName",getIntent().getStringExtra("courseName"));
@@ -99,31 +91,30 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
 
 
 
-        ////message
         stdShareBtn = findViewById(R.id.c_share);
-
         messages = new ArrayList<>();
-        //className = findViewById(R.id.live_std_name);
-        //className.setText(getIntent().getStringExtra("courseName"));
         username = getIntent().getStringExtra("username");
         getSupportActionBar().setTitle(getIntent().getStringExtra("courseName"));
         sendMessage = (EditText) findViewById(R.id.c_msg);
         sendMessageButton = (ImageView) findViewById(R.id.c_send);
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("messages");
+
+        // following code is used to get messages from firebase which are placed in messages list.
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                message x = snapshot.getValue(message.class);
-                Log.v("msgmsg", "72");
+                Message x = snapshot.getValue(Message.class);
+                // checking if message belongs to this class
                 if (x.getSenderID().equals(getIntent().getStringExtra("courseName")) || x.getReceiverID().equals(getIntent().getStringExtra("courseName"))) {
+
+                    // incrementing count if message is a resource
                     if (x.getResourceType().equalsIgnoreCase("pdf") || x.getResourceType().equalsIgnoreCase("msword")
                             || x.getResourceType().equalsIgnoreCase("ppt") || x.getResourceType().equalsIgnoreCase("zip")) {
-                        //x.message = x.message+ "##" + count;
                         count++;
                     }
                     messages.add(
-                            snapshot.getValue(message.class)
+                            snapshot.getValue(Message.class)
                     );
                     rv.smoothScrollToPosition(Objects.requireNonNull(rv.getAdapter()).getItemCount() - 1);
                     adapter.notifyDataSetChanged();
@@ -151,12 +142,12 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
             }
         });
 
+        // following code used to send text message by pushing a message object to firebase so others can see in near realtime
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                Log.v("msgmsg", "109");
-                reference.push().setValue(new message(
+                reference.push().setValue(new Message(
                         getIntent().getStringExtra("courseName"),
                         username,
                         sendMessage.getText().toString().trim(),
@@ -165,42 +156,30 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
 
                 ));
                 sendMessage.setText("");
-                //rv.smoothScrollToPosition(Objects.requireNonNull(rv.getAdapter()).getItemCount() - 1);
                 adapter.notifyDataSetChanged();
-
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        Toast.makeText(getApplicationContext(),snapshot.getValue(String.class),Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-
-            }
-
-            ;
+            };
         });
+
         rv = findViewById(R.id.c_rcv_msg_list);
-        // add=findViewById(R.id.address);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(manager);
-        Collections.sort(messages, new Comparator<message>() {
+
+        // following code sorts messages according to time - in ascending order
+        Collections.sort(messages, new Comparator<Message>() {
             @Override
-            public int compare(message message, message t1) {
+            public int compare(Message message, Message t1) {
                 if (message.getTime() == null || t1.getTime() == null)
                     return 0;
                 return message.getTime().compareTo(t1.getTime());
             }
         });
 
+        // this button is used to send files
         stdShareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // options contains types of files that can be sent
                 CharSequence options[] = new CharSequence[]
                         {
                                 "Images",
@@ -209,6 +188,8 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                                 "MS Word File",
                                 "Zip file"
                         };
+
+                // builder used to select type of file student wants to send
                 AlertDialog.Builder builder = new AlertDialog.Builder(LiveTeacherClassActivity.this);
                 builder.setTitle("Select File");
                 builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -216,7 +197,6 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (i == 0) {
                             fileType = "Images";
-
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             intent.setType("image/*");
@@ -225,11 +205,9 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                         }
                         if (i == 1) {
                             fileType = "PDF";
-
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             intent.setType("application/pdf");
-                            //intent.setType("*/*");
                             startActivityForResult(intent, 100);
                         }
                         if (i == 2) {
@@ -242,19 +220,11 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             intent.setType("*/*");
                             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-                            //intent.setType("*/*");
                             startActivityForResult(intent, 100);
                         }
                         if (i == 3) {
                             fileType = "Word";
-                            //    Intent intent = new Intent();
-                            //    intent.setAction(Intent.ACTION_GET_CONTENT);
-                            //    intent.setType("application/msword");
-                            //    intent.setType("docx/*");
-                            // intent.setType("application/docx");
-
                             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                            // intent.addCategory(Intent.CATEGORY_);
                             intent.setType("*/*");
                             String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"};
                             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
@@ -262,17 +232,9 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                         }
                         if (i == 4) {
                             fileType = "zip";
-
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             String[] mimeTypes = {"application/zip"};
-                            /*String[] mimeTypes =
-                                    {"application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
-                                            "application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
-                                            "text/plain",
-                                            "application/zip"};
-
-                             */
                             intent.setType("*/*");
                             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
                             startActivityForResult(intent, 100);
@@ -290,11 +252,11 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
         db = new DBHelper(getApplicationContext());
         whiteboard = findViewById(R.id.live_std_whiteboard);
 
+        // clicking on button opens class whiteboard
         whiteboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String key = db.getWhiteboardIDFromClassTitle(getIntent().getStringExtra("courseName"));//firebase boardmeta key/id
-                Log.i(TAG, "Opening board " + key);
                 Toast.makeText(LiveTeacherClassActivity.this, "Opening board: " + key, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(LiveTeacherClassActivity.this, DrawingActivity.class);
                 intent.putExtra("courseName", getIntent().getStringExtra("courseName"));
@@ -305,10 +267,10 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
             }
         });
 
-        // buttons
         taskBtn = findViewById(R.id.live_std_tasks);
         resourcesBtn = findViewById(R.id.live_std_resources);
 
+        // clicking on button opens activity showing list of tasks - ongoing and finished
         taskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -321,6 +283,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
             }
         });
 
+        // clicking on resource button opens activity showing list of resources shared by teachers
         resourcesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -333,24 +296,21 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
         });
     }
 
+    // following method called when result returns from startActivityForResult method
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == RESULT_OK) {
-            Log.v("HERE", "here");
-            selectedImage = data.getData();
-            Log.v("HERE", selectedImage.toString());
-            Log.v("HERE", selectedImage.getPath());
-            Log.v("HERE", selectedImage.getLastPathSegment());
-            Log.v("HERE", selectedImage.getPathSegments().toString());
-            Log.v("HERE", data.getDataString());
 
+        //following code used to store file/resource in firebase storage and then linking a reference to that file in a message that is stored in
+        // realtime firebase so that it can be shared with others in almost real time
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            selectedFile = data.getData();//selectedFile contains resource data that was selected by student to send in chat
 
             if (fileType.equals("Images")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://vclass-47776.appspot.com");
                 storageReference = storageReference.child("Messages/images" + count + ".jpg");
                 //count++;
-                storageReference.putFile(selectedImage)
+                storageReference.putFile(selectedFile)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -359,10 +319,10 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                                     @RequiresApi(api = Build.VERSION_CODES.O)
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        message msg = new message("", "", "", "", true, "images", "teacher");
+                                        Message msg = new Message("", "", "", "", true, "images", "teacher");
                                         msg.setMessage(uri.toString() + "##" + count);
 
-                                        reference.push().setValue(new message(
+                                        reference.push().setValue(new Message(
                                                 getIntent().getStringExtra("courseName"),
                                                 username,
                                                 msg.getMessage(),
@@ -390,7 +350,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(
                                         LiveTeacherClassActivity.this,
-                                        "Failed to upload picture neechay",
+                                        "Failed to upload picture  ",
                                         Toast.LENGTH_LONG
                                 ).show();
                             }
@@ -401,7 +361,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
             } else if (fileType.equals("PDF")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Messages/pdf" + count + ".pdf");
-                storageReference.putFile(selectedImage)
+                storageReference.putFile(selectedFile)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -410,10 +370,10 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                                     @RequiresApi(api = Build.VERSION_CODES.O)
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        message msg = new message("", "", "", "", true, "pdf", "teacher");
+                                        Message msg = new Message("", "", "", "", true, "pdf", "teacher");
                                         msg.setMessage(uri.toString() + "##" + count);
 
-                                        reference.push().setValue(new message(
+                                        reference.push().setValue(new Message(
                                                 getIntent().getStringExtra("courseName"),
                                                 username,
                                                 msg.getMessage(),
@@ -421,7 +381,6 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                                                 true, "pdf", "teacher"
 
                                         ));
-                                        //count++;
                                         adapter.notifyDataSetChanged();
 
                                     }
@@ -442,7 +401,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(
                                         LiveTeacherClassActivity.this,
-                                        "Failed to upload pdf neechay",
+                                        "Failed to upload pdf  ",
                                         Toast.LENGTH_LONG
                                 ).show();
                             }
@@ -452,7 +411,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
             } else if (fileType.equals("PPT")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Messages/powerpoint" + count + ".ppt");
-                storageReference.putFile(selectedImage)
+                storageReference.putFile(selectedFile)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -461,10 +420,10 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                                     @RequiresApi(api = Build.VERSION_CODES.O)
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        message msg = new message("", "", "", "", true, "ppt", "teacher");
+                                        Message msg = new Message("", "", "", "", true, "ppt", "teacher");
                                         msg.setMessage(uri.toString() + "##" + count);
 
-                                        reference.push().setValue(new message(
+                                        reference.push().setValue(new Message(
                                                 getIntent().getStringExtra("courseName"),
                                                 username,
                                                 msg.getMessage(),
@@ -472,7 +431,6 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                                                 true, "ppt", "teacher"
 
                                         ));
-                                        //count++;
                                         adapter.notifyDataSetChanged();
 
                                     }
@@ -493,7 +451,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(
                                         LiveTeacherClassActivity.this,
-                                        "Failed to upload pdf neechay",
+                                        "Failed to upload pdf  ",
                                         Toast.LENGTH_LONG
                                 ).show();
                             }
@@ -501,25 +459,20 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                 ;
 
             } else if (fileType.equals("Word")) {
-                Log.v("check word", "1");
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Messages/msWord" + count + ".docx");
-                Log.v("check word", "2");
-                storageReference.putFile(selectedImage)
+                storageReference.putFile(selectedFile)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Log.v("check word", "3");
                                 Task<Uri> task = taskSnapshot.getStorage().getDownloadUrl();
                                 task.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @RequiresApi(api = Build.VERSION_CODES.O)
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        Log.v("check word", "4");
-                                        message msg = new message("", "", "", "", true, "msword", "teacher");
+                                        Message msg = new Message("", "", "", "", true, "msword", "teacher");
                                         msg.setMessage(uri.toString() + "##" + count);
-                                        Log.v("check word", "5 " + msg);
-                                        reference.push().setValue(new message(
+                                        reference.push().setValue(new Message(
                                                 getIntent().getStringExtra("courseName"),
                                                 username,
                                                 msg.getMessage(),
@@ -527,7 +480,6 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                                                 true, "msword", "teacher"
 
                                         ));
-                                        Log.v("check word", "6");
                                         adapter.notifyDataSetChanged();
 
                                     }
@@ -548,7 +500,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(
                                         LiveTeacherClassActivity.this,
-                                        "Failed to upload msword neechay",
+                                        "Failed to upload msword  ",
                                         Toast.LENGTH_LONG
                                 ).show();
                             }
@@ -559,7 +511,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Messages/zip" + count + ".zip");
                 //count++;
-                storageReference.putFile(selectedImage)
+                storageReference.putFile(selectedFile)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -568,10 +520,10 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                                     @RequiresApi(api = Build.VERSION_CODES.O)
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        message msg = new message("", "", "", "", true, "zip", "teacher");
+                                        Message msg = new Message("", "", "", "", true, "zip", "teacher");
                                         msg.setMessage(uri.toString() + "##" + count);
 
-                                        reference.push().setValue(new message(
+                                        reference.push().setValue(new Message(
                                                 getIntent().getStringExtra("courseName"),
                                                 username,
                                                 msg.getMessage(),
@@ -600,7 +552,7 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(
                                         LiveTeacherClassActivity.this,
-                                        "Failed to upload other neechay",
+                                        "Failed to upload other  ",
                                         Toast.LENGTH_LONG
                                 ).show();
                             }
@@ -612,6 +564,8 @@ public class LiveTeacherClassActivity extends AppCompatActivity {
 
     }
 
+
+    // method used to go to previous activity when back button pressed.
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), TeacherClassesActivity.class);
         myIntent.putExtra("name", username);

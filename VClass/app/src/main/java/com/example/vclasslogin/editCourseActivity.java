@@ -2,7 +2,6 @@ package com.example.vclasslogin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,13 +9,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class editCourseActivity extends AppCompatActivity {
+// this is used by admin to edit course details
+public class EditCourseActivity extends AppCompatActivity {
 
     EditText courseName,courseCode,creditHrs,description;
     int id;
     Button save;
     DBHelper DB;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,7 @@ public class editCourseActivity extends AppCompatActivity {
         init();
         save = (Button) findViewById(R.id.btn_save_edit_crs);
 
-        //listener for Sign-up button
+        //listener for Save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,8 +41,10 @@ public class editCourseActivity extends AppCompatActivity {
                 String cHrs=creditHrs.getText().toString();
                 String cDes=description.getText().toString();
 
+
+                // following code makes sure all fields are filled correctly and updates changed entries in database
                 if (cName.isEmpty() || cCode.isEmpty() || cHrs.isEmpty() || cDes.isEmpty())
-                    Toast.makeText(editCourseActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditCourseActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
                 else {
 
                     Boolean checkCName = false,checkCCode = false;
@@ -57,22 +58,20 @@ public class editCourseActivity extends AppCompatActivity {
                     if (!(checkCName ||  checkCCode)) {
                         Boolean update = DB.updateCourseData(id,cCode,cName,cHrs,cDes);
                         if (update) {
-                            //Log.v("board60", "yes");
                             DB.updateWhiteboardForCourse(getIntent().getStringExtra("courseName"), cName);
-                            //Log.v("board62", "yes");
-                            Toast.makeText(editCourseActivity.this, "Course Details Updated Successfully!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditCourseActivity.this, "Course Details Updated Successfully!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), ListCourseActivity.class);
                             startActivity(intent);
                         }
                         else {
-                            Toast.makeText(editCourseActivity.this, "Updation failed!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditCourseActivity.this, "Updation failed!", Toast.LENGTH_SHORT).show();
                         }
                     }
                     else {
                         if (checkCCode)
-                            Toast.makeText(editCourseActivity.this, "Updation failed!\nCourse Code already exists!\n", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditCourseActivity.this, "Updation failed!\nCourse Code already exists!\n", Toast.LENGTH_SHORT).show();
                         else if (checkCName)
-                            Toast.makeText(editCourseActivity.this, "Updation failed!\nCourse Name already exists!\n", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditCourseActivity.this, "Updation failed!\nCourse Name already exists!\n", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -81,6 +80,8 @@ public class editCourseActivity extends AppCompatActivity {
 
 
     }
+
+    // the following method places information regarding courses in editable text boxes
     void init(){
         courseName.setText(getIntent().getStringExtra("courseName"));
         courseCode.setText(getIntent().getStringExtra("courseCode"));
@@ -90,5 +91,4 @@ public class editCourseActivity extends AppCompatActivity {
         return;
     }
 
-    // return checked radio button
 }

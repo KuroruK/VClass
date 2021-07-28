@@ -1,3 +1,6 @@
+// CODE REFERENCE : https://github.com/googlearchive/AndroidDrawing
+// Code modified to fit our requirements
+
 package com.example.vclasslogin;
 
 import android.app.Dialog;
@@ -13,10 +16,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * @author greg
- * @since 6/27/13
- */
+
 public class ColorPickerDialog extends Dialog {
 
     public interface OnColorChangedListener {

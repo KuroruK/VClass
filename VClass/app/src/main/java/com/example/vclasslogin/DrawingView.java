@@ -1,3 +1,6 @@
+// CODE REFERENCE : https://github.com/googlearchive/AndroidDrawing
+// Code modified to fit our requirements
+
 package com.example.vclasslogin;
 
 import android.content.Context;
@@ -44,23 +47,25 @@ public class DrawingView extends View {
     private int mCanvasWidth;
     private int mCanvasHeight;
 
-    private int minWidth=10;
-    private int midWidth=30;
-    private int maxWidth=50;
-    private int selectedWidth=minWidth;
+    private int minWidth = 10;
+    private int midWidth = 30;
+    private int maxWidth = 50;
+    private int selectedWidth = minWidth;
     private String userType;
 
     public DrawingView(Context context, Firebase ref) {
         this(context, ref, 1.0f);
     }
-    public DrawingView(Context context, Firebase ref, int width, int height,int strokeWidth, String user_type) {
+
+    public DrawingView(Context context, Firebase ref, int width, int height, int strokeWidth, String user_type) {
         this(context, ref);
         this.setBackgroundColor(Color.DKGRAY);
         mCanvasWidth = width;
         mCanvasHeight = height;
-        this.selectedWidth=strokeWidth;
+        this.selectedWidth = strokeWidth;
         userType = user_type;
     }
+
     public DrawingView(Context context, Firebase ref, float scale) {
         super(context);
 
@@ -82,7 +87,7 @@ public class DrawingView extends View {
                 if (!mOutstandingSegments.contains(name)) {
                     // Deserialize the data into our Segment class
                     Segment segment = dataSnapshot.getValue(Segment.class);
-                    drawSegment(segment, paintFromColor(segment.getColor(),segment.getWidth()));
+                    drawSegment(segment, paintFromColor(segment.getColor(), segment.getWidth()));
                     // Tell the view to redraw itself
                     invalidate();
                 }
@@ -119,32 +124,30 @@ public class DrawingView extends View {
 
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
     }
-    public void setStrokeWidth(int width){
+
+    //set width of a line/stroke
+    public void setStrokeWidth(int width) {
         mPaint.setStrokeWidth(width);
-        selectedWidth=width;
-        if(mCurrentSegment!=null)
+        selectedWidth = width;
+        if (mCurrentSegment != null)
             mCurrentSegment.setWidth(selectedWidth);
     }
+
     public void cleanup() {
         mFirebaseRef.removeEventListener(mListener);
     }
 
-    public int getmCurrentColor(){
+    //return current color selected for pen
+    public int getmCurrentColor() {
         return mCurrentColor;
     }
 
+    //set color for pen
     public void setColor(int color) {
         mCurrentColor = color;
         mPaint.setColor(color);
     }
 
-    public void clear() {
-        mBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        mBuffer = new Canvas(mBitmap);
-        mCurrentSegment = null;
-        mOutstandingSegments.clear();
-        invalidate();
-    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
@@ -154,24 +157,25 @@ public class DrawingView extends View {
 
         mBitmap = Bitmap.createBitmap(Math.round(mCanvasWidth * mScale), Math.round(mCanvasHeight * mScale), Bitmap.Config.ARGB_8888);
         mBuffer = new Canvas(mBitmap);
-        Log.i("AndroidDrawing", "onSizeChanged: created bitmap/buffer of "+mBitmap.getWidth()+"x"+mBitmap.getHeight());
+        Log.i("AndroidDrawing", "onSizeChanged: created bitmap/buffer of " + mBitmap.getWidth() + "x" + mBitmap.getHeight());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.DKGRAY);
-        canvas.drawRect(0, 0, mBitmap.getWidth(), mBitmap.getHeight(), paintFromColor(Color.WHITE, Paint.Style.FILL_AND_STROKE,minWidth));
+        canvas.drawRect(0, 0, mBitmap.getWidth(), mBitmap.getHeight(), paintFromColor(Color.WHITE, Paint.Style.FILL_AND_STROKE, minWidth));
 
         canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
 
         canvas.drawPath(mPath, mPaint);
     }
 
-    public static Paint paintFromColor(int color,int width) {
-        return paintFromColor(color, Paint.Style.STROKE,width);
+    //paint a line with a color and width
+    public static Paint paintFromColor(int color, int width) {
+        return paintFromColor(color, Paint.Style.STROKE, width);
     }
 
-    public static Paint paintFromColor(int color, Paint.Style style,int width) {
+    public static Paint paintFromColor(int color, Paint.Style style, int width) {
         Paint p = new Paint();
         p.setAntiAlias(true);
         p.setDither(true);
@@ -181,6 +185,7 @@ public class DrawingView extends View {
         p.setStrokeWidth(width);//store segment width
         return p;
     }
+
 
     public static Path getPathForPoints(List<Point> points, double scale) {
         Path path = new Path();
@@ -202,23 +207,32 @@ public class DrawingView extends View {
         return path;
     }
 
-
+    //draw a segment for a line
     private void drawSegment(Segment segment, Paint paint) {
         if (mBuffer != null) {
             mBuffer.drawPath(getPathForPoints(segment.getPoints(), mScale), paint);
         }
     }
 
+    //function for when finger is placed on screen
     private void onTouchStart(float x, float y) {
+        //reset line path
         mPath.reset();
+
+        //place the current coordinates as start of path
         mPath.moveTo(x, y);
+
+        //new line segment for line
         mCurrentSegment = new Segment(mCurrentColor);
         mCurrentSegment.setWidth(selectedWidth);
         mLastX = (int) x / PIXEL_SIZE;
         mLastY = (int) y / PIXEL_SIZE;
+
+        //add the points for the line segment
         mCurrentSegment.addPoint(mLastX, mLastY);
     }
 
+    //function for when finger is moved on screen
     private void onTouchMove(float x, float y) {
 
         int x1 = (int) x / PIXEL_SIZE;
@@ -226,26 +240,34 @@ public class DrawingView extends View {
 
         float dx = Math.abs(x1 - mLastX);
         float dy = Math.abs(y1 - mLastY);
+
+        //adds the current moved coordinates to the path of the line
         if (dx >= 1 || dy >= 1) {
             mPath.quadTo(mLastX * PIXEL_SIZE, mLastY * PIXEL_SIZE, ((x1 + mLastX) * PIXEL_SIZE) / 2, ((y1 + mLastY) * PIXEL_SIZE) / 2);
             mLastX = x1;
             mLastY = y1;
+
+            //add points to current line segment
             mCurrentSegment.addPoint(mLastX, mLastY);
         }
     }
 
+    //function for when finger is lifted off of screen
     private void onTouchEnd() {
+
         mPath.lineTo(mLastX * PIXEL_SIZE, mLastY * PIXEL_SIZE);
         mBuffer.drawPath(mPath, mPaint);
         mPath.reset();
+
+        //push the segment to firebase to be stored
         Firebase segmentRef = mFirebaseRef.push();
         final String segmentName = segmentRef.getKey();
         mOutstandingSegments.add(segmentName);
 
         // create a scaled version of the segment, so that it matches the size of the board
         Segment segment = new Segment(mCurrentSegment.getColor());
-        for (Point point: mCurrentSegment.getPoints()) {
-            segment.addPoint((int)Math.round(point.x / mScale), (int)Math.round(point.y / mScale));
+        for (Point point : mCurrentSegment.getPoints()) {
+            segment.addPoint((int) Math.round(point.x / mScale), (int) Math.round(point.y / mScale));
         }
         segment.setWidth(mCurrentSegment.getWidth());
 
@@ -265,6 +287,7 @@ public class DrawingView extends View {
         });
     }
 
+    //manages different types of touch events, finger placed, moved and removed from screen
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (userType.equals("student"))

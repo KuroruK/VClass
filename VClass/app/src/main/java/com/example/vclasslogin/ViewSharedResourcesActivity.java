@@ -40,17 +40,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+// this activity displays list of all shared resources of a specific course to a student
 public class ViewSharedResourcesActivity extends AppCompatActivity {
-    //String userType;
     FloatingActionButton shareBtn;
     private static String FIREBASE_URL = "https://vclass-47776.firebaseio.com/";
     RecyclerView rv;
     MyRvResourceListAdapter adapter;
     ArrayList<Resource> resources = new ArrayList<Resource>();
-    static int counter = 0;
     FirebaseDatabase database;
     DatabaseReference reference;
     String username, courseName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,15 +66,19 @@ public class ViewSharedResourcesActivity extends AppCompatActivity {
         courseName = getIntent().getStringExtra("courseName");
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Resources");
+
+        // following code used to get resources from firebase and adding them to resources list
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Resource x = snapshot.getValue(Resource.class);
-                resources.add(
-                        snapshot.getValue(Resource.class)
-                );
+                if (x.getCourse().equalsIgnoreCase(courseName)) {
+                    resources.add(
+                            snapshot.getValue(Resource.class)
+                    );
 
-                adapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
+                }
 
             }
 
@@ -98,9 +102,12 @@ public class ViewSharedResourcesActivity extends AppCompatActivity {
 
             }
         });
+
         rv = findViewById(R.id.rvList_s_resources);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(manager);
+
+        //following code sorts resources in ascending order based on time
         Collections.sort(resources, new Comparator<Resource>() {
             @Override
             public int compare(Resource res, Resource t1) {
@@ -114,7 +121,8 @@ public class ViewSharedResourcesActivity extends AppCompatActivity {
 
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    // method used to go to previous activity when back button pressed.
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), LiveStudentClassActivity.class);
         myIntent.putExtra("username", username);
         myIntent.putExtra("courseName", courseName);

@@ -29,7 +29,7 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     Context c;
     List<ClassTask> tasks;
     String userName, userType;
-    ArrayList<String> ids;
+    ArrayList<String> ids; // list of task ids/keys from firebase
     FirebaseDatabase database;
     DatabaseReference reference;
     ArrayList<String> studentTaskTitles;
@@ -47,27 +47,27 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.dbHelper = new DBHelper(c);
     }
 
-
+    //returns a value depending on userType -- used to decide which view to create and bind to
     @Override
     public int getItemViewType(int position) {
         switch (userType) {
-            case "teacher0":
+            case "teacher0": //ongoing teacher - main
                 return 0;
-            case "teacher1":
+            case "teacher1": //submitted teacher - main
                 return 1;
-            case "student0":
+            case "student0": //ongoing student - main
                 return 2;
-            case "student1":
+            case "student1": //submitted student - main
                 return 3;
-            case "ongoingTeacherView":
+            case "ongoingTeacherView": //ongoing teacher view - individual task
                 return 4;
-            case "ongoingStudent":
+            case "ongoingStudent": //ongoing student view - individual task
                 return 5;
-            case "teacherSideStudentNames":
+            case "teacherSideStudentNames": //submitted students from teacher side
                 return 6;
-            case "ongoingTeacherEdit":
+            case "ongoingTeacherEdit": //ongoing teacher edit - individual task
                 return 7;
-            case "submittedStudentIndividualFiles":
+            case "submittedStudentIndividualFiles": //student submitted view - individual task
                 return 8;
             default:
                 return -1;
@@ -75,13 +75,16 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
+    //setting row layout depending on which activity called it.
+    // Variable "userType" used to determine this
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
-
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         RecyclerView.ViewHolder viewHolder = null;
+
+        // viewType is integer that is returned from getItemViewType method.
         switch (viewType) {
             case 0:
                 View v1 = inflater.inflate(R.layout.row_ongoing_task, viewGroup, false);
@@ -118,7 +121,7 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
             case 8:
                 View v9 = inflater.inflate(R.layout.row_attached_file, viewGroup, false);
-                viewHolder = new MyViewHolder6(v9);
+                viewHolder = new MyViewHolder9(v9);
                 break;
             default:
 
@@ -138,6 +141,7 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 vh1.dueDate.setText(tasks.get(position).getDeadline());
                 vh1.taskName.setText(tasks.get(position).getTaskTitle());
                 vh1.teacher.setText(tasks.get(position).getSubmittedBy());
+                // if task clicked, will view the selected uploaded task in detail
                 vh1.rl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -186,16 +190,14 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 2:// ongoing student
                 MyViewHolder3 vh3 = (MyViewHolder3) viewHolder;
                 if (tasks.size() != 0) {
-
                     vh3.taskName.setText(tasks.get(position).getTaskTitle());
                     vh3.teacherName.setText(tasks.get(position).getSubmittedBy());
                     vh3.due.setText(tasks.get(position).getDeadline());
                     String alreadySubmitted = "0";
 
-                    Log.v("tagid1", "Student task length in rv: " + studentTaskTitles.size());
                     if (studentTaskTitles.size() != 0) {
                         if (studentTaskTitles.contains(tasks.get(position).getTaskTitle())) {
-                            vh3.status.setText("Submitted!");
+                            vh3.status.setText("Submitted!"); // completed
                             vh3.status.setTextColor(Color.parseColor("#808080"));
                             alreadySubmitted = "1";
                         } else {
@@ -206,7 +208,6 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
 
 
-//                    vh3.status.setText(tasks.get(position).getStatus().toUpperCase());
                     final String finalAlreadySubmitted = alreadySubmitted;
                     vh3.rl.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -250,7 +251,6 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     vh4.status.setTextColor(Color.parseColor("#B60520"));
                 }
 
-//                vh4.status.setText(tasks.get(position).getStatus().toUpperCase());
                 vh4.rl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -277,7 +277,6 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 4://ongoing teacher view individual
 
                 final MyViewHolder6 vh6 = (MyViewHolder6) viewHolder;
-                //    vh6.dueDate.setText(tasks.get(position).getDeadline());
                 if (ids.size() > position + 1) {
                     String file = ids.get(position + 1);
                     String extension = file.substring(file.indexOf("?alt") - 1, file.indexOf("?alt"));
@@ -288,7 +287,6 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     if (extension.equals("p")) extension = ".zip";
 
                     vh6.taskName.setText(tasks.get(position).getTaskTitle() + extension);
-                    //vh6.teacher.setText("here");
                     vh6.rl.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -339,10 +337,8 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 6:
 
                 final MyViewHolder7 vh7 = (MyViewHolder7) viewHolder;
-                //    vh6.dueDate.setText(tasks.get(position).getDeadline());
                 vh7.name.setText(studentTaskTitles.get(position));//in studentTaskTitles-> studentNames
                 vh7.id.setText(String.valueOf(dbHelper.getStudentID(vh7.name.getText().toString().trim())));
-                //vh6.teacher.setText("here");
                 vh7.rl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -366,7 +362,6 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             case 7://ongoing teacher edit individual
                 final MyViewHolder8 vh8 = (MyViewHolder8) viewHolder;
-                //    vh6.dueDate.setText(tasks.get(position).getDeadline());
                 String file1 = ids.get(position + 1);
                 Log.v("checkFile1", file1);
                 String extension1 = file1.substring(file1.indexOf("?alt") - 1, file1.indexOf("?alt"));
@@ -376,7 +371,6 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (extension1.equals("x")) extension1 = ".docx";
                 if (extension1.equals("p")) extension1 = ".zip";
                 vh8.taskName.setText(tasks.get(position).getTaskTitle() + extension1);
-                //vh8.teacher.setText("here");
                 vh8.rl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -421,7 +415,6 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 8://student submitted view individual
 
                 final MyViewHolder6 vh9 = (MyViewHolder6) viewHolder;
-                //    vh6.dueDate.setText(tasks.get(position).getDeadline());
                 if (ids.size() > position) {
                     String file = ids.get(position);
                     final String file11 = tasks.get(position).getFile();
@@ -537,14 +530,12 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public static class MyViewHolder6 extends RecyclerView.ViewHolder {
-        TextView taskName;// dueDate, teacher;
-        //ImageView cancel;
+        TextView taskName;
         RelativeLayout rl;
 
         public MyViewHolder6(@NonNull View itemView) {
             super(itemView);
             taskName = itemView.findViewById(R.id.row_vf_fname);
-            //cancel = itemView.findViewById(R.id.row_tvf_cancel);
             rl = itemView.findViewById(R.id.s_row);
 
 
@@ -553,7 +544,6 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public static class MyViewHolder7 extends RecyclerView.ViewHolder {
         TextView name, id;
-
         RelativeLayout rl;
 
         public MyViewHolder7(@NonNull View itemView) {
@@ -567,7 +557,7 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public static class MyViewHolder8 extends RecyclerView.ViewHolder {
-        TextView taskName;// dueDate, teacher;
+        TextView taskName;
         ImageView cancel;
         RelativeLayout rl;
 
@@ -578,5 +568,19 @@ public class MyRvTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             rl = itemView.findViewById(R.id.s_row);
         }
 
+    }
+
+
+    public static class MyViewHolder9 extends RecyclerView.ViewHolder {
+        TextView taskName;
+        RelativeLayout rl;
+
+        public MyViewHolder9(@NonNull View itemView) {
+            super(itemView);
+            taskName = itemView.findViewById(R.id.row_vf_fname);
+            rl = itemView.findViewById(R.id.s_row);
+
+
+        }
     }
 }

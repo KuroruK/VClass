@@ -1,3 +1,6 @@
+// CODE REFERENCE : https://github.com/googlearchive/AndroidDrawing
+// Code modified to fit our requirements
+
 package com.example.vclasslogin;
 
 import android.content.Intent;
@@ -100,6 +103,9 @@ public class DrawingActivity extends AppCompatActivity implements ColorPickerDia
 
     @Override
     public void onStart() {
+        /**
+         * connect to firebase
+         */
         super.onStart();
         // Set up a notification to let us know when we're connected or disconnected from the Firebase servers
         mConnectedListener = mFirebaseRef.getRoot().child(".info/connected").addValueEventListener(new ValueEventListener() {
@@ -128,7 +134,6 @@ public class DrawingActivity extends AppCompatActivity implements ColorPickerDia
         if (mDrawingView != null) {
             mDrawingView.cleanup();
         }
-        // this.updateThumbnail(mBoardWidth, mBoardHeight, mSegmentsRef, mMetadataRef);
     }
 
 
@@ -138,12 +143,10 @@ public class DrawingActivity extends AppCompatActivity implements ColorPickerDia
             return false;
 
         super.onCreateOptionsMenu(menu);
-        // getMenuInflater().inflate(R.menu.menu_drawing, menu);
 
         menu.add(0, COLOR_MENU_ID, 0, "Color").setShortcut('3', 'c').setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         menu.add(0, CLEAR_MENU_ID, 2, "Clear").setShortcut('5', 'x');
-        //    menu.add(0, PIN_MENU_ID, 3, "Keep in sync").setShortcut('6', 's').setIcon(android.R.drawable.ic_lock_lock)
-        //            .setCheckable(true).setChecked(SyncedBoardManager.isSynced(mBoardId));
+
 
         menu.add(0, ERASER_MENU_ID, 4, "Eraser");
         menu.add(0, THIN_MENU_ID, 5, "Thin Pen");
@@ -161,10 +164,13 @@ public class DrawingActivity extends AppCompatActivity implements ColorPickerDia
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //option for color picker
         if (item.getItemId() == COLOR_MENU_ID) {
             new ColorPickerDialog(this, this, 0xFFFF0000).show();
             return true;
-        } else if (item.getItemId() == CLEAR_MENU_ID) {
+        }
+        //option for clearing the whiteboard screen
+        else if (item.getItemId() == CLEAR_MENU_ID) {
             mDrawingView.cleanup();
             mSegmentsRef.removeValue(new Firebase.CompletionListener() {
                 @Override
@@ -174,18 +180,19 @@ public class DrawingActivity extends AppCompatActivity implements ColorPickerDia
                     }
                     mDrawingView = new DrawingView(DrawingActivity.this, mFirebaseRef.child("boardsegments").child(mBoardId), mBoardWidth, mBoardHeight, selectedWidth, userType);
                     setContentView(mDrawingView);
-                    //mDrawingView.clear();
                 }
             });
 
             return true;
-        } else if (item.getItemId() == PIN_MENU_ID) {
+        }
+        //option
+        else if (item.getItemId() == PIN_MENU_ID) {
             SyncedBoardManager.toggle(mFirebaseRef.child("boardsegments"), mBoardId);
             item.setChecked(SyncedBoardManager.isSynced(mBoardId));
             return true;
-        } else if (item.getItemId() == ERASER_MENU_ID) {
-            //isErase = !isErase;
-            //item.setChecked(isErase);
+        }
+        //option to set eraser as current selected item
+        else if (item.getItemId() == ERASER_MENU_ID) {
             selectedWidth = maxWidth;
             colorSelected = mDrawingView.getmCurrentColor();
             mDrawingView.setColor(0xFFFFFFFF);
@@ -193,10 +200,10 @@ public class DrawingActivity extends AppCompatActivity implements ColorPickerDia
             selected = "Eraser";
             Toast.makeText(getApplicationContext(), "Selected: " + selected, Toast.LENGTH_SHORT).show();
             return true;
-        } else if (item.getItemId() == THIN_MENU_ID) {
+        }
+        //set thin pen size as current selected item
+        else if (item.getItemId() == THIN_MENU_ID) {
 
-            //isErase = !isErase;
-            //item.setChecked(isErase);
             if (colorSelected != -1)
                 mDrawingView.setColor(colorSelected);
             selected = "Thin Pen";
@@ -204,9 +211,10 @@ public class DrawingActivity extends AppCompatActivity implements ColorPickerDia
             mDrawingView.setStrokeWidth(selectedWidth);
             Toast.makeText(getApplicationContext(), "Selected: " + selected, Toast.LENGTH_SHORT).show();
             return true;
-        } else if (item.getItemId() == NORMAL_MENU_ID) {
-            //isErase = !isErase;
-            //item.setChecked(isErase);
+        }
+        //set normal pen size as current selected item
+        else if (item.getItemId() == NORMAL_MENU_ID) {
+
             if (colorSelected != -1)
                 mDrawingView.setColor(colorSelected);
             selected = "Normal Pen";
@@ -214,9 +222,10 @@ public class DrawingActivity extends AppCompatActivity implements ColorPickerDia
             mDrawingView.setStrokeWidth(selectedWidth);
             Toast.makeText(getApplicationContext(), "Selected: " + selected, Toast.LENGTH_SHORT).show();
             return true;
-        } else if (item.getItemId() == THICK_MENU_ID) {
-            //isErase = !isErase;
-            //item.setChecked(isErase);
+        }
+        //set thick pen as current selected item
+        else if (item.getItemId() == THICK_MENU_ID) {
+
             selected = "Marker";
             if (colorSelected != -1)
                 mDrawingView.setColor(colorSelected);
@@ -229,56 +238,6 @@ public class DrawingActivity extends AppCompatActivity implements ColorPickerDia
         }
     }
 
-    /*
-        public static void updateThumbnail(int boardWidth, int boardHeight, Firebase segmentsRef, final Firebase metadataRef) {
-            final float scale = Math.min(1.0f * THUMBNAIL_SIZE / boardWidth, 1.0f * THUMBNAIL_SIZE / boardHeight);
-            final Bitmap b = Bitmap.createBitmap(Math.round(boardWidth * scale), Math.round(boardHeight * scale), Bitmap.Config.ARGB_8888);
-            final Canvas buffer = new Canvas(b);
-
-            buffer.drawRect(0, 0, b.getWidth(), b.getHeight(), DrawingView.paintFromColor(Color.WHITE, Paint.Style.FILL_AND_STROKE,selectedWidth));
-            Log.i(TAG, "Generating thumbnail of " + b.getWidth() + "x" + b.getHeight());
-
-            segmentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot segmentSnapshot : dataSnapshot.getChildren()) {
-                        Segment segment = segmentSnapshot.getValue(Segment.class);
-                        buffer.drawPath(
-                                DrawingView.getPathForPoints(segment.getPoints(), scale),
-                                DrawingView.paintFromColor(segment.getColor(),segment.getWidth())
-                        );
-                    }
-                    String encoded = encodeToBase64(b);
-                    metadataRef.child("thumbnail").setValue(encoded, new Firebase.CompletionListener() {
-                        @Override
-                        public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                            if (firebaseError != null) {
-                                Log.e(TAG, "Error updating thumbnail", firebaseError.toException());
-                            }
-                        }
-                    });
-                }
-
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-
-                }
-            });
-        }
-    */
-    public static String encodeToBase64(Bitmap image) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String imageEncoded = com.firebase.client.utilities.Base64.encodeBytes(b);
-
-        return imageEncoded;
-    }
-
-    public static Bitmap decodeFromBase64(String input) throws IOException {
-        byte[] decodedByte = com.firebase.client.utilities.Base64.decode(input);
-        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
-    }
 
     @Override
     public void colorChanged(int newColor) {

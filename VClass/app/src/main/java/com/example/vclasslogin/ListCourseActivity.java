@@ -16,12 +16,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+// this activity shows list of all courses to admin
 public class ListCourseActivity extends AppCompatActivity {
     RecyclerView rv;
-    TextView add;
     MyRvCourseListAdapter adapter;
     ArrayList<Courses> courseList;
-    static int ccounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +31,17 @@ public class ListCourseActivity extends AppCompatActivity {
 
         courseList = new ArrayList<Courses>();
         FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.plusButtonCourse);
+        // following button takes admin to RegisterCourseActivity where admin can add a course
         assert addButton != null;
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ListCourseActivity.this, registerCourseActivity.class);
+                Intent intent = new Intent(ListCourseActivity.this, RegisterCourseActivity.class);
                 startActivityForResult(intent, 4);
             }
         });
+
+        // following code is used to get courses from database and place them in courseList
         String qu = "SELECT * FROM COURSES";
         DBHelper db = new DBHelper(this);
         Cursor cursor = db.execReadQuery(qu);
@@ -48,15 +50,11 @@ public class ListCourseActivity extends AppCompatActivity {
         } else {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                Log.v("Courses: ", " list Courses Cursor");
                 courseList.add(new Courses(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
                 cursor.moveToNext();
             }
         }
-        for (int i = 0; i < courseList.size(); i++)
-            Log.v("CourseInfo ", courseList.get(i).toString());
         rv = findViewById(R.id.rvListCourse);
-        // add=findViewById(R.id.address);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(ListCourseActivity.this);
         rv.setLayoutManager(manager);
         adapter = new MyRvCourseListAdapter(ListCourseActivity.this, courseList);
@@ -64,9 +62,12 @@ public class ListCourseActivity extends AppCompatActivity {
 
     }
 
+    // following method called when startActivityForResult returns - in this case from registerCourseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // following code is used to get courses from database and place them in courseList
 
         if (requestCode == 4) {
             String qu = "SELECT * FROM COURSES";

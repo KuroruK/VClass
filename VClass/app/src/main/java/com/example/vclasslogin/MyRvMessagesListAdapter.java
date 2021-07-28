@@ -24,55 +24,39 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context c;
-    List<message> messages;
+    List<Message> messages; // list of messages
     String senderID;
-    FirebaseDatabase database;
-    DatabaseReference reference;
-    CircleImageView receiverProfilePhoto;
-    static int count = 1;
-    String photo;
 
 
-    public MyRvMessagesListAdapter(Context c, List<message> messages, String senderID, String photo) {
+    public MyRvMessagesListAdapter(Context c, List<Message> messages, String senderID, String photo) {
         this.senderID = senderID;
-        this.photo = photo;
         this.c = c;
         this.messages = messages;
-        database = FirebaseDatabase.getInstance();
-        reference = database.getReference("profiles");
     }
 
-
+    //returns a value used to decide which view to create and bind to
     @Override
     public int getItemViewType(int position) {
-        boolean isImage = messages.get(position).getResource();
-        if (!(isImage)) {
+        boolean isResource = messages.get(position).getResource();
+        if (!(isResource)) {
             if (messages.get(position).getSenderID().equals(senderID)) {
-                return 0;
+                return 0;// simple text message sent by user
             }
-            return 1;
+            return 1; // simple text message received by user
         }
-        if (isImage && messages.get(position).getResourceType().equals("images")) {
-            Log.v("myLogmsg", senderID);
+        if (isResource && messages.get(position).getResourceType().equals("images")) {
             if (messages.get(position).getSenderID().equals(senderID)) {
-                return 2;
+                return 2; // image sent by user
             }
-            return 3;
+            return 3; // image received by user
         }
-        if (isImage)
+        if (isResource)
             if (messages.get(position).getSenderID().equals(senderID)) {
-                return 4;
+                return 4; // resource other than image sent by user
             }
-        return 5;
+        return 5; // resource other than image received by user
     }
 
-    /*  @NonNull
-      @Override
-      public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-          View itemView= LayoutInflater.from(c).inflate(R.layout.message_row,parent,false);
-          return new MyViewHolder(itemView);
-      }
-  */
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -121,7 +105,6 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
             case 1://rec message
                 MyViewHolder2 vh2 = (MyViewHolder2) viewHolder;
-                Log.v("message", messages.get(position).getMessage());
                 vh2.recName.setText(messages.get(position).getSenderID());
                 vh2.recMessage.setText(messages.get(position).getMessage());
                 vh2.recTime.setText(messages.get(position).getTime());
@@ -131,7 +114,7 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
                 final MyViewHolder3 vh3 = (MyViewHolder3) viewHolder;
                 Picasso.get().load(messages.get(position).getMessage()).into(vh3.senImage);
                 vh3.senImageTime.setText(messages.get(position).getTime());
-                //0001
+                // clicking on image will download image and open it
                 vh3.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -145,8 +128,7 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
                 Picasso.get().load(messages.get(position).getMessage()).into(vh4.recImage);
                 vh4.recImageTime.setText(messages.get(position).getTime());
                 vh4.recName.setText(messages.get(position).getSenderID());
-                //Picasso.get().load(photo).into(vh4.recPhoto);
-
+                // clicking on image will download image and open it
                 vh4.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -160,11 +142,9 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
                 vh5.senTime.setText(messages.get(position).getTime());
                 String msg = messages.get(position).message;
                 String fName=msg.substring(msg.indexOf("%2F")+3,msg.indexOf("?alt"));
-                Log.v("check fName",fName);
                 final String fileName = msg.substring(0, msg.indexOf("##"));
                 vh5.senFileName.setText(fName);
-                Log.v("check filename", fileName);
-                Log.v("check msg", msg);
+                // clicking on file will download file and open it
                 vh5.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -179,12 +159,10 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
                 String msg1 = messages.get(position).message;
                 final String fileName1 = msg1.substring(0, msg1.indexOf("##"));
                 String fName1=msg1.substring(msg1.indexOf("%2F")+3,msg1.indexOf("?alt"));
-                Log.v("check fName",fName1);
                 vh6.recFileName.setText(fName1);
                 vh6.recTime.setText(messages.get(position).getTime());
                 vh6.recName.setText(messages.get(position).getSenderID());
-                Log.v("check filename1", fileName1);
-                Log.v("check msg1", msg1);
+                // clicking on file will download file and open it
                 vh6.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -198,6 +176,7 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    // returns number of messages
     @Override
     public int getItemCount() {
         if (messages == null)
@@ -205,7 +184,7 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
         return messages.size();
     }
 
-
+    // class to define elements of sent text message row
     public class MyViewHolder1 extends RecyclerView.ViewHolder {
         TextView senMessage, senTime;
         RelativeLayout senRow;
@@ -219,6 +198,7 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    // class to define elements of received text message row
     public class MyViewHolder2 extends RecyclerView.ViewHolder {
         TextView recMessage, recTime,recName;
         RelativeLayout recRow;
@@ -233,6 +213,7 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    // class to define elements of sent image row
     public class MyViewHolder3 extends RecyclerView.ViewHolder {
         ImageView senImage;
         TextView senImageTime;
@@ -247,6 +228,7 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    // class to define elements of received image row
     public class MyViewHolder4 extends RecyclerView.ViewHolder {
         ImageView recImage;
         TextView recImageTime,recName;
@@ -263,6 +245,7 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
+    // class to define elements of sent resource row
     public class MyViewHolder5 extends RecyclerView.ViewHolder {
         TextView senFileName,senTime;
         RelativeLayout senFile;
@@ -276,6 +259,7 @@ public class MyRvMessagesListAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    // class to define elements of received resource row
     public class MyViewHolder6 extends RecyclerView.ViewHolder {
         TextView recFileName,recName,recTime;
         RelativeLayout recFile;

@@ -1,4 +1,4 @@
-include ':unity vr test 7-debug'
+include ':unity vr test 8-debug'
 include ':unitygvr'
 include ':unity-classes'
 include ':libprotobuf-java-nano'

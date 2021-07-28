@@ -1,10 +1,10 @@
+// CODE REFERENCE : https://github.com/googlearchive/AndroidDrawing
+// Code modified to fit our requirements
+
 package com.example.vclasslogin;
 
-/**
- * @author greg
- * @since 6/26/13
- */
 public class Point {
+    //point class for whiteboard lines
     int x;
     int y;
 

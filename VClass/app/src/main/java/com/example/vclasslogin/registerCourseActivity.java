@@ -2,21 +2,18 @@ package com.example.vclasslogin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatCheckBox;
 
-public class registerCourseActivity extends AppCompatActivity {
+// this activity is used by admin to add new courses
+public class RegisterCourseActivity extends AppCompatActivity {
 
-    EditText courseName,courseCode,creditHrs,description;
+    EditText courseName, courseCode, creditHrs, description;
     Button signUp;
     DBHelper DB;
 
@@ -41,33 +38,31 @@ public class registerCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String cName = courseName.getText().toString();
-                String cCode=courseCode.getText().toString();
-                String cHrs=creditHrs.getText().toString();
-                String cDes=description.getText().toString();
+                String cCode = courseCode.getText().toString();
+                String cHrs = creditHrs.getText().toString();
+                String cDes = description.getText().toString();
 
+                // following code makes sure all fields are filled correctly.
                 if (cName.isEmpty() || cCode.isEmpty() || cHrs.isEmpty() || cDes.isEmpty())
-                    Toast.makeText(registerCourseActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterCourseActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
                 else {
 
                     Boolean checkCName = DB.doesCourseNameExist(cName), checkCCode = DB.doesCourseCodeExist(cCode);
                     if (!(checkCName || checkCCode)) {
-                        Boolean insert = DB.insertCourseData(cCode,cName,cHrs,cDes);
+                        Boolean insert = DB.insertCourseData(cCode, cName, cHrs, cDes);
                         if (insert) {
                             DB.addWhiteboardForCourse(cName);
-                            Log.v("course_whiteboard", DB.getWhiteboardIDFromClassTitle(cName));
-                            Toast.makeText(registerCourseActivity.this, "Course Registration Successful!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterCourseActivity.this, "Course Registration Successful!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), ListCourseActivity.class);
                             startActivity(intent);
+                        } else {
+                            Toast.makeText(RegisterCourseActivity.this, "Registration failed!", Toast.LENGTH_SHORT).show();
                         }
-                        else {
-                            Toast.makeText(registerCourseActivity.this, "Registration failed!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else {
+                    } else {
                         if (checkCCode)
-                            Toast.makeText(registerCourseActivity.this, "Registration failed!\nCourse Code already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterCourseActivity.this, "Registration failed!\nCourse Code already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
                         if (checkCName)
-                            Toast.makeText(registerCourseActivity.this, "Registration failed!\nCourse Name already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterCourseActivity.this, "Registration failed!\nCourse Name already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -75,5 +70,4 @@ public class registerCourseActivity extends AppCompatActivity {
         });
     }
 
-    // return checked radio button
 }

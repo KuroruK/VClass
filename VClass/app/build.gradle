@@ -63,7 +63,7 @@ dependencies {
     implementation project(":gvr-permissionsupport-release")
     implementation project(":libprotobuf-java-nano")
     implementation project(":unity-classes")
-    implementation project(":unity vr test 7-debug")
+    implementation project(":unity vr test 8-debug")
     implementation project(":unitygvr")
 
 

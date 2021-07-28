@@ -24,17 +24,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+// this activity displays list of all shared resources of a specific course to a teacher
 public class ResourceSharingActivity extends AppCompatActivity {
-    //String userType;
     FloatingActionButton shareBtn;
     private static String FIREBASE_URL = "https://vclass-47776.firebaseio.com/";
     RecyclerView rv;
     MyRvResourceListAdapter adapter;
     ArrayList<Resource> resources = new ArrayList<Resource>();
-    static int counter = 0;
     FirebaseDatabase database;
     DatabaseReference reference;
-    String username, courseName;//, userType;
+    String username, courseName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +49,21 @@ public class ResourceSharingActivity extends AppCompatActivity {
         resources = new ArrayList<>();
         username = getIntent().getStringExtra("username");
         courseName = getIntent().getStringExtra("courseName");
-        //userType = getIntent().getStringExtra("userType");
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Resources");
+
+        // following code used to get resources from firebase and adding them to resources list
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Resource x = snapshot.getValue(Resource.class);
-                resources.add(
-                        snapshot.getValue(Resource.class)
-                );
+                if (x.getCourse().equalsIgnoreCase(courseName)) {
+                    resources.add(
+                            snapshot.getValue(Resource.class)
+                    );
 
-                adapter.notifyDataSetChanged();
-
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -88,6 +89,8 @@ public class ResourceSharingActivity extends AppCompatActivity {
         rv = findViewById(R.id.rvList_t_resources);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(manager);
+
+        //following code sorts resources in ascending order based on time
         Collections.sort(resources, new Comparator<Resource>() {
             @Override
             public int compare(Resource res, Resource t1) {
@@ -100,11 +103,11 @@ public class ResourceSharingActivity extends AppCompatActivity {
         rv.setAdapter(adapter);
 
 
+        // following button takes teacher to AttachFileActivity
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AttachFileActivity.class);
-                Log.v("myLogRSA", username);
                 intent.putExtra("username", username);
                 intent.putExtra("courseName", courseName);
                 startActivityForResult(intent, 200);
@@ -112,18 +115,23 @@ public class ResourceSharingActivity extends AppCompatActivity {
         });
     }
 
+    // following method called when startActivityForResult returns
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // following code adds new resources that have been added by teacher to resource list so it can be displayed as well.
         if (requestCode == 200 && resultCode == RESULT_OK) {
             reference.addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     Resource x = snapshot.getValue(Resource.class);
-                    resources.add(
-                            snapshot.getValue(Resource.class)
-                    );
-                    adapter.notifyDataSetChanged();
+                    if (x.getCourse().equalsIgnoreCase(courseName)) {
+                        resources.add(
+                                snapshot.getValue(Resource.class)
+                        );
+                        adapter.notifyDataSetChanged();
+                    }
 
                 }
 
@@ -150,7 +158,8 @@ public class ResourceSharingActivity extends AppCompatActivity {
         }
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    // method used to go to previous activity when back button pressed.
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), LiveTeacherClassActivity.class);
         myIntent.putExtra("username", username);
         myIntent.putExtra("courseName", courseName);

@@ -16,7 +16,7 @@ import java.util.List;
 
 public class MyRvTeacherCoursesListAdapter extends RecyclerView.Adapter<MyRvTeacherCoursesListAdapter.MyViewHolder> {
     Context c;
-    List<String> courses;
+    List<String> courses; // contains list of courses of the user - in this case, a teacher
     String username;
 
     public MyRvTeacherCoursesListAdapter(Context c, List<String> courses, String username) {
@@ -25,6 +25,7 @@ public class MyRvTeacherCoursesListAdapter extends RecyclerView.Adapter<MyRvTeac
         this.username = username;
     }
 
+    //setting row layout for teacher courses
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,18 +33,17 @@ public class MyRvTeacherCoursesListAdapter extends RecyclerView.Adapter<MyRvTeac
         return new MyViewHolder(itemView);
     }
 
+    // placing some specific teacher course information in a row
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.className.setText(courses.get(position));
 
-        Log.v("t2", "yes");
+        // if a course of a teacher is selected from list, a new Activity that shows the selected teachers' course class hub is opened.
         if (holder.rl != null) {
-            Log.v("t2", "no");
             holder.rl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    Log.v("t1", "here");
                     Intent intent = new Intent(view.getContext(), LiveTeacherClassActivity.class);
                     intent.putExtra("username", username);
                     intent.putExtra("type", "teacher");
@@ -56,6 +56,7 @@ public class MyRvTeacherCoursesListAdapter extends RecyclerView.Adapter<MyRvTeac
 
     }
 
+    // returns number of teachers' courses in list
     @Override
     public int getItemCount() {
         if (courses == null)
@@ -63,6 +64,7 @@ public class MyRvTeacherCoursesListAdapter extends RecyclerView.Adapter<MyRvTeac
         return courses.size();
     }
 
+    // class to define elements of a teachers' course row
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView className, isLive;
         RelativeLayout rl;
@@ -70,8 +72,6 @@ public class MyRvTeacherCoursesListAdapter extends RecyclerView.Adapter<MyRvTeac
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             className = itemView.findViewById(R.id.row_class_name);
-            //isLive = itemView.findViewById(R.id.row_class_is_live);
-
             rl = itemView.findViewById(R.id.class_row);
 
 

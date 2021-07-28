@@ -20,19 +20,11 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+// this activity shows list of teacher group chats
 public class TeacherGroupChatsActivity extends AppCompatActivity {
-    //    AutoCompleteAdapter autoCompleteAdapter;
     RecyclerView rv;
-    TextView add;
     MyRvListGroupChatsAdapter adapter;
     ArrayList<String> groupLists = new ArrayList<>();
-    FirebaseDatabase database;
-    DatabaseReference reference;
-    CircleImageView viewProfilePhoto;
-    ImageView menu;
-    AutoCompleteTextView search;
-
-
     String username;
     int teacherID;
     ArrayList<String> courses;
@@ -59,22 +51,20 @@ public class TeacherGroupChatsActivity extends AppCompatActivity {
 
         teacherID = dbHelper.getTeacherID(username);
         coursesIDs = dbHelper.getTeacherCourseIDs(teacherID);
+
+        // following loop adds teacher courses to groupList
         for (int i = 0; i < coursesIDs.size(); ++i) {
             groupLists.add(dbHelper.getCourseName(coursesIDs.get(i)));
-            Log.v("teacher_", dbHelper.getCourseName(coursesIDs.get(i)));
         }
 
 
-        // add=findViewById(R.id.address);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         rv.setLayoutManager(manager);
         adapter = new MyRvListGroupChatsAdapter(this, groupLists, getIntent().getStringExtra("name"), "teacher");
         rv.setAdapter(adapter);
     }
 
-    void searchArray() {
-    }
-
+    // method used to go to previous activity when back button pressed.
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), TeacherView.class);
         myIntent.putExtra("teacher-username", username);

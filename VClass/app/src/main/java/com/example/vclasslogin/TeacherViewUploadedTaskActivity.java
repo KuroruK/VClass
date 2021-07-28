@@ -15,9 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -26,13 +23,9 @@ public class TeacherViewUploadedTaskActivity extends AppCompatActivity {
     Button btnEdit, btnBack;
     RecyclerView rv;
 
-    FirebaseDatabase database;
-    DatabaseReference reference;
     MyRvTaskListAdapter adapter;
     ArrayList<ClassTask> tasks = new ArrayList<ClassTask>();
     ArrayList<String> ids = new ArrayList<String>();
-    ArrayList<String> files = new ArrayList<>();
-
     String courseName, taskTitle, description, deadline, obtainedMarks, totalMarks, submittedBy, file, date, id;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -41,12 +34,12 @@ public class TeacherViewUploadedTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_view_uploaded_task);
 
-
-        // back button - action bar
+        // actionbar - back button and title
         getSupportActionBar().setTitle("View Task");
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        // getting require data from previous activity
         courseName = getIntent().getStringExtra("courseName");
         taskTitle = getIntent().getStringExtra("taskTitle");
         description = getIntent().getStringExtra("description");
@@ -58,6 +51,7 @@ public class TeacherViewUploadedTaskActivity extends AppCompatActivity {
         date = getIntent().getStringExtra("date");
         id = getIntent().getStringExtra("id");
 
+        // getting fields from layout
         title = findViewById(R.id.t_vut_title);
         desc = findViewById(R.id.t_vut_desc2);
         due = findViewById(R.id.t_vut_due2);
@@ -65,22 +59,27 @@ public class TeacherViewUploadedTaskActivity extends AppCompatActivity {
         btnEdit = findViewById(R.id.t_vut_e_btn);
         btnBack = findViewById(R.id.t_vut_b_btn);
         rv = findViewById(R.id.t_vut_rvList_files);
-        Log.v("check file", file);
 
-        //no of files in task
+        // putting text data in layout fields
+        title.setText(taskTitle);
+        desc.setText(description);
+        due.setText(deadline);
+        marks.setText(totalMarks);
+
+        // no of files upload by teacher as a helping material for task
         int noOfFiles = 0;
         for (int i = 0; i < file.length() - 1; i++) {
             if (file.charAt(i) == '#' && file.charAt(i + 1) == '#') {
                 noOfFiles++;
-                Log.v("check updatingNoOfIfles", "yup");
             }
         }
-        Log.v("check nooffiles", Integer.toString(noOfFiles));
+
+        // getting file names attached with a particular task
         String getFiles = null;
         int index = 0;
         ids.add(id);
         if (noOfFiles > 0) {
-            getFiles = file.substring(2, file.length());
+            getFiles = file.substring(2);
         }
         String temp = null;
         for (int i = 0; i < noOfFiles; i++) {
@@ -93,12 +92,9 @@ public class TeacherViewUploadedTaskActivity extends AppCompatActivity {
             ids.add(temp);
             index = getFiles.indexOf('#') + 2;
             getFiles = getFiles.substring(index);
-            //      Log.v("check getFiles",getFiles);
-        }
-        for (int i = 0; i < ids.size(); i++) {
-            Log.v("check ids", ids.get(i));
         }
 
+        // getting those files and display them in this activity
         for (int i = 0; i < noOfFiles; i++) {
             tasks.add(new ClassTask(
                     "File No. " + Integer.toString(i + 1),
@@ -115,16 +111,14 @@ public class TeacherViewUploadedTaskActivity extends AppCompatActivity {
             ));
         }
 
+        // setting layout manager and adapter for rv
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(manager);
         Log.v("tagid", "0");
         adapter = new MyRvTaskListAdapter(getApplicationContext(), tasks, "ongoingTeacherView", ids, submittedBy, null);
         rv.setAdapter(adapter);
 
-        title.setText(taskTitle);
-        desc.setText(description);
-        due.setText(deadline);
-        marks.setText(totalMarks);
+        // to go to the EditTaskActivity, if needed
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +137,7 @@ public class TeacherViewUploadedTaskActivity extends AppCompatActivity {
             }
         });
 
+        // to go to the last opened activity
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +151,7 @@ public class TeacherViewUploadedTaskActivity extends AppCompatActivity {
         });
     }
 
+    // method use to go to previous activity when back button is pressed
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), TaskActivity.class);
         myIntent.putExtra("username", submittedBy);

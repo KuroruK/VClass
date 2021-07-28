@@ -3,7 +3,6 @@ package com.example.vclasslogin.ui.main;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,7 @@ import java.util.Locale;
 
 public class OngoingTaskFragment extends Fragment {
     FloatingActionButton addTask;
-    String userType;// = "student";
+    String userType;
     String courseName, userName;
     RecyclerView rv;
     MyRvTaskListAdapter adapter;
@@ -45,11 +44,9 @@ public class OngoingTaskFragment extends Fragment {
     DatabaseReference reference;
     View v;
     ArrayList<String> ids = new ArrayList<String>();
-    ArrayList<String> studentTaskTitles = new ArrayList<>();
+    ArrayList<String> studentTaskTitles;
 
-
-    int i = 0;
-
+    // constructor which gets and updates its data members with required data
     public OngoingTaskFragment(String user, String course, String name, ArrayList<String> studentTaskTitles) {
         userType = user;
         courseName = course;
@@ -61,9 +58,11 @@ public class OngoingTaskFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
+        // condition to check userType and then set particular layout accordingly
         if (userType.equals("teacher")) {
             v = inflater.inflate(R.layout.fragment_ongoing_task_teacher, container, false);
+
+            // floating button - to assign a new task
             addTask = v.findViewById(R.id.add_task);
             addTask.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,25 +74,25 @@ public class OngoingTaskFragment extends Fragment {
                 }
             });
 
+            // once task is assigned, setting layout manager for rv
             rv = v.findViewById(R.id.rvList_ongoing_task_teacher);
             RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
             rv.setLayoutManager(manager);
-            Log.v("tagid", "0");
             adapter = new MyRvTaskListAdapter(getContext(), tasks, "teacher0", ids, userName, studentTaskTitles);
-            rv.setAdapter(adapter);
-            return v;
 
         } else {
             v = inflater.inflate(R.layout.fragment_ongoing_task_student, container, false);
+
+            // setting layout manager for rv
             rv = v.findViewById(R.id.rvList_ongoing_task_student);
             RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
             rv.setLayoutManager(manager);
-            Log.v("tagid", "0");
             adapter = new MyRvTaskListAdapter(getContext(), tasks, "student0", ids, userName, studentTaskTitles);
-            rv.setAdapter(adapter);
-            return v;
         }
 
+        // setting adapter for rv
+        rv.setAdapter(adapter);
+        return v;
     }
 
     @Override
@@ -101,15 +100,13 @@ public class OngoingTaskFragment extends Fragment {
         super.onCreate(savedInstanceState);
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Tasks");
-        //    if(userType.equals("teacher")){
         reference.addChildEventListener(new ChildEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 ClassTask tem = snapshot.getValue(ClassTask.class);
-                Log.v("tagid", tem.getCourseName() + "......" + courseName);
 
-
+                // setting task date in tempDate
                 String tempDate = tem.getDeadline();
                 String currentDate = "";
                 String cDate = Integer.toString(LocalDateTime.now().getDayOfMonth());
@@ -117,6 +114,8 @@ public class OngoingTaskFragment extends Fragment {
                 cDate += Integer.toString(LocalDateTime.now().getMonthValue());
                 cDate += "/";
                 cDate += Integer.toString(LocalDateTime.now().getYear());
+
+                // conditions to convert date into proper format i.e, dd/mm/yyyy
                 if (cDate.charAt(1) == '/') {
                     currentDate = '0' + cDate;
                 } else {
@@ -130,7 +129,7 @@ public class OngoingTaskFragment extends Fragment {
                     currentDate = cDate;
                 }
 
-
+                //  getting current date and compare with the tasks date to check if task's status is ongoing or previous
                 Date d1 = null, d2 = null;
                 DateFormat format1 = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
                 try {
@@ -140,14 +139,10 @@ public class OngoingTaskFragment extends Fragment {
                     e.printStackTrace();
                 }
 
+                // to display only teacher's uploaded task
                 if (!(d2.after(d1))) {
-
-
                     if (tem.getCourseName().equals(courseName) && tem.getUserType().equals("teacher")) {
-
                         ids.add(snapshot.getKey());
-
-                        Log.v("tagid", "1");
                         tasks.add(
                                 snapshot.getValue(ClassTask.class)
                         );
@@ -157,8 +152,7 @@ public class OngoingTaskFragment extends Fragment {
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String
-                    previousChildName) {
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
             }
 
@@ -168,8 +162,7 @@ public class OngoingTaskFragment extends Fragment {
             }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String
-                    previousChildName) {
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
             }
 
@@ -177,11 +170,7 @@ public class OngoingTaskFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
         });
-
-
     }
-
 }
 

@@ -1,6 +1,6 @@
 package com.example.vclasslogin;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,13 +15,9 @@ import java.util.ArrayList;
 
 public class AdminView extends AppCompatActivity {
 
-    ArrayList<String> basicFields;
-    GridAdapterAdmin adapter;
-    public static ArrayList<String> divisions;
-    public static ArrayList<String> timeSlots;
-    GridView gridView;
-    public static databaseHandler handler;
-    public static Activity activity;
+    ArrayList<String> basicFields; // to store main menu item names
+    AdminGridAdapter adapter;   // to set adapter for main menu
+    GridView gridView;  // grid view for main menu items
 
     // actionbar menu
     @Override
@@ -32,44 +28,30 @@ public class AdminView extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_layout);
 
+        // actionbar - setting title
         getSupportActionBar().setTitle("Main Menu");
 
-        basicFields = new ArrayList<>();
-        handler = new databaseHandler(this);
-        activity = this;
-
-        /*getSupportActionBar().show();
-        divisions = new ArrayList();
-        divisions.add("Artificial Intelligence");
-        divisions.add("Software Engineering");
-        divisions.add("Human Computer Interaction");
-        divisions.add("Software for Mobile Devices");
-        divisions.add("Computer Networks");
-
-        timeSlots = new ArrayList();
-        timeSlots.add("8:00 - 9:30");
-        timeSlots.add("9:30 - 11:00");
-        timeSlots.add("11:00 - 12:30");
-        timeSlots.add("12:30 - 14:00");
-        timeSlots.add("14:00 - 15:30");
-        timeSlots.add("15:30 - 17:00");*/
-
         gridView = (GridView) findViewById(R.id.grid);
+
+        // setting profile name as Admin
+        TextView profileName = findViewById(R.id.profile_name);
+        profileName.setText("Admin");
+
+        basicFields = new ArrayList<>();
+        // adding main menu item names into the list
         basicFields.add("Manage Teachers");
         basicFields.add("Manage Students");
         basicFields.add("Manage Timetable");
         basicFields.add("Manage Courses");
 
-        String name = getIntent().getStringExtra("admin-username");
-        TextView profileName = findViewById(R.id.profile_name);
-        profileName.setText("Admin");
-
-        adapter = new GridAdapterAdmin(this, basicFields, name);
+        // setting adapter for admin menu by passing this activity, menu items names and admin username
+        adapter = new AdminGridAdapter(this, basicFields, getIntent().getStringExtra("admin-username"));
         gridView.setAdapter(adapter);
     }
 

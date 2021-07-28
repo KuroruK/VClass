@@ -2,7 +2,6 @@ package com.example.vclasslogin.ui.main;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class SubmittedTaskFragment extends Fragment {
-    String userType;// = "student";
+    String userType;
     String courseName, userName;
     RecyclerView rv;
     MyRvTaskListAdapter adapter;
@@ -41,8 +40,9 @@ public class SubmittedTaskFragment extends Fragment {
     DatabaseReference reference;
     View v;
     ArrayList<String> ids = new ArrayList<String>();
-    ArrayList<String> studentTaskTitles = new ArrayList<>();
+    ArrayList<String> studentTaskTitles;
 
+    // constructor which gets and updates its data members with required data
     public SubmittedTaskFragment(String user, String course, String name, ArrayList<String> studentTaskTitles) {
         userType = user;
         courseName = course;
@@ -53,42 +53,38 @@ public class SubmittedTaskFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (userType.equals("teacher")) {
-            v = inflater.inflate(R.layout.fragment_submitted_task, container, false);
+        v = inflater.inflate(R.layout.fragment_submitted_task, container, false);   // setting layout
+        rv = v.findViewById(R.id.rvList_submitted_task);    // recycler view in layout
 
+        // setting layout manager for rv
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
+        rv.setLayoutManager(manager);
 
-            rv = v.findViewById(R.id.rvList_submitted_task);
-            RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
-            rv.setLayoutManager(manager);
-            Log.v("tagid", "0");
+        // condition to open particular activity when an item is selected from recycler view
+        if (userType.equals("teacher"))
             adapter = new MyRvTaskListAdapter(getContext(), tasks, "teacher1", ids, userName, studentTaskTitles);
-            rv.setAdapter(adapter);
-            return v;
-        } else {
-            v = inflater.inflate(R.layout.fragment_submitted_task, container, false);
-            rv = v.findViewById(R.id.rvList_submitted_task);
-            RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
-            rv.setLayoutManager(manager);
-            Log.v("tagid", "0");
+        else
             adapter = new MyRvTaskListAdapter(getContext(), tasks, "student1", ids, userName, studentTaskTitles);
-            rv.setAdapter(adapter);
-            return v;
-        }
 
+        // setting adapter for rv
+        rv.setAdapter(adapter);
+        return v;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // getting firebase instance, then reference and then getting all the tasks whose dates have been passed
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Tasks");
-        //      if(userType.equals("teacher")){
         reference.addChildEventListener(new ChildEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 ClassTask tem = snapshot.getValue(ClassTask.class);
-                Log.v("tagid", tem.getCourseName() + "......" + courseName);
+
+                // setting task date in tempDate
                 String tempDate = tem.getDeadline();
                 String currentDate = "";
                 String cDate = Integer.toString(LocalDateTime.now().getDayOfMonth());
@@ -96,6 +92,8 @@ public class SubmittedTaskFragment extends Fragment {
                 cDate += Integer.toString(LocalDateTime.now().getMonthValue());
                 cDate += "/";
                 cDate += Integer.toString(LocalDateTime.now().getYear());
+
+                // conditions to convert date into proper format i.e, dd/mm/yyyy
                 if (cDate.charAt(1) == '/') {
                     currentDate = '0' + cDate;
                 } else {
@@ -109,7 +107,7 @@ public class SubmittedTaskFragment extends Fragment {
                     currentDate = cDate;
                 }
 
-
+                //  getting current date and compare with the tasks date to check if task's status is ongoing or previous
                 Date d1 = null, d2 = null;
                 DateFormat format1 = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
                 try {
@@ -119,19 +117,13 @@ public class SubmittedTaskFragment extends Fragment {
                     e.printStackTrace();
                 }
 
+                // to display only teacher's uploaded task
                 if (d2.after(d1)) {
-                    Log.v("date1", d1.toString());
-                    Log.v("date1", d2.toString());
-
                     if (tem.getCourseName().equals(courseName) && tem.getUserType().equals("teacher")) {
-
                         ids.add(snapshot.getKey());
-
-                        Log.v("tagid", "yuyuuyu");
                         tasks.add(
                                 snapshot.getValue(ClassTask.class)
                         );
-
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -157,7 +149,6 @@ public class SubmittedTaskFragment extends Fragment {
 
             }
         });
-
     }
 }
 

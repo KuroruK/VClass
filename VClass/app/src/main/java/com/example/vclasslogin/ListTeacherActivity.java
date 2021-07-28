@@ -18,10 +18,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+// this activity shows list of all teachers to admin
 public class ListTeacherActivity extends AppCompatActivity {
-    static int counter = 0;
     RecyclerView rv;
-    TextView add;
     MyRvTeacherListAdapter adapter;
     ArrayList<Teacher> teacherList = new ArrayList<Teacher>();
 
@@ -35,21 +34,22 @@ public class ListTeacherActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        if (counter == 0) {
-            teacherList = new ArrayList<Teacher>();
-            counter++;
-        }
+        teacherList = new ArrayList<Teacher>();
+
 
         FloatingActionButton addButton = findViewById(R.id.plusButton);
         assert addButton != null;
+        // following button takes admin to RegisterTeacherActivity where admin can add a teacher
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ListTeacherActivity.this, registerTeacherActivity.class);
+                Intent intent = new Intent(ListTeacherActivity.this, RegisterTeacherActivity.class);
                 startActivityForResult(intent, 3);
             }
         });
 
+
+        // following code is used to get teachers from database and place them in teacherList
         String qu = "SELECT * FROM TEACHERS";
         DBHelper db = new DBHelper(this);
         Cursor cursor = db.execReadQuery(qu);
@@ -62,6 +62,7 @@ public class ListTeacherActivity extends AppCompatActivity {
                 cursor.moveToNext();
             }
 
+            // following code uses user ids from teacher list to fetch users from database and fill the empty data members of teachers in teachersList
             for (int i = 0; i < teacherList.size(); i++) {
                 qu = "Select * from all_users where userid=" + teacherList.get(i).getId();
                 cursor = db.execReadQuery(qu);
@@ -78,39 +79,23 @@ public class ListTeacherActivity extends AppCompatActivity {
             }
         }
 
-        for (int i = 0; i < teacherList.size(); i++)
-            Log.v("teacherInfo ", teacherList.get(i).toString());
         rv = findViewById(R.id.rvList);
-        // add=findViewById(R.id.address);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(ListTeacherActivity.this);
         rv.setLayoutManager(manager);
         adapter = new MyRvTeacherListAdapter(ListTeacherActivity.this, teacherList);
         rv.setAdapter(adapter);
     }
 
+
+    // following method called when startActivityForResult returns - in this case from registerTeacherActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
+        // following code is used to get teachers from database and place them in teacherList
+
         if (requestCode == 3) {
-     /*           String qu = "SELECT * FROM TEACHERS";
-                DBHelper db= new DBHelper(this);
-                Cursor cursor = db.execReadQuery(qu);
-                if(cursor==null||cursor.getCount()==0)
-                {
-                    Toast.makeText(getBaseContext(),"No Notes Found",Toast.LENGTH_LONG).show();
-                }else {
-                    cursor.moveToFirst();
-                    for(int i=teacherList.size();i>0;i--){
-                        teacherList.remove(i-1);
-
-                    }
-                    while (!cursor.isAfterLast()) {
-                        teacherList.add(new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6)));
-                        cursor.moveToNext();
-                    }
-                }*/
-
 
             String qu = "SELECT * FROM TEACHERS";
             DBHelper db = new DBHelper(this);
@@ -146,7 +131,6 @@ public class ListTeacherActivity extends AppCompatActivity {
             }
 
             rv = findViewById(R.id.rvList);
-            //add=findViewById(R.id.address);
             RecyclerView.LayoutManager manager = new LinearLayoutManager(ListTeacherActivity.this);
             rv.setLayoutManager(manager);
             adapter = new MyRvTeacherListAdapter(ListTeacherActivity.this, teacherList);
@@ -154,6 +138,8 @@ public class ListTeacherActivity extends AppCompatActivity {
         }
     }
 
+
+    // method used to go to previous activity when back button pressed.
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(getApplicationContext(), AdminView.class);
         intent.putExtra("admin-username", getIntent().getStringExtra("username"));

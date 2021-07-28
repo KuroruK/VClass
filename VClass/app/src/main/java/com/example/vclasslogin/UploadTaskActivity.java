@@ -38,10 +38,9 @@ public class UploadTaskActivity extends AppCompatActivity {
     Button attachTask, uploadTask;
     String fileType = "";
     Uri selectedImage = null;
-    static int count = 0;
+    static int count = 0;      // add a number at the end of attached file names by increasing 1-by-1
     FirebaseDatabase database;
     DatabaseReference reference;
-
     ArrayList<ClassTask> refFiles;
     String id;
     ArrayList<String> ids = new ArrayList<String>();
@@ -53,24 +52,31 @@ public class UploadTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+        // actionbar - back button and title
+        getSupportActionBar().setTitle("New Task");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // getting require data from previous activity
         courseName = getIntent().getStringExtra("courseName");
         teacherName = getIntent().getStringExtra("username");
+
+        // getting firebase instance and reference
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Tasks");
+
+        // getting fields from layout
         title = findViewById(R.id.task_name);
         description = findViewById(R.id.task_details);
         deadline = findViewById(R.id.task_due_date);
         totalMarks = findViewById(R.id.task_marks);
         attachTask = findViewById(R.id.task_attach_file);
-
-        // back button - action bar
-        getSupportActionBar().setTitle("New Task");
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        uploadTask = findViewById(R.id.btn_upload_task);
 
         attachTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // options contains types of files that can be sent
                 CharSequence options[] = new CharSequence[]
                         {
                                 "Images",
@@ -79,6 +85,8 @@ public class UploadTaskActivity extends AppCompatActivity {
                                 "MS Word File",
                                 "Zip file"
                         };
+
+                // builder used to select type of file student wants to send
                 AlertDialog.Builder builder = new AlertDialog.Builder(UploadTaskActivity.this);
                 builder.setTitle("Select File");
                 builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -99,32 +107,23 @@ public class UploadTaskActivity extends AppCompatActivity {
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             intent.setType("application/pdf");
-                            //intent.setType("*/*");
                             startActivityForResult(intent, 110);
                         }
                         if (i == 2) {
                             fileType = "PPT";
                             String[] mimeTypes =
                                     {"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
-
                                     };
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             intent.setType("*/*");
                             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-                            //intent.setType("*/*");
                             startActivityForResult(intent, 110);
                         }
                         if (i == 3) {
                             fileType = "Word";
-                            //    Intent intent = new Intent();
-                            //    intent.setAction(Intent.ACTION_GET_CONTENT);
-                            //    intent.setType("application/msword");
-                            //    intent.setType("docx/*");
-                            // intent.setType("application/docx");
 
                             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                            // intent.addCategory(Intent.CATEGORY_);
                             intent.setType("*/*");
                             String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"};
                             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
@@ -136,13 +135,6 @@ public class UploadTaskActivity extends AppCompatActivity {
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             String[] mimeTypes = {"application/zip"};
-                            /*String[] mimeTypes =
-                                    {"application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
-                                            "application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
-                                            "text/plain",
-                                            "application/zip"};
-
-                             */
                             intent.setType("*/*");
                             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
                             startActivityForResult(intent, 110);
@@ -153,7 +145,7 @@ public class UploadTaskActivity extends AppCompatActivity {
             }
         });
 
-        uploadTask = findViewById(R.id.btn_upload_task);
+        // to finish activity after adding new task details
         uploadTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,16 +154,8 @@ public class UploadTaskActivity extends AppCompatActivity {
         });
     }
 
-    void fileAdapter(String id) {
-        //Log.v("check id", id);
-        //Log.v("check resource", String.valueOf(resources.size()));
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
-        rv.setLayoutManager(manager);
-        ArrayList<String> temp = new ArrayList<String>();
-        adapter = new MyRvTaskListAdapter(getApplicationContext(), refFiles, "ongoingStudent", ids, teacherName, temp);
-        rv.setAdapter(adapter);
-    }
-
+    /*following code used to store file/resource in firebase storage and then linking a reference to that file
+    in a message that is stored in realtime firebase so that it can be shared with others in almost real time*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -205,27 +189,6 @@ public class UploadTaskActivity extends AppCompatActivity {
                                                 LocalDateTime.now().toString(),
                                                 "ongoing"
                                         ));
-
-                                        /*ClassTask ct = new ClassTask(
-                                                title.getText().toString(),
-                                                courseName,
-                                                description.getText().toString(),
-                                                deadline.getText().toString(),
-                                                "teacher",
-                                                "-",
-                                                totalMarks.getText().toString(),
-                                                teacherName,
-                                                "##" + uri1,
-                                                LocalDateTime.now().toString(),
-                                                "ongoing"
-                                        );
-
-                                        id = reference.push().getKey();
-                                        reference.child(id).setValue(ct);
-                                        refFiles.add(ct);
-                                        fileAdapter(id);
-
-                                        adapter.notifyDataSetChanged();*/
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -250,8 +213,6 @@ public class UploadTaskActivity extends AppCompatActivity {
                             }
                         })
                 ;
-
-
             } else if (fileType.equals("PDF")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/Pdf" + count + ".pdf");
@@ -303,7 +264,6 @@ public class UploadTaskActivity extends AppCompatActivity {
                             }
                         })
                 ;
-
             } else if (fileType.equals("PPT")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/PowerPoint" + count + ".ppt");
@@ -355,7 +315,6 @@ public class UploadTaskActivity extends AppCompatActivity {
                             }
                         })
                 ;
-
             } else if (fileType.equals("Word")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/msWord" + count + ".docx");
@@ -407,7 +366,6 @@ public class UploadTaskActivity extends AppCompatActivity {
                             }
                         })
                 ;
-
             } else if (fileType.equals("zip")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Tasks/zip" + count + ".zip");
@@ -463,6 +421,7 @@ public class UploadTaskActivity extends AppCompatActivity {
         }
     }
 
+    // method use to go to previous activity when back button is pressed
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), TaskActivity.class);
         myIntent.putExtra("username", teacherName);

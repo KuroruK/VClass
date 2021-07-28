@@ -21,7 +21,6 @@ public class ListStudentActivity extends AppCompatActivity {
     TextView add;
     MyRvStudentListAdapter adapter;
     ArrayList<Student> studentList;
-    static int scounter=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,34 +29,36 @@ public class ListStudentActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Students");
 
-        studentList=new ArrayList<Student>();
+        studentList = new ArrayList<Student>();
 
-        FloatingActionButton addButton=(FloatingActionButton) findViewById(R.id.plusButtonStudent);
-        assert addButton!=null;
+        FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.plusButtonStudent);
+        assert addButton != null;
+        // following button takes admin to RegisterStudentActivity where admin can add a student
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(ListStudentActivity.this,registerStudentActivity.class);
-                startActivityForResult(intent,3);
+                Intent intent = new Intent(ListStudentActivity.this, RegisterStudentActivity.class);
+                startActivityForResult(intent, 3);
             }
         });
 
+        // following code is used to get students from database and place them in studentList
         String qu = "SELECT * FROM STUDENTS";
-        DBHelper db= new DBHelper(this);
+        DBHelper db = new DBHelper(this);
         Cursor cursor = db.execReadQuery(qu);
-        if(cursor==null||cursor.getCount()==0)
-        {
-            Toast.makeText(getBaseContext(),"No Students Found",Toast.LENGTH_LONG).show();
-        }else {
+        if (cursor == null || cursor.getCount() == 0) {
+            Toast.makeText(getBaseContext(), "No Students Found", Toast.LENGTH_LONG).show();
+        } else {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                studentList.add(new Student(cursor.getInt(0), " ", " ", " "," ", " ",cursor.getString(1),cursor.getString(2)));
+                studentList.add(new Student(cursor.getInt(0), " ", " ", " ", " ", " ", cursor.getString(1), cursor.getString(2)));
                 cursor.moveToNext();
             }
 
-            for(int i=0;i<studentList.size();i++){
-                qu="Select * from all_users where userid="+studentList.get(i).getId();
-                cursor=db.execReadQuery(qu);
+            // following code uses user ids from student list to fetch users from database and fill the empty data members of students in studentList
+            for (int i = 0; i < studentList.size(); i++) {
+                qu = "Select * from all_users where userid=" + studentList.get(i).getId();
+                cursor = db.execReadQuery(qu);
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
                     studentList.get(i).setName(cursor.getString(1));
@@ -74,59 +75,42 @@ public class ListStudentActivity extends AppCompatActivity {
         }
 
 
-
-        for(int i=0;i<studentList.size();i++)
-                Log.v("StudentInfo ",studentList.get(i).toString());
-            rv=findViewById(R.id.rvListStudent);
-       // add=findViewById(R.id.address);
-        RecyclerView.LayoutManager manager=new LinearLayoutManager(ListStudentActivity.this);
+        rv = findViewById(R.id.rvListStudent);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(ListStudentActivity.this);
         rv.setLayoutManager(manager);
-        adapter=new MyRvStudentListAdapter(ListStudentActivity.this,studentList);
+        adapter = new MyRvStudentListAdapter(ListStudentActivity.this, studentList);
         rv.setAdapter(adapter);
 
     }
+
+    // following method called when startActivityForResult returns - in this case from registerStudentActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 3) {
-    /*            String qu = "SELECT * FROM STUDENTS";
-                DBHelper db= new DBHelper(this);
-                Cursor cursor = db.execReadQuery(qu);
-                if(cursor==null||cursor.getCount()==0)
-                {
-                    Toast.makeText(getBaseContext(),"No Students Found",Toast.LENGTH_LONG).show();
-                }else {
-                    cursor.moveToFirst();
-                    for(int i=studentList.size();i>0;i--){
-                        studentList.remove(i-1);
-                    }
-                    while (!cursor.isAfterLast()) {
-                        studentList.add(new Student(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6),cursor.getString(7)));
-                        cursor.moveToNext();
-                    }
-                }
 
-     */
+        // following code is used to get students from database and place them in studentList
+
+        if (requestCode == 3) {
+
             String qu = "SELECT * FROM STUDENTS";
-            DBHelper db= new DBHelper(this);
+            DBHelper db = new DBHelper(this);
             Cursor cursor = db.execReadQuery(qu);
-            if(cursor==null||cursor.getCount()==0)
-            {
-                Toast.makeText(getBaseContext(),"No Students Found",Toast.LENGTH_LONG).show();
-            }else {
+            if (cursor == null || cursor.getCount() == 0) {
+                Toast.makeText(getBaseContext(), "No Students Found", Toast.LENGTH_LONG).show();
+            } else {
                 cursor.moveToFirst();
-                for(int i=studentList.size();i>0;i--){
-                    studentList.remove(i-1);
+                for (int i = studentList.size(); i > 0; i--) {
+                    studentList.remove(i - 1);
                 }
                 while (!cursor.isAfterLast()) {
-                    studentList.add(new Student(cursor.getInt(0), " ", " ", " "," ", " ",cursor.getString(1),cursor.getString(2)));
+                    studentList.add(new Student(cursor.getInt(0), " ", " ", " ", " ", " ", cursor.getString(1), cursor.getString(2)));
                     cursor.moveToNext();
                 }
 
-                for(int i=0;i<studentList.size();i++){
-                    qu="Select * from all_users where userid="+studentList.get(i).getId();
-                    cursor=db.execReadQuery(qu);
+                for (int i = 0; i < studentList.size(); i++) {
+                    qu = "Select * from all_users where userid=" + studentList.get(i).getId();
+                    cursor = db.execReadQuery(qu);
                     cursor.moveToFirst();
                     while (!cursor.isAfterLast()) {
                         studentList.get(i).setName(cursor.getString(1));
@@ -143,15 +127,13 @@ public class ListStudentActivity extends AppCompatActivity {
             }
 
 
+            rv = findViewById(R.id.rvListStudent);
+            RecyclerView.LayoutManager manager = new LinearLayoutManager(ListStudentActivity.this);
+            rv.setLayoutManager(manager);
+            adapter = new MyRvStudentListAdapter(ListStudentActivity.this, studentList);
+            rv.setAdapter(adapter);
 
-            rv=findViewById(R.id.rvListStudent);
-          //s      add=findViewById(R.id.address);
-                RecyclerView.LayoutManager manager=new LinearLayoutManager(ListStudentActivity.this);
-               rv.setLayoutManager(manager);
-               adapter=new MyRvStudentListAdapter(ListStudentActivity.this,studentList);
-                rv.setAdapter(adapter);
-
-            }
+        }
 
     }
 }

@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -40,38 +39,30 @@ public class AttachFileActivity extends AppCompatActivity {
     EditText title;
     RecyclerView rvFile;
     Button attachFileBtn, confirmBtn;
-    String fileType = "";
-    String username, courseName, taskTitle, description, deadline, obtainedMarks, totalMarks, submittedBy, file, date;
+    String fileType = "";   // images, ppt, word, pdf, zip
+    String username, courseName;
     Uri selectedImage = null;
     MyRvResourceListAdapter adapter;
     ArrayList<Resource> resources;
     Boolean attached = false;
     String id;
-    static int count = 0;
+    static int count = 0;   // add a number at the end of attached file names by increasing 1-by-1
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attach_file);
 
-        // action bar
+        // actionbar - back button
         getSupportActionBar().setTitle("File Details");
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // code here
         username = getIntent().getStringExtra("username");
         courseName = getIntent().getStringExtra("courseName");
         resources = new ArrayList<>();
-        //taskTitle = getIntent().getStringExtra("taskTitle");
-        //description = getIntent().getStringExtra("description");
-        //deadline = getIntent().getStringExtra("deadline");
-        //obtainedMarks = getIntent().getStringExtra("obtainedMarks");
-        //totalMarks = getIntent().getStringExtra("totalMarks");
-        //submittedBy = getIntent().getStringExtra("submittedBy");
-        //file = getIntent().getStringExtra("file");
-        //date = getIntent().getStringExtra("date");
 
+        // getting firebase instance and reference
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Resources");
 
@@ -79,16 +70,18 @@ public class AttachFileActivity extends AppCompatActivity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
+        // size of window
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
+        // setting size of the window/activity
         getWindow().setLayout((int) (width * 0.8), (int) (height * 0.6));
 
         // getting ids
         title = findViewById(R.id.at_file_title_2);
         attachFileBtn = findViewById(R.id.af_attach_btn);
         confirmBtn = findViewById(R.id.af_confirm_btn);
-        rvFile = findViewById(R.id.af_rv);  // code here to show file in this rv
+        rvFile = findViewById(R.id.af_rv);
 
         // attaching file
         attachFileBtn.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +89,9 @@ public class AttachFileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (resources.isEmpty())
                     attached = false;
-                if (attached == false) {
-                    CharSequence options[] = new CharSequence[]
+                if (!attached) {
+                    // options contains types of files that can be sent
+                    CharSequence[] options = new CharSequence[]
                             {
                                     "Images",
                                     "PDF",
@@ -105,6 +99,8 @@ public class AttachFileActivity extends AppCompatActivity {
                                     "MS Word File",
                                     "Zip file"
                             };
+
+                    // builder used to select type of file student wants to send
                     AlertDialog.Builder builder = new AlertDialog.Builder(AttachFileActivity.this);
                     builder.setTitle("Select File");
                     builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -125,32 +121,23 @@ public class AttachFileActivity extends AppCompatActivity {
                                 Intent intent = new Intent();
                                 intent.setAction(Intent.ACTION_GET_CONTENT);
                                 intent.setType("application/pdf");
-                                //intent.setType("*/*");
                                 startActivityForResult(intent, 300);
                             }
                             if (i == 2) {
                                 fileType = "PPT";
                                 String[] mimeTypes =
                                         {"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
-
                                         };
                                 Intent intent = new Intent();
                                 intent.setAction(Intent.ACTION_GET_CONTENT);
                                 intent.setType("*/*");
                                 intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-                                //intent.setType("*/*");
                                 startActivityForResult(intent, 300);
                             }
                             if (i == 3) {
                                 fileType = "Word";
-                                //    Intent intent = new Intent();
-                                //    intent.setAction(Intent.ACTION_GET_CONTENT);
-                                //    intent.setType("application/msword");
-                                //    intent.setType("docx/*");
-                                // intent.setType("application/docx");
 
                                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                // intent.addCategory(Intent.CATEGORY_);
                                 intent.setType("*/*");
                                 String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"};
                                 intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
@@ -162,13 +149,6 @@ public class AttachFileActivity extends AppCompatActivity {
                                 Intent intent = new Intent();
                                 intent.setAction(Intent.ACTION_GET_CONTENT);
                                 String[] mimeTypes = {"application/zip"};
-                            /*String[] mimeTypes =
-                                    {"application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
-                                            "application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
-                                            "text/plain",
-                                            "application/zip"};
-
-                             */
                                 intent.setType("*/*");
                                 intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
                                 startActivityForResult(intent, 300);
@@ -176,8 +156,6 @@ public class AttachFileActivity extends AppCompatActivity {
                         }
                     });
                     builder.show();
-
-
                 } else {
                     Toast.makeText(getApplicationContext(), "Only one file attachment is allowed", Toast.LENGTH_SHORT).show();
                 }
@@ -188,23 +166,23 @@ public class AttachFileActivity extends AppCompatActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // display message when action is completed and finish this activity
                 Toast.makeText(getApplicationContext(), "File successfully attached!", Toast.LENGTH_SHORT).show();
-                //code here to finish activity and do some action
                 finish();
             }
         });
     }
 
+    // function to set rv based on ids - when the file is attached, it is shown in rv
     void fileAdapter(String id) {
-        Log.v("check id", id);
-        Log.v("check resource", String.valueOf(resources.size()));
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
         rvFile.setLayoutManager(manager);
         adapter = new MyRvResourceListAdapter(getApplicationContext(), resources, "attach", id);
         rvFile.setAdapter(adapter);
     }
 
-    //code here
+    /*following code used to store file/resource in firebase storage and then linking a reference to that file
+    in a message that is stored in realtime firebase so that it can be shared with others in almost real time*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -263,8 +241,6 @@ public class AttachFileActivity extends AppCompatActivity {
                             }
                         })
                 ;
-
-
             } else if (fileType.equals("PDF")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Resources/Pdf" + count + ".pdf");
@@ -317,7 +293,6 @@ public class AttachFileActivity extends AppCompatActivity {
                             }
                         })
                 ;
-
             } else if (fileType.equals("PPT")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Resources/PowerPoint" + count + ".ppt");
@@ -370,7 +345,6 @@ public class AttachFileActivity extends AppCompatActivity {
                             }
                         })
                 ;
-
             } else if (fileType.equals("Word")) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 storageReference = storageReference.child("Resources/msWord" + count + ".docx");
@@ -479,6 +453,7 @@ public class AttachFileActivity extends AppCompatActivity {
         }
     }
 
+    // method use to go to previous activity when back button is pressed
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), LiveTeacherClassActivity.class);
         myIntent.putExtra("username", username);

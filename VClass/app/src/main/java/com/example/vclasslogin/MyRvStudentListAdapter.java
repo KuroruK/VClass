@@ -16,13 +16,14 @@ import java.util.List;
 
 public class MyRvStudentListAdapter extends RecyclerView.Adapter<MyRvStudentListAdapter.MyViewHolder> {
     Context c;
-    List<Student> studentList;
+    List<Student> studentList; // contains list of students
 
     public MyRvStudentListAdapter(Context c, List<Student> studentList) {
         this.c = c;
         this.studentList = studentList;
     }
 
+    //setting row layout for students
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -30,6 +31,7 @@ public class MyRvStudentListAdapter extends RecyclerView.Adapter<MyRvStudentList
         return new MyViewHolder(itemView);
     }
 
+    // placing some specific student information in a row
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.name.setText(studentList.get(position).getName());
@@ -38,15 +40,13 @@ public class MyRvStudentListAdapter extends RecyclerView.Adapter<MyRvStudentList
         holder.section.setText(studentList.get(position).getSection());
         holder.contact.setText(studentList.get(position).getMobileNo());
 
-        Log.v("t2","yes");
+        // if a student is selected from list, a new Activity that shows the selected students' details is opened.
         if(holder.rl!=null) {
-            Log.v("t2","no");
             holder.rl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    Log.v("t1","here");
-                    Intent intent=new Intent(view.getContext(),viewStudentDetailsActivity.class);
+                    Intent intent=new Intent(view.getContext(), ViewStudentDetailsActivity.class);
                     intent.putExtra("name",studentList.get(position).getName());
                     intent.putExtra("class",studentList.get(position).getClassName());
                     intent.putExtra("section",studentList.get(position).getSection());
@@ -63,6 +63,7 @@ public class MyRvStudentListAdapter extends RecyclerView.Adapter<MyRvStudentList
 
     }
 
+    // returns number of students in list
     @Override
     public int getItemCount() {
         if(studentList==null)
@@ -70,6 +71,7 @@ public class MyRvStudentListAdapter extends RecyclerView.Adapter<MyRvStudentList
         return studentList.size();
     }
 
+    // class to define elements of student row
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name,Class,section,email,contact;
         RelativeLayout rl;

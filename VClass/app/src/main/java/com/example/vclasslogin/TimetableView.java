@@ -1,3 +1,6 @@
+// CODE REFERENCE : https://github.com/tlaabs/TimetableView
+// Code modified to fit our requirements
+
 package com.example.vclasslogin;
 
 import android.app.Activity;
@@ -116,42 +119,16 @@ public class TimetableView extends LinearLayout {
         stickerSelectedListener = listener;
     }
 
-    /**
-     * date : 2019-02-08
-     * get all schedules TimetableView has.
-     */
-    public ArrayList<Schedule> getAllSchedulesInStickers() {
-        ArrayList<Schedule> allSchedules = new ArrayList<Schedule>();
-        for (int key : stickers.keySet()) {
-            for (Schedule schedule : stickers.get(key).getSchedules()) {
-                allSchedules.add(schedule);
-            }
-        }
-        return allSchedules;
-    }
 
-    /**
-     * date : 2019-02-08
-     * Used in Edit mode, To check a invalidate schedule.
-     */
-    public ArrayList<Schedule> getAllSchedulesInStickersExceptIdx(int idx) {
-        ArrayList<Schedule> allSchedules = new ArrayList<Schedule>();
-        for (int key : stickers.keySet()) {
-            if (idx == key) continue;
-            for (Schedule schedule : stickers.get(key).getSchedules()) {
-                allSchedules.add(schedule);
-            }
-        }
-        return allSchedules;
-    }
 
+    //adds a list of schedules to the timetable as stickers
     public void add(ArrayList<Schedule> schedules) {
         add(schedules, -1);
     }
-
     private void add(final ArrayList<Schedule> schedules, int specIdx) {
         final int count = specIdx < 0 ? ++stickerCount : specIdx;
         Sticker sticker = new Sticker();
+        //for each schedule in schedules list, create a sticker and place it in the entire stickers list
         for (Schedule schedule : schedules) {
             TextView tv = new TextView(context);
 
@@ -179,10 +156,12 @@ public class TimetableView extends LinearLayout {
         setStickerColor();
     }
 
+    //save the currently loaded stickers list as a json
     public String createSaveData() {
         return SaveManager.saveSticker(stickers);
     }
 
+    //load stickers from a json - unused
     public void load(String data) {
         removeAll();
         stickers = SaveManager.loadSticker(data);
@@ -196,6 +175,7 @@ public class TimetableView extends LinearLayout {
         setStickerColor();
     }
 
+    //remove all stored stickers from timetable
     public void removeAll() {
         for (int key : stickers.keySet()) {
             Sticker sticker = stickers.get(key);
@@ -206,11 +186,13 @@ public class TimetableView extends LinearLayout {
         stickers.clear();
     }
 
+    //edit a specific sticker
     public void edit(int idx, ArrayList<Schedule> schedules) {
         remove(idx);
         add(schedules, idx);
     }
 
+    //remove a sticker using its id
     public void remove(int idx) {
         Sticker sticker = stickers.get(idx);
         for (TextView tv : sticker.getView()) {

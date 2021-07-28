@@ -16,14 +16,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class editStudentActivity extends AppCompatActivity {
+// this is used by admin to edit student details
+public class EditStudentActivity extends AppCompatActivity {
 
-    EditText name, mobileNo, email, username, password,Class,section;
+    EditText name, mobileNo, email, username, password, Class, section;
     int id;
     Button save;
     DBHelper DB;
-    Spinner c1,c2,c3,c4,c5;
-    String course1,course2,course3,course4,course5;
+    Spinner c1, c2, c3, c4, c5;
+    String course1, course2, course3, course4, course5;
 
 
     @Override
@@ -40,36 +41,37 @@ public class editStudentActivity extends AppCompatActivity {
         Class = (EditText) findViewById(R.id.edit_s_class2);
         section = (EditText) findViewById(R.id.edit_s_section2);
         password = (EditText) findViewById(R.id.edit_s_password2);
-        c1=(Spinner)findViewById(R.id.edit_s_course11);
-        c2=(Spinner)findViewById(R.id.edit_s_course21);
-        c3=(Spinner)findViewById(R.id.edit_s_course31);
-        c4=(Spinner)findViewById(R.id.edit_s_course41);
-        c5=(Spinner)findViewById(R.id.edit_s_course51);
+        c1 = (Spinner) findViewById(R.id.edit_s_course11);
+        c2 = (Spinner) findViewById(R.id.edit_s_course21);
+        c3 = (Spinner) findViewById(R.id.edit_s_course31);
+        c4 = (Spinner) findViewById(R.id.edit_s_course41);
+        c5 = (Spinner) findViewById(R.id.edit_s_course51);
         DB = new DBHelper(this);
         init();
         save = (Button) findViewById(R.id.btn_save_edit_s);
 
-        course1=getIntent().getStringExtra("course1");
-        course2=getIntent().getStringExtra("course2");
-        course3=getIntent().getStringExtra("course3");
-        course4=getIntent().getStringExtra("course4");
-        course5=getIntent().getStringExtra("course5");
+        course1 = getIntent().getStringExtra("course1");
+        course2 = getIntent().getStringExtra("course2");
+        course3 = getIntent().getStringExtra("course3");
+        course4 = getIntent().getStringExtra("course4");
+        course5 = getIntent().getStringExtra("course5");
 
-        final ArrayList<String> c1List=new ArrayList<String>();
-        final ArrayList<String> c2List=new ArrayList<String>();
-        final ArrayList<String> c3List=new ArrayList<String>();
-        final ArrayList<String> c4List=new ArrayList<String>();
-        final ArrayList<String> c5List=new ArrayList<String>();
+        final ArrayList<String> c1List = new ArrayList<String>();
+        final ArrayList<String> c2List = new ArrayList<String>();
+        final ArrayList<String> c3List = new ArrayList<String>();
+        final ArrayList<String> c4List = new ArrayList<String>();
+        final ArrayList<String> c5List = new ArrayList<String>();
+
+        // following code adds courses to 5 identical courses lists
+        // these lists are attached with spinners and admin can select and update student courses
         String qu = "SELECT * FROM COURSES";
-        DBHelper db= new DBHelper(this);
+        DBHelper db = new DBHelper(this);
         Cursor cursor = db.execReadQuery(qu);
-        if(cursor==null||cursor.getCount()==0)
-        {
-            Toast.makeText(getBaseContext(),"No Courses Found",Toast.LENGTH_LONG).show();
-        }else {
+        if (cursor == null || cursor.getCount() == 0) {
+            Toast.makeText(getBaseContext(), "No Courses Found", Toast.LENGTH_LONG).show();
+        } else {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                Log.v("Courses: "," list Courses cursor");
                 c1List.add(cursor.getString(2));
                 c2List.add(cursor.getString(2));
                 c3List.add(cursor.getString(2));
@@ -94,23 +96,23 @@ public class editStudentActivity extends AppCompatActivity {
         c4.setSelection(c4List.indexOf(getIntent().getStringExtra("course4")));
         c5.setSelection(c5List.indexOf(getIntent().getStringExtra("course5")));
 
+
+        // following listeners are called when a course is selected by admin.
         c1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                course1= c1List.get(i);
+                course1 = c1List.get(i);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.v("Course selected1","Nothing selected");
-
 
             }
         });
         c2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                course2= c2List.get(i);
+                course2 = c2List.get(i);
             }
 
             @Override
@@ -121,46 +123,39 @@ public class editStudentActivity extends AppCompatActivity {
         c3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                course3= c3List.get(i);
+                course3 = c3List.get(i);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.v("Course selected3","Nothing 3 selected");
 
             }
         });
         c4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                course4= c4List.get(i);
+                course4 = c4List.get(i);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.v("Course selected4","Nothing 4 selected");
 
             }
         });
         c5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                course5= c5List.get(i);
+                course5 = c5List.get(i);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.v("Course selected5","Nothing 5 selected");
 
             }
         });
 
 
-
-
-
-
-        //listener for Sign-up button
+        //listener for Save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,52 +164,51 @@ public class editStudentActivity extends AppCompatActivity {
                 String mail = email.getText().toString();
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
-                String aclass= Class.getText().toString();
-                String sec= section.getText().toString();
+                String aclass = Class.getText().toString();
+                String sec = section.getText().toString();
 
-                if (tname.isEmpty() || mobile.isEmpty() || mail.isEmpty() || user.isEmpty() || pass.isEmpty()  || aclass.isEmpty() || sec.isEmpty())
-                    Toast.makeText(editStudentActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+                // following code makes sure all fields are filled correctly and updates changed entries in database
+                if (tname.isEmpty() || mobile.isEmpty() || mail.isEmpty() || user.isEmpty() || pass.isEmpty() || aclass.isEmpty() || sec.isEmpty())
+                    Toast.makeText(EditStudentActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
                 else {
 
-                        Boolean checkUser = false, checkEmail = false, checkMobile = false;
-                        if(!(user.equals(getIntent().getStringExtra("username")))){
-                            DB.doesStudentUserNameExist(user);
-                        }
-                    if(!(mail.equals(getIntent().getStringExtra("email")))){
+                    Boolean checkUser = false, checkEmail = false, checkMobile = false;
+                    if (!(user.equals(getIntent().getStringExtra("username")))) {
+                        DB.doesStudentUserNameExist(user);
+                    }
+                    if (!(mail.equals(getIntent().getStringExtra("email")))) {
                         checkEmail = DB.doesStudentEmailExist(mail);
                     }
-                    if(!(mobile.equals(getIntent().getStringExtra("mobileNo")))){
+                    if (!(mobile.equals(getIntent().getStringExtra("mobileNo")))) {
                         checkMobile = DB.doesStudentMobileNumberExist(mobile);
                     }
 
-                        if (!(checkUser || checkEmail || checkMobile)) {
-                            Boolean update = DB.updateStudentData(id,tname, mobile, mail, user, pass,aclass,sec);
-                            if (update) {
-                                Toast.makeText(editStudentActivity.this, "Student Details Updated Successfully!", Toast.LENGTH_SHORT).show();
-                                DB.deleteStudentCourseData(id);
-                                DB.insertStudentCourseData(id,DB.getCourseIDFromCourseName(course1));
-                                DB.insertStudentCourseData(id,DB.getCourseIDFromCourseName(course2));
-                                DB.insertStudentCourseData(id,DB.getCourseIDFromCourseName(course3));
-                                DB.insertStudentCourseData(id,DB.getCourseIDFromCourseName(course4));
-                                DB.insertStudentCourseData(id,DB.getCourseIDFromCourseName(course5));
-                                DB.close();
-                                Log.v("selected courses",course1+" "+course2+" "+course3+" "+course4+" "+course5);
+                    if (!(checkUser || checkEmail || checkMobile)) {
+                        Boolean update = DB.updateStudentData(id, tname, mobile, mail, user, pass, aclass, sec);
+                        if (update) {
+                            Toast.makeText(EditStudentActivity.this, "Student Details Updated Successfully!", Toast.LENGTH_SHORT).show();
+                            DB.deleteStudentCourseData(id);
+                            DB.insertStudentCourseData(id, DB.getCourseIDFromCourseName(course1));
+                            DB.insertStudentCourseData(id, DB.getCourseIDFromCourseName(course2));
+                            DB.insertStudentCourseData(id, DB.getCourseIDFromCourseName(course3));
+                            DB.insertStudentCourseData(id, DB.getCourseIDFromCourseName(course4));
+                            DB.insertStudentCourseData(id, DB.getCourseIDFromCourseName(course5));
+                            DB.close();
+                            Log.v("selected courses", course1 + " " + course2 + " " + course3 + " " + course4 + " " + course5);
 
-                                Intent intent = new Intent(getApplicationContext(), ListStudentActivity.class);
-                                startActivity(intent);
-                            }
-                            else {
-                                Toast.makeText(editStudentActivity.this, "Updation failed!", Toast.LENGTH_SHORT).show();
-                            }
+                            Intent intent = new Intent(getApplicationContext(), ListStudentActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(EditStudentActivity.this, "Updation failed!", Toast.LENGTH_SHORT).show();
                         }
-                        else {
-                            if (checkUser)
-                                Toast.makeText(editStudentActivity.this, "Updation failed!\nUsername already exists!\n", Toast.LENGTH_SHORT).show();
-                            else if (checkEmail)
-                                Toast.makeText(editStudentActivity.this, "Updation failed!\nEmail already exists!\n", Toast.LENGTH_SHORT).show();
-                            else if (checkMobile)
-                                Toast.makeText(editStudentActivity.this, "Updation failed!\nMobile number already exists!\n", Toast.LENGTH_SHORT).show();
-                        }
+                    } else {
+                        if (checkUser)
+                            Toast.makeText(EditStudentActivity.this, "Updation failed!\nUsername already exists!\n", Toast.LENGTH_SHORT).show();
+                        else if (checkEmail)
+                            Toast.makeText(EditStudentActivity.this, "Updation failed!\nEmail already exists!\n", Toast.LENGTH_SHORT).show();
+                        else if (checkMobile)
+                            Toast.makeText(EditStudentActivity.this, "Updation failed!\nMobile number already exists!\n", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             }
@@ -222,18 +216,19 @@ public class editStudentActivity extends AppCompatActivity {
 
 
     }
-    void init(){
+
+    // the following method places information regarding student in editable text boxes
+    void init() {
         name.setText(getIntent().getStringExtra("name"));
         email.setText(getIntent().getStringExtra("email"));
         mobileNo.setText(getIntent().getStringExtra("mobileNo"));
         Class.setText(getIntent().getStringExtra("class"));
         section.setText(getIntent().getStringExtra("section"));
-        String tem=getIntent().getStringExtra("username");
+        String tem = getIntent().getStringExtra("username");
         username.setText(tem);
         password.setText(getIntent().getStringExtra("password"));
-        id=DB.getStudentID(tem);
+        id = DB.getStudentID(tem);
         return;
     }
 
-    // return checked radio button
 }

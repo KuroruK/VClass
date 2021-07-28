@@ -16,7 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class editTeacherActivity extends AppCompatActivity {
+// this is used by admin to edit teacher details
+public class EditTeacherActivity extends AppCompatActivity {
 
     EditText name, mobileNo, email, username, password, specialization;
     int id;
@@ -51,6 +52,9 @@ public class editTeacherActivity extends AppCompatActivity {
         final ArrayList<String> c1List = new ArrayList<String>();
         final ArrayList<String> c2List = new ArrayList<String>();
         final ArrayList<String> c3List = new ArrayList<String>();
+
+        // following code adds courses to 3 identical courses lists
+        // these lists are attached with spinners and admin can select and update teacher courses
         String qu = "SELECT * FROM COURSES";
         DBHelper db = new DBHelper(this);
         Cursor cursor = db.execReadQuery(qu);
@@ -59,7 +63,6 @@ public class editTeacherActivity extends AppCompatActivity {
         } else {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                Log.v("Courses: ", " list Courses cursor");
                 c1List.add(cursor.getString(2));
                 c2List.add(cursor.getString(2));
                 c3List.add(cursor.getString(2));
@@ -76,7 +79,7 @@ public class editTeacherActivity extends AppCompatActivity {
         c2.setSelection(c2List.indexOf(getIntent().getStringExtra("course2")));
         c3.setSelection(c3List.indexOf(getIntent().getStringExtra("course3")));
 
-
+        // following listeners are called when a course is selected by admin.
         c1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -85,7 +88,6 @@ public class editTeacherActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.v("Course selected1", "Nothing selected");
 
 
             }
@@ -109,13 +111,12 @@ public class editTeacherActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.v("Course selected3", "Nothing 3 selected");
 
             }
         });
 
 
-        //listener for Sign-up button
+        //listener for Save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,8 +127,9 @@ public class editTeacherActivity extends AppCompatActivity {
                 String pass = password.getText().toString();
                 String spec = specialization.getText().toString();
 
+                // following code makes sure all fields are filled correctly and updates changed entries in database
                 if (tname.isEmpty() || mobile.isEmpty() || mail.isEmpty() || user.isEmpty() || pass.isEmpty() || spec.isEmpty())
-                    Toast.makeText(editTeacherActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditTeacherActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
                 else {
 
                     Boolean checkUser = false, checkEmail = false, checkMobile = false;
@@ -145,24 +147,23 @@ public class editTeacherActivity extends AppCompatActivity {
 
                         Boolean update = DB.updateTeacherData(id, tname, mobile, mail, user, pass, spec);
                         if (update) {
-                            Toast.makeText(editTeacherActivity.this, "Teacher Details Updated Successfully!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditTeacherActivity.this, "Teacher Details Updated Successfully!", Toast.LENGTH_SHORT).show();
                             DB.deleteTeacherCourseData(id);
                             DB.insertTeacherCourseData(id, DB.getCourseIDFromCourseName(course1));
                             DB.insertTeacherCourseData(id, DB.getCourseIDFromCourseName(course2));
                             DB.insertTeacherCourseData(id, DB.getCourseIDFromCourseName(course3));
-                            Log.v("selected courses", course1 + " " + course2 + " " + course3);
                             Intent intent = new Intent(getApplicationContext(), ListTeacherActivity.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(editTeacherActivity.this, "Updation failed!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditTeacherActivity.this, "Updation failed!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         if (checkUser)
-                            Toast.makeText(editTeacherActivity.this, "Updation failed!\nUsername already exists!\n", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditTeacherActivity.this, "Updation failed!\nUsername already exists!\n", Toast.LENGTH_SHORT).show();
                         else if (checkEmail)
-                            Toast.makeText(editTeacherActivity.this, "Updation failed!\nEmail already exists!\n", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditTeacherActivity.this, "Updation failed!\nEmail already exists!\n", Toast.LENGTH_SHORT).show();
                         else if (checkMobile)
-                            Toast.makeText(editTeacherActivity.this, "Updation failed!\nMobile number already exists!\n", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditTeacherActivity.this, "Updation failed!\nMobile number already exists!\n", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -172,6 +173,7 @@ public class editTeacherActivity extends AppCompatActivity {
 
     }
 
+    // the following method places information regarding teacher in editable text boxes
     void init() {
         name.setText(getIntent().getStringExtra("name"));
         email.setText(getIntent().getStringExtra("email"));
@@ -186,5 +188,4 @@ public class editTeacherActivity extends AppCompatActivity {
         return;
     }
 
-    // return checked radio button
 }

@@ -30,13 +30,12 @@ import java.util.ArrayList;
 public class TeacherViewStudentPreviousTaskActivity extends AppCompatActivity {
     String courseName, taskTitle, description, deadline, obtainedMarks, totalMarks, submittedBy, file, date, id;
     Button save, back;
-    int count = 0;
+    int count = 0;  // add a number at the end of attached file names by increasing 1-by-1
     String userName;
     TextView title, studentID, studentName;
     EditText feedback, oMarks;
     FirebaseDatabase database;
     DatabaseReference reference;
-
     RecyclerView rv1;
     MyRvTaskListAdapter adapter1;
     ArrayList<ClassTask> tasks1 = new ArrayList<ClassTask>();
@@ -46,7 +45,14 @@ public class TeacherViewStudentPreviousTaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_task_teacher);
 
+        // actionbar - back button and title
+        getSupportActionBar().setTitle(submittedBy);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // getting require data from previous activity
         userName = getIntent().getStringExtra("userName");
         courseName = getIntent().getStringExtra("courseName");
         taskTitle = getIntent().getStringExtra("taskTitle");
@@ -58,36 +64,31 @@ public class TeacherViewStudentPreviousTaskActivity extends AppCompatActivity {
         file = getIntent().getStringExtra("file");
         date = getIntent().getStringExtra("date");
         id = getIntent().getStringExtra("id");
+
+        // getting firebase instance and reference
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Tasks");
-        setContentView(R.layout.activity_view_task_teacher);
 
-        // back button - action bar
-        getSupportActionBar().setTitle(submittedBy);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-
+        // getting fields from layout
         title = findViewById(R.id.task_v_teacher_title);
-        title.setText(taskTitle);
         studentID = findViewById(R.id.task_v_std_id2);
-        studentID.setText(id);
         studentName = findViewById(R.id.task_v_std_name2);
-        studentName.setText(submittedBy);
         oMarks = findViewById(R.id.task_v_teacher_om3);
         feedback = findViewById(R.id.task_v_teacher_db3);
-
-
         save = findViewById(R.id.t_vut_e_btn);
         back = findViewById(R.id.t_vut_b_btn);
-
         rv1 = findViewById(R.id.rvList_files);
+
+        // putting text data in layout fields
+        title.setText(taskTitle);
+        studentID.setText(id);
+        studentName.setText(submittedBy);
+
+        //  getting particular task details from firebase
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 ClassTask tem = snapshot.getValue(ClassTask.class);
-                Log.v("tagid", tem.getTaskTitle() + ";;;" + taskTitle);
-                Log.v("tagid", tem.getSubmittedBy() + ":::" + submittedBy);
                 if (tem.getTaskTitle().equals(taskTitle) && tem.getSubmittedBy().equals(submittedBy)) {
                     if (tem.getStatus().equals("feedback")) {
                         oMarks.setText(tem.obtainedMarks);
@@ -96,10 +97,8 @@ public class TeacherViewStudentPreviousTaskActivity extends AppCompatActivity {
                         ids1.add(snapshot.getKey());
                         count++;
                         tem.taskTitle = taskTitle + "_" + submittedBy + "_" + count;
-                        Log.v("tagid", "1");
                         tasks1.add(
                                 tem
-                                //  snapshot.getValue(ClassTask.class)
                         );
                         adapter1.notifyDataSetChanged();
                     }
@@ -127,16 +126,17 @@ public class TeacherViewStudentPreviousTaskActivity extends AppCompatActivity {
             }
         });
 
+        // setting layout manager and adapter for rv
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
         rv1.setLayoutManager(manager);
         Log.v("tagid", "0");
         adapter1 = new MyRvTaskListAdapter(getApplicationContext(), tasks1, "submittedStudentIndividualFiles", ids1, userName, null);
         rv1.setAdapter(adapter1);
 
+        // button to go back to the last opened activity
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(TeacherViewStudentPreviousTaskActivity.this, TaskActivity.class);
                 intent.putExtra("courseName", getIntent().getStringExtra("courseName"));
                 intent.putExtra("userType", "teacher");
@@ -145,7 +145,7 @@ public class TeacherViewStudentPreviousTaskActivity extends AppCompatActivity {
             }
         });
 
-
+        // button to save modification (obtained marks and feedback)
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,29 +160,14 @@ public class TeacherViewStudentPreviousTaskActivity extends AppCompatActivity {
                         studentName.getText().toString(),
                         feedback.getText().toString(),
                         LocalDateTime.now().toString(),
-                        "feedback"//will show this is the task which has obtained marks and feedback.
+                        "feedback"  // will show this is the task which has obtained marks and feedback.
                 ));
                 finish();
-                /*
-                Intent intent = new Intent(view.getContext(), TeacherViewPreviousTaskActivity.class);
-                intent.putExtra("taskTitle", tasks.get(position).getTaskTitle());
-                intent.putExtra("courseName", tasks.get(position).getCourseName());
-                intent.putExtra("description", tasks.get(position).getDescription());
-                intent.putExtra("deadline", tasks.get(position).getDeadline());
-                intent.putExtra("obtainedMarks", tasks.get(position).getObtainedMarks());
-                intent.putExtra("totalMarks", tasks.get(position).getTotalMarks());
-                intent.putExtra("submittedBy", tasks.get(position).getSubmittedBy());
-                intent.putExtra("file", tasks.get(position).getFile());
-                intent.putExtra("date", tasks.get(position).getDate());
-                intent.putExtra("id", ids.get(position));
-                intent.putExtra("userName", userName);
-                c.startActivity(intent);
-
-                 */
             }
         });
     }
 
+    // method use to go to previous activity when back button is pressed
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(getApplicationContext(), TeacherViewPreviousTaskActivity.class);
 

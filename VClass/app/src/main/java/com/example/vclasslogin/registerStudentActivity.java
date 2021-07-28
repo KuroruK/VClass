@@ -14,7 +14,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 
-public class registerStudentActivity extends AppCompatActivity {
+// this activity is used by admin to add new students
+public class RegisterStudentActivity extends AppCompatActivity {
 
     EditText firstName, lastName, mobileNo, email, username, password, cPassword,Class,section;
     AppCompatCheckBox showPasswordCheckbox;
@@ -58,8 +59,9 @@ public class registerStudentActivity extends AppCompatActivity {
                 String sect= section.getText().toString().trim();
 
 
+                // following code makes sure all fields are filled correctly.
                 if (fName.isEmpty() || mobile.isEmpty() || mail.isEmpty() || user.isEmpty() || pass.isEmpty() || cPass.isEmpty() || clas.isEmpty() || sect.isEmpty())
-                    Toast.makeText(registerStudentActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterStudentActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
                 else {
                     if (pass.equals(cPass)) {
 
@@ -69,25 +71,25 @@ public class registerStudentActivity extends AppCompatActivity {
                             Boolean insert = DB.insertStudentData((fName + " " + lName) , mobile, mail, user, pass,clas,sect);
                             if (insert) {
                                 sendMail(mail,user,pass);
-                                Toast.makeText(registerStudentActivity.this, "Register Successfully!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterStudentActivity.this, "Register Successfully!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), ListStudentActivity.class);
                                 startActivity(intent);
                             }
                             else {
-                                Toast.makeText(registerStudentActivity.this, "Registration failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterStudentActivity.this, "Registration failed!", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else {
                             if (checkUser)
-                                Toast.makeText(registerStudentActivity.this, "Registration failed!\nUsername already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterStudentActivity.this, "Registration failed!\nUsername already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
                             else if (checkEmail)
-                                Toast.makeText(registerStudentActivity.this, "Registration failed!\nEmail already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterStudentActivity.this, "Registration failed!\nEmail already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
                             else if (checkMobile)
-                                Toast.makeText(registerStudentActivity.this, "Registration failed!\nMobile number already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterStudentActivity.this, "Registration failed!\nMobile number already exists!\nPlease login!", Toast.LENGTH_SHORT).show();
                         }
                     }
                     else {
-                        Toast.makeText(registerStudentActivity.this, "Passwords are not matching!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterStudentActivity.this, "Passwords are not matching!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -119,7 +121,5 @@ public class registerStudentActivity extends AppCompatActivity {
         JavaMailAPI javaMailAPI = new JavaMailAPI(this, rcvEmail, sbjStr, msgStr);
         javaMailAPI.execute();
 
-        Log.v("temp_mail", rcvEmail + "___" + sbjStr + "___" + msgStr);
     }
-    // return checked radio button
 }

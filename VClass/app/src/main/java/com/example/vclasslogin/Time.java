@@ -1,8 +1,12 @@
+// CODE REFERENCE : https://github.com/tlaabs/TimetableView
+// Code modified to fit our requirements
+
 package com.example.vclasslogin;
 
 
 import java.io.Serializable;
 
+//class to for time in hours and minutes
 public class Time implements Serializable {
     private int hour = 0;
     private int minute = 0;
