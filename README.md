@@ -2,14 +2,11 @@
 # Virtual Classroom (VClass)
 ===================================
 
-<h3>By : Mubeen Khan    - i170071, Ahmed Abdullah - i170120, Mustafa Shoaib - i170204</h3>
+<h4>By : Mubeen Khan    - i170071, Ahmed Abdullah - i170120, Mustafa Shoaib - i170204</h4>
 
+<h3>Brief Description</h3>
 <dl>
-  VClass is an android application that provides the features of a classroom from 
-  the comfort of people’s homes. Using virtual reality technology, a more immersive and
-  interactive experience can be had relative to the typical online video conferencing or 
-  classroom software. Furthermore, VClass is an application that has all the necessary classroom
-  features in one place. Thus, it is a one-stop solution for all classroom needs.
+VClass is an android application that provides the features of a classroom from the comfort of people’s homes. Using virtual reality technology, a more immersive and interactive experience can be had relative to the typical online video conferencing or classroom software. Furthermore, VClass is an application that has all the necessary classroom features in one place. Thus, it is a one-stop solution for all classroom needs.
 </dl>
 
 Start
