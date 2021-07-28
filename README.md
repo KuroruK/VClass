@@ -2,7 +2,7 @@
 # Virtual Classroom (VClass)
 ===================================
 
-By : Mubeen Khan    - i170071, Ahmed Abdullah - i170120, Mustafa Shoaib - i170204
+<h3>By : Mubeen Khan    - i170071, Ahmed Abdullah - i170120, Mustafa Shoaib - i170204</h3>
 
 <dl>
   VClass is an android application that provides the features of a classroom from 
