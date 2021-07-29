@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    android:id="@+id/messageRow">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:id="@+id/messenger"/>
+    <TextView
+        android:background="#4CAF50"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:textSize="18dp"
+        android:textColor="#000000"
+        android:id="@+id/senderMsg"/>
+
+    <TextView
+        android:background="#D1C9C9"
+        android:layout_width="match_parent"
+        android:layout_marginRight="50dp"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="#000000"
+        android:id="@+id/receiverMsg"/>
+
+</LinearLayout>

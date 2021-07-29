@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".EditStudentActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/edit_s_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:text="Edit Student"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/edit_s_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_s_details"
+            android:layout_marginStart="10dp"
+            android:text="Name: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_name1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_s_details"
+            android:layout_marginStart="5dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edit_s_name2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_s_details"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@null"
+            android:hint="name here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_name"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Email:"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_email1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_name"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_s_email2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_name"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@null"
+            android:hint="email here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_email"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Student's ID:"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_id1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_email"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_s_id2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_email"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@null"
+            android:hint="id here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_id"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Username:"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_username1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_id"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_s_username2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_id"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@null"
+            android:hint="username here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_username"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Password:"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_password1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_username"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_s_password2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_username"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@null"
+            android:hint="password here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_password"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Contact Number:"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_contact1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_password2"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_s_contact2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_password2"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@null"
+            android:ems="7"
+            android:hint="number here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_contact"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Class: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_class1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_contact"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_s_class2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_contact"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@null"
+            android:hint="class here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_class"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Section: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_section1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_class"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_s_section2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_class"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@null"
+            android:hint="section here"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/edit_s_course1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_section"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Course 1: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_section"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary">
+
+            <Spinner
+                android:id="@+id/edit_s_course11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/custom_spinner_arrow" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/edit_s_course2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_course1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Course 2: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_course1"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary">
+
+            <Spinner
+                android:id="@+id/edit_s_course21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/custom_spinner_arrow" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/edit_s_course3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_course2"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Course 3: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_course2"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary">
+
+            <Spinner
+                android:id="@+id/edit_s_course31"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/custom_spinner_arrow" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/edit_s_course4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_course3"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Course 4: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_course3"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary">
+
+            <Spinner
+                android:id="@+id/edit_s_course41"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/custom_spinner_arrow" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/edit_s_course5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_course4"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Course 5: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_course4"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/edit_s_contact"
+            android:background="@drawable/custom_spinner_boundary">
+
+            <Spinner
+                android:id="@+id/edit_s_course51"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/custom_spinner_arrow" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_save_edit_s"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_s_course5"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginVertical="50dp"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorEdit"
+            android:padding="10dp"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</ScrollView>

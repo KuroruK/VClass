@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/c_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/row_c_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Course Name:"
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_c_name2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/row_c_name"
+            android:text="name here"
+            android:textColor="#000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/row_c_courseCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_c_name2"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:text="Course Code: "
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_c_courseCode2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_c_name2"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@id/row_c_name"
+            android:text="Course code here"
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_c_crd_hrs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_c_courseCode"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:text="Credit Hours: "
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_c_crd_hrs2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_c_courseCode"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@id/row_c_name"
+            android:text="crd hrs here"
+            android:textColor="@color/colorLightGrey" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

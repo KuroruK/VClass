@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/s_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/row_s_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Name: "
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_s_name2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/row_s_section"
+            android:text="name here"
+            android:textColor="#000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/row_s_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_s_name"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:text="Class: "
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_s_class2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_s_name"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@id/row_s_section"
+            android:text="Class here"
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_s_section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_s_class"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:text="Section: "
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_s_section2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_s_class"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@id/row_s_section"
+            android:text="Section here"
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_s_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_s_section"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:text="Email: "
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_s_email2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_s_section"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@id/row_s_section"
+            android:text="email here"
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_s_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_s_email"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:text="Contact: "
+            android:textColor="@color/colorLightGrey" />
+
+        <TextView
+            android:id="@+id/row_s_contact2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_s_email"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@id/row_s_section"
+            android:text="contact here"
+            android:textColor="@color/colorLightGrey" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/student_task_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/row_task_submitted_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toStartOf="@id/row_task_submitted_deadline"
+            android:text="Task name"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/row_task_submitted_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_below="@id/row_task_submitted_name"
+            android:layout_toStartOf="@id/row_task_submitted_status2"
+            android:text="Submitted "
+            android:textColor="@color/colorDarkGreen"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/row_task_submitted_status2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:text="2"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/row_task_submitted_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_task_submitted_name"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:text="By: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/row_task_submitted_tname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_task_submitted_name"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@id/row_task_submitted_by"
+            android:text="teacher name"
+            android:layout_toStartOf="@id/row_task_submitted_status"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/row_task_submitted_deadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_toStartOf="@id/row_task_submitted_deadline2"
+            android:text="Due: "
+            android:textColor="@color/colorLightGrey"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/row_task_submitted_deadline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:text="20/01/2021"
+            android:textColor="@color/colorLightGrey"
+            android:textSize="12sp" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

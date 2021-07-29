@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:padding="20dp"
+        tools:context=".RegisterStudentActivity">
+
+
+        <TextView
+            android:id="@+id/regFormS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:text="Registration Form (Student)"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/firstNameS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/regFormS"
+            android:ems="8"
+            android:hint="First Name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/lastNameS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/regFormS"
+            android:layout_alignParentRight="true"
+            android:ems="8"
+            android:hint="Last Name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/mobileNoS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/firstNameS"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="Mobile Number"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/emailS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mobileNoS"
+            android:layout_marginTop="20dp"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/classS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emailS"
+            android:layout_marginTop="20dp"
+            android:hint="Enter Class"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/sectionS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/classS"
+            android:layout_marginTop="20dp"
+            android:hint="Enter Section"
+            android:inputType="text" />
+
+
+        <EditText
+            android:id="@+id/usernameS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sectionS"
+            android:layout_marginTop="20dp"
+            android:hint="User Name" />
+
+
+        <EditText
+            android:id="@+id/passwordS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/usernameS"
+            android:layout_marginTop="20dp"
+            android:hint="New Password"
+            android:inputType="textPassword" />
+
+
+        <EditText
+            android:id="@+id/cPasswordS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/passwordS"
+            android:layout_marginTop="20dp"
+            android:hint="Confirm Password"
+            android:inputType="textPassword" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/showPasswordS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cPasswordS"
+            android:layout_marginTop="10dp"
+            android:text="Show password" />
+
+        <Button
+            android:id="@+id/btnSignUpS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/showPasswordS"
+            android:layout_marginHorizontal="90dp"
+            android:layout_marginVertical="50dp"
+            android:background="@drawable/all_curved_corners"
+            android:backgroundTint="@color/colorLogin"
+            android:padding="10dp"
+            android:text="Register!"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite" />
+
+    </RelativeLayout>
+</ScrollView>
